@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Domain", "HM.Domain", "{BEE9D18F-DDDC-4CA4-BFD5-11286A7760E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Application", "HM.Application", "{5FB4DF85-80C2-4A90-BA3B-080A22CB33A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Infrastructure", "HM.Infrastructure", "{DFB0A9B0-7DAA-406E-97BD-DEB8B2C39DA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Presentation", "HM.Presentation", "{1F8310D9-E1CC-4159-AC35-4C54F753F7CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal
