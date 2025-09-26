@@ -1,14 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Domain", "HM.Domain", "{BEE9D18F-DDDC-4CA4-BFD5-11286A7760E0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Application", "HM.Application", "{5FB4DF85-80C2-4A90-BA3B-080A22CB33A2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Infrastructure", "HM.Infrastructure", "{DFB0A9B0-7DAA-406E-97BD-DEB8B2C39DA3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HM.Presentation", "HM.Presentation", "{1F8310D9-E1CC-4159-AC35-4C54F753F7CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.Domain", "HM.Domain\HM.Domain.csproj", "{FE2070D2-F1A9-4B74-86EB-D1F8728DDC48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.Application", "HM.Application\HM.Application.csproj", "{A0BD4EAD-2DAD-4FF1-BC6D-CACCA2A3FC03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,8 +16,11 @@ Global
 		{FE2070D2-F1A9-4B74-86EB-D1F8728DDC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE2070D2-F1A9-4B74-86EB-D1F8728DDC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE2070D2-F1A9-4B74-86EB-D1F8728DDC48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0BD4EAD-2DAD-4FF1-BC6D-CACCA2A3FC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0BD4EAD-2DAD-4FF1-BC6D-CACCA2A3FC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0BD4EAD-2DAD-4FF1-BC6D-CACCA2A3FC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0BD4EAD-2DAD-4FF1-BC6D-CACCA2A3FC03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{FE2070D2-F1A9-4B74-86EB-D1F8728DDC48} = {BEE9D18F-DDDC-4CA4-BFD5-11286A7760E0}
 	EndGlobalSection
 EndGlobal
