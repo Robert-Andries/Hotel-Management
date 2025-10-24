@@ -16,7 +16,7 @@ public sealed class RoomReview : Entity
 
     public Guid RoomId { get; }
     public Guid UserId { get; }
-    public Comment Comment { get; }
+    public Comment Comment { get; private set; }
     public int Rating { get; private set; }
     public DateTime CreatedAtUtc { get; }
     public DateTime? UpdatedAtUtc { get; private set; }
@@ -25,7 +25,7 @@ public sealed class RoomReview : Entity
     {
         var oldRating = Rating;
         Rating = newRating;
-        // raise RoomReviewUpdated(RoomId, oldRating, newRating)
         UpdatedAtUtc = nowUtc;
+        Comment = newComment;
     }
 }
