@@ -1,10 +1,9 @@
 ﻿using HM.Domain.Bookings.Value_Objects;
-using HM.Domain.Rooms.Value_Objects;
 using HM.Domain.Rooms.Entities;
+using HM.Domain.Rooms.Value_Objects;
 using HM.Domain.Shared;
 
 namespace HM.Domain.Bookings.Services;
-
 
 public class PricingService
 {
@@ -18,7 +17,6 @@ public class PricingService
 
         decimal percentageUpCharge = 0;
         foreach (var amenity in apartment.Features)
-        {
             percentageUpCharge += amenity switch
             {
                 Feautre.GardenView or Feautre.MountainView => 0.05m,
@@ -31,15 +29,12 @@ public class PricingService
                 Feautre.WiFi => 0.01m,
                 _ => 0
             };
-        }
 
         var amenitiesUpCharge = Money.Zero(currency);
         if (percentageUpCharge > 0)
-        {
             amenitiesUpCharge = new Money(
                 priceForPeriod.Amount * percentageUpCharge,
                 currency);
-        }
 
         var totalPrice = Money.Zero(currency);
         totalPrice += priceForPeriod;

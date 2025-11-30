@@ -7,7 +7,7 @@ namespace HM.Domain.Bookings.Abstractions;
 
 public interface IBookingRepository
 {
-    Task<Result<Booking>> Add(Guid userId, DateRange range, Guid roomId, CancellationToken cancellationToken = default );
+    void Add(Booking booking);
     Task<Result<Booking>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Result<List<Booking>>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Result> Update(Guid bookingId, Booking booking, CancellationToken cancellationToken = default);

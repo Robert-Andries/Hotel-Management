@@ -10,6 +10,6 @@ public interface IRoomRepository
     Task<Result<Room>> GetByLocationAsync(RoomLocation location, CancellationToken cancellationToken = default);
     Task<Result<List<Room>>> GetAllAsync(RoomLocation location, CancellationToken cancellationToken = default);
     Task<Result<List<Room>>> GetAllAsync(CancellationToken cancellationToken = default);
-    
-    Task<Result> UpdateRoom(Guid Id ,Room room, CancellationToken cancellationToken = default);
+
+    Task<Result> UpdateRoom(Guid Id, Room room, CancellationToken cancellationToken = default);
 }

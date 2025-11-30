@@ -1,11 +1,12 @@
 ﻿using HM.Domain.Abstractions;
+using HM.Domain.Reviews.Events;
 using HM.Domain.Reviews.Value_Objects;
 
 namespace HM.Domain.Reviews.Entities;
 
 public sealed class RoomReview : Entity
 {
-    public RoomReview(Guid id, Guid roomId, Guid userId, Comment comment, int rating, DateTime createdAtUtc) : base(id)
+    private RoomReview(Guid id, Guid roomId, Guid userId, Comment comment, int rating, DateTime createdAtUtc) : base(id)
     {
         RoomId = roomId;
         UserId = userId;
@@ -14,18 +15,32 @@ public sealed class RoomReview : Entity
         CreatedAtUtc = createdAtUtc;
     }
 
-    public Guid RoomId { get; }
-    public Guid UserId { get; }
+    public Guid RoomId { get; init; }
+    public Guid UserId { get; init; }
     public Comment Comment { get; private set; }
     public int Rating { get; private set; }
-    public DateTime CreatedAtUtc { get; }
-    public DateTime? UpdatedAtUtc { get; private set; }
+    public DateTime CreatedAtUtc { get; init; }
+    public DateTime? UpdatedAtUtc { get; internal set; }
 
-    public void Update(int newRating, Comment newComment, DateTime nowUtc)
+    public static RoomReview Create(Guid roomId, Guid userId, Comment comment, int rating, DateTime createdAtUtc)
     {
-        var oldRating = Rating;
-        Rating = newRating;
-        UpdatedAtUtc = nowUtc;
-        Comment = newComment;
+        var review = new RoomReview(Guid.NewGuid(),
+            roomId,
+            userId,
+            comment,
+            rating,
+            createdAtUtc);
+
+        review.RaiseDomainEvent(new ReviewCreatedDomainEvent(review.Id, review.RoomId));
+
+        return review;
+    }
+    public void Update(int rating, Comment comment, DateTime updatedAtUtc)
+    {
+        Rating = rating;
+        Comment = comment;
+        UpdatedAtUtc = updatedAtUtc;
+
+        this.RaiseDomainEvent(new ReviewUpdatedDomainEvent(Id, RoomId));
     }
 }

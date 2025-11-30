@@ -5,17 +5,31 @@ namespace HM.Domain.Users.Entities;
 
 public sealed class User : Entity
 {
-    public User(Guid id, Name name, ContactInfo contact, DateOnly dateOfBirth) : base(id)
+    private User(Guid id, Name name, ContactInfo contact, DateOnly dateOfBirth) : base(id)
     {
         Name = name;
         Contact = contact;
         DateOfBirth = dateOfBirth;
     }
 
+    public static User Create(Name name, ContactInfo contact, DateOnly dateOfBirth)
+    {
+        var user = new User(Guid.NewGuid(), name, contact, dateOfBirth);
+        
+        return user;
+    }
+
     #region Properties
+
     public Name Name { get; init; }
     public ContactInfo Contact { get; init; }
-    public DateOnly DateOfBirth { get; init ; }
-    public int Age => DateTime.Now.Year - DateOfBirth.Year;
+    public DateOnly DateOfBirth { get; init; }
+    public int GetAge(DateOnly today)
+    {
+        var age = today.Year - DateOfBirth.Year;
+        if (DateOfBirth > today.AddYears(-age)) age--;
+        return age;
+    }
+
     #endregion
 }

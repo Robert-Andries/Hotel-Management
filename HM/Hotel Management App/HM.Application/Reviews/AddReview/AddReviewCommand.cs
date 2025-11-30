@@ -4,5 +4,10 @@ using HM.Domain.Reviews.Value_Objects;
 
 namespace HM.Application.Reviews.AddReview;
 
-public record AddReviewCommand(Guid RoomId, Guid UserId, Comment Comment, int Rating) : ICommand<Result> 
-{}
+public record AddReviewCommand(
+    Guid RoomId,
+    Guid UserId,
+    Comment Comment,
+    int Rating) : ICommand<Result>
+{
+}

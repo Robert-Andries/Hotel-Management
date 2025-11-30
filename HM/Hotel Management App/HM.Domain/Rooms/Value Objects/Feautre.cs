@@ -10,5 +10,5 @@ public enum Feautre
     MountainView = 6,
     GardenView = 7,
     Tv = 8,
-    Balcony = 9,
+    Balcony = 9
 }

@@ -1,4 +1,6 @@
-﻿namespace HM.Domain.Bookings.Value_Objects;
+﻿using HM.Domain.Abstractions;
+
+namespace HM.Domain.Bookings.Value_Objects;
 
 public record DateRange
 {
@@ -12,17 +14,19 @@ public record DateRange
 
     public int LengthInDays => End.DayNumber - Start.DayNumber;
 
-    public static DateRange Create(DateOnly start, DateOnly end)
+    public static Result<DateRange> Create(DateOnly start, DateOnly end)
     {
-        if (start > end)
-        {
-            throw new ApplicationException("End date precedes start date");
-        }
+        if (start >= end)
+            return Result.Failure<DateRange>(new Error(
+                "DateRange.Invalid",
+                "End date precedes start date"));
 
-        return new DateRange
+        DateRange output = new()
         {
             Start = start,
             End = end
         };
+
+        return Result.Success(output);
     }
 }
