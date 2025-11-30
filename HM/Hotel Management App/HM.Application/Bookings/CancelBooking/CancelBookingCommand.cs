@@ -3,4 +3,4 @@ using HM.Domain.Abstractions;
 
 namespace HM.Application.Bookings.CancelBooking;
 
-public record CancelBookingCommand(Guid BookingId) : ICommand<Result>;
+public sealed record CancelBookingCommand(Guid BookingId) : ICommand<Result>;

@@ -3,4 +3,4 @@ using HM.Domain.Abstractions;
 
 namespace HM.Application.Bookings.CheckInGuest;
 
-public record CheckInGuestCommand(Guid BookingId) : ICommand<Result>;
+public sealed record CheckInGuestCommand(Guid BookingId) : ICommand<Result>;

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HM.Application.Bookings.Events;
 
-public class BookingCanceledDomainEventHandler : INotificationHandler<BookingCanceledDomainEvent>
+internal sealed class BookingCanceledDomainEventHandler : INotificationHandler<BookingCanceledDomainEvent>
 {
     private readonly IRoomRepository  _roomRepository;
     private readonly IBookingRepository _bookingRepository;

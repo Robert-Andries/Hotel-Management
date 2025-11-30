@@ -4,7 +4,7 @@ using HM.Domain.Bookings.Abstractions;
 
 namespace HM.Application.Bookings.CancelBooking;
 
-public class CancelBookingCommandHandler : ICommandHandler<CancelBookingCommand, Result>
+internal sealed class CancelBookingCommandHandler : ICommandHandler<CancelBookingCommand, Result>
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IUnitOfWork _unitOfWork;

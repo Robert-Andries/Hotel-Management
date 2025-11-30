@@ -5,7 +5,7 @@ using HM.Domain.Rooms.Abstractions;
 
 namespace HM.Application.Bookings.CheckOutGuest;
 
-public class CheckOutGuestCommandHandler : ICommandHandler<CheckOutGuestCommand, Result>
+internal sealed class CheckOutGuestCommandHandler : ICommandHandler<CheckOutGuestCommand, Result>
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IUnitOfWork _unitOfWork;

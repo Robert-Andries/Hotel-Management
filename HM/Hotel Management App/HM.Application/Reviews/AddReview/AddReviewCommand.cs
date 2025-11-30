@@ -4,7 +4,7 @@ using HM.Domain.Reviews.Value_Objects;
 
 namespace HM.Application.Reviews.AddReview;
 
-public record AddReviewCommand(
+public sealed record AddReviewCommand(
     Guid RoomId,
     Guid UserId,
     Comment Comment,

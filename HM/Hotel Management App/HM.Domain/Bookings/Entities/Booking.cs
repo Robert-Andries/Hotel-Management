@@ -5,7 +5,7 @@ using HM.Domain.Shared;
 
 namespace HM.Domain.Bookings.Entities;
 
-public class Booking : Entity
+public sealed class Booking : Entity
 {
     private Booking(Guid id, Guid userId, Guid roomId, DateRange duration, Money price,
         DateTime createdOnUtc, BookingStatus status)

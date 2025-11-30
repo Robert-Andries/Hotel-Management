@@ -4,7 +4,7 @@ using HM.Domain.Bookings.Abstractions;
 
 namespace HM.Application.Bookings.CheckInGuest;
 
-public class CheckInGuestCommandHandler : ICommandHandler<CheckInGuestCommand, Result>
+internal sealed class CheckInGuestCommandHandler : ICommandHandler<CheckInGuestCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IBookingRepository _bookingRepository;
