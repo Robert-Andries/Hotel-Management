@@ -1,5 +1,11 @@
-﻿using HM.Domain.Abstractions;
+﻿using HM.Application.Abstractions.Data;
+using HM.Domain.Abstractions;
+using HM.Domain.Bookings.Abstractions;
+using HM.Domain.Rooms.Abstractions;
+using HM.Domain.Users.Abstractions;
 using HM.Infrastructure.DateTimeProvider;
+using HM.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +18,20 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddSingleton<ITime, Time>();
-        
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            var connectionString = configuration.GetConnectionString("Database");
+            options.UseSqlServer(connectionString);
+        });
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoomRepository, RoomRepository>();
+        services.AddScoped<IBookingRepository, BookingRepository>();
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
         return services;
     }
 }
