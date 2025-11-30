@@ -53,6 +53,5 @@ internal sealed class BookingCheckedOutDomainEventHandler : INotificationHandler
         }
         
         await _roomRepository.UpdateRoom(room.Id, room, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
