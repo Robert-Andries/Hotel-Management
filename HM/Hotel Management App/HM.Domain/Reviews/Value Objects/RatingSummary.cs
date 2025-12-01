@@ -3,7 +3,7 @@ using HM.Domain.Reviews.Abstractions;
 
 namespace HM.Domain.Reviews.Value_Objects;
 
-public sealed record RatingSummary(Guid RoomId, double Average, int Count)
+public sealed record RatingSummary(Guid RoomId, float Average, int Count)
 {
     public async Task<Result<RatingSummary>> Update(IReviewRepository roomRepository,
         CancellationToken cancellationToken = default)
@@ -13,7 +13,7 @@ public sealed record RatingSummary(Guid RoomId, double Average, int Count)
             return Result.Failure<RatingSummary>(reviewsResult.Error);
 
         var reviews = reviewsResult.Value;
-        var newAvg = reviews.Average(x => x.Rating);
+        var newAvg = (float)reviews.Average(x => x.Rating);
         var newCount = reviews.Count;
 
         return Result.Success(new RatingSummary(RoomId, newAvg, newCount));

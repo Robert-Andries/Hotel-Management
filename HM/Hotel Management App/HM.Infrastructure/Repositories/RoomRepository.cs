@@ -1,4 +1,5 @@
 using HM.Domain.Abstractions;
+using HM.Domain.Rooms;
 using HM.Domain.Rooms.Abstractions;
 using HM.Domain.Rooms.Entities;
 using HM.Domain.Rooms.Value_Objects;
@@ -15,48 +16,73 @@ internal sealed class RoomRepository : IRoomRepository
         _dbContext = dbContext;
     }
 
+    public async Task<Result> AddAsync(Room room, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await _dbContext.Rooms.AddAsync(room, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Failure(Error.OperationCanceled);
+        }
+        return Result.Success();
+    }
+
     public async Task<Result<Room>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var room = await _dbContext.Rooms.FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
-
+        Room? room;
+        try
+        {
+            room = await _dbContext.Rooms.FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Failure<Room>(Error.OperationCanceled);
+        }
         if (room is null)
-            return Result.Failure<Room>(new Error("Room.NotFound",
-                "The room with the specified identifier was not found."));
-
+            return Result.Failure<Room>(RoomErrors.NotFound);
+        
         return Result.Success(room);
     }
-
-    public async Task<Result<Room>> GetByLocationAsync(RoomLocation location,
-        CancellationToken cancellationToken = default)
-    {
-        var room = await _dbContext.Rooms.FirstOrDefaultAsync(r => r.Location == location, cancellationToken);
-
-        if (room is null)
-            return Result.Failure<Room>(new Error("Room.NotFound",
-                "The room with the specified location was not found."));
-
-        return Result.Success(room);
-    }
-
-    public async Task<Result<List<Room>>> GetAllAsync(RoomLocation location,
-        CancellationToken cancellationToken = default)
-    {
-        var rooms = await _dbContext.Rooms
-            .Where(r => r.Location == location)
-            .ToListAsync(cancellationToken);
-
-        return Result.Success(rooms);
-    }
-
+    
     public async Task<Result<List<Room>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var rooms = await _dbContext.Rooms.ToListAsync(cancellationToken);
+        List<Room> rooms;
+        try
+        {
+            rooms = await _dbContext.Rooms.ToListAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Failure<List<Room>>(Error.OperationCanceled);
+        }
         return Result.Success(rooms);
     }
 
-    public Task<Result> UpdateRoom(Guid id, Room room, CancellationToken cancellationToken = default)
+    public Task<Result> UpdateRoomAsync(Guid id, Room room, CancellationToken cancellationToken = default)
     {
         _dbContext.Rooms.Update(room);
+        _dbContext.SaveChanges();
         return Task.FromResult(Result.Success());
+    }
+
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        int rowsDeleted = 0;
+        try
+        {
+            rowsDeleted = await _dbContext.Rooms
+                .Where(room => room.Id == id)
+                .ExecuteDeleteAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Failure(Error.OperationCanceled);
+        }
+        if (rowsDeleted == 0)
+            return Result.Failure(RoomErrors.NotFound);
+
+        return Result.Success();
     }
 }

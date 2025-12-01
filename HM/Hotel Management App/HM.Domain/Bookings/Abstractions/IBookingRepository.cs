@@ -7,12 +7,12 @@ namespace HM.Domain.Bookings.Abstractions;
 
 public interface IBookingRepository
 {
-    void Add(Booking booking);
+    Task<Result> AddAsync(Booking booking, CancellationToken cancellationToken = default);
     Task<Result<Booking>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Result<List<Booking>>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Result> Update(Guid bookingId, Booking booking, CancellationToken cancellationToken = default);
 
-    Task<bool> IsOverlappingAsync(
+    Task<Result<bool>> IsOverlappingAsync(
         Room room,
         DateRange duration,
         CancellationToken cancellationToken = default);

@@ -53,7 +53,7 @@ internal sealed class ReviewCreatedDomainEventHandler : INotificationHandler<Rev
             return;
         }
 
-        await _roomRepository.UpdateRoom(room.Id, room, cancellationToken);
+        await _roomRepository.UpdateRoomAsync(room.Id, room, cancellationToken);
         
         // No need to call SaveChangesAsync here, as it's handled by the main transaction
     }

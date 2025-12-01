@@ -50,7 +50,9 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
             return Result.Failure<Guid>(dateRangeResult.Error);
         var dateRange = dateRangeResult.Value;
 
-        if (await _bookingRepository.IsOverlappingAsync(roomResult.Value, dateRange, cancellationToken))
+        var isOverlappingResult =
+            await _bookingRepository.IsOverlappingAsync(roomResult.Value, dateRange, cancellationToken);
+        if (isOverlappingResult.IsFailure || isOverlappingResult.Value == true)
             return Result.Failure<Guid>(BookingErrors.Overlapping);
 
         var booking = Booking.Reserve(
@@ -60,7 +62,7 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
             _time.NowUtc,
             Money.Zero());
 
-        _bookingRepository.Add(booking);
+        await _bookingRepository.AddAsync(booking, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -55,6 +55,6 @@ internal sealed class BookingReservedDomainEventHandler : INotificationHandler<B
             return;
         }
 
-        await _roomRepository.UpdateRoom(room.Id, room, cancellationToken);
+        await _roomRepository.UpdateRoomAsync(room.Id, room, cancellationToken);
     }
 }

@@ -17,9 +17,11 @@ internal sealed class BookingRepository : IBookingRepository
         _dbContext = dbContext;
     }
 
-    public void Add(Booking booking)
+    public async Task<Result> AddAsync(Booking booking, CancellationToken cancellationToken = default)
     {
         _dbContext.Bookings.Add(booking);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return Result.Success();
     }
 
     public async Task<Result<Booking>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -45,16 +47,26 @@ internal sealed class BookingRepository : IBookingRepository
         return Task.FromResult(Result.Success());
     }
 
-    public async Task<bool> IsOverlappingAsync(Room room, DateRange range,
+    public async Task<Result<bool>> IsOverlappingAsync(Room room, DateRange range,
         CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Bookings
-            .AnyAsync(
-                b =>
-                    b.RoomId == room.Id &&
-                    b.Duration.Start <= range.End &&
-                    b.Duration.End >= range.Start &&
-                    b.Status != BookingStatus.Cancelled,
-                cancellationToken);
+        bool isOverlapping;
+        try
+        {
+            isOverlapping = await _dbContext.Bookings
+                .AnyAsync(
+                    b =>
+                        b.RoomId == room.Id &&
+                        b.Duration.Start <= range.End &&
+                        b.Duration.End >= range.Start &&
+                        b.Status != BookingStatus.Cancelled,
+                    cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Failure<bool>(Error.OperationCanceled);
+        }
+
+        return Result.Success(isOverlapping);
     }
 }

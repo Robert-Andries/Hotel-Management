@@ -1,4 +1,5 @@
-﻿using HM.Domain.Abstractions;
+﻿using System.Runtime.InteropServices;
+using HM.Domain.Abstractions;
 using HM.Domain.Reviews.Value_Objects;
 using HM.Domain.Rooms.Events;
 using HM.Domain.Rooms.Value_Objects;
@@ -8,9 +9,9 @@ namespace HM.Domain.Rooms.Entities;
 
 public sealed class Room : Entity
 {
-    public Room(Guid id, RoomType roomType, RoomLocation location,
-        List<Feautre> features, RatingSummary rating, RoomStatus status, Money price,
-        DateTime? lastBookedOnUtc = null) : base(id)
+    private Room(Guid id, RoomType roomType, RoomLocation location,
+        List<Feautre> features, RatingSummary rating, RoomStatus status, Money price) 
+        : base(id)
     {
         RoomType = roomType;
         Location = location;
@@ -18,11 +19,9 @@ public sealed class Room : Entity
         Rating = rating;
         Status = status;
         Price = price;
-        LastBookedOnUtc = lastBookedOnUtc;
     }
 
     #region Properties
-
     public RoomType RoomType { get; private set; }
     public RoomLocation Location { get; private set; }
     public List<Feautre> Features { get; private set; }
@@ -32,6 +31,31 @@ public sealed class Room : Entity
     public DateTime? LastBookedOnUtc { get; private set; }
 
     #endregion
+
+    /// <summary>
+    /// Factory method to create a Room entity
+    /// </summary>
+    /// <returns>The newly created room entity</returns>
+    public static Result<Room> Create(RoomType roomType, RoomLocation location, List<Feautre> features, Money price)
+    {
+        if (price.Amount <= 0)
+            return Result.Failure<Room>(RoomErrors.InvalidPrice);
+        
+        var roomId = Guid.NewGuid();
+        var rating = new RatingSummary(roomId, 0.0f, 0);
+
+        var room = new Room(roomId,
+            roomType,
+            location,
+            features,
+            rating,
+            RoomStatus.Available,
+            price);
+        
+        room.RaiseDomainEvent(new RoomCreatedDomainEvent(roomId));
+
+        return Result.Success(room);
+    }
     
     /// <summary>
     /// Reserves the room for a specific date.
