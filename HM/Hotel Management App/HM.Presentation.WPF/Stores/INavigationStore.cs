@@ -7,6 +7,6 @@ namespace HM.Presentation.WPF.Stores;
 /// </summary>
 public interface INavigationStore
 {
-    BaseViewModel CurrentViewModel { get; }
+    BaseViewModel? CurrentViewModel { get; }
     void NavigateTo<TViewModel>() where TViewModel : BaseViewModel;
 }

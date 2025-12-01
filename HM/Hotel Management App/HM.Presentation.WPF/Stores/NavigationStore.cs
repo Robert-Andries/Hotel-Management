@@ -16,7 +16,7 @@ public sealed class NavigationStore : ObservableObject, INavigationStore
         this._getViewModel = getViewModel;
     }
     
-    public BaseViewModel CurrentViewModel
+    public BaseViewModel? CurrentViewModel
     {
         get => _currentViewModel;
         private set

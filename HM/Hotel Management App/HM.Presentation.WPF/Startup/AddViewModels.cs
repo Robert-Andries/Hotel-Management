@@ -13,6 +13,8 @@ internal static class AddViewModels
     {
         service.AddScoped<INavigationStore, NavigationStore>();
         service.AddScoped<MainViewModel>();
+        service.AddScoped<BookingViewModel>();
+        service.AddScoped<RoomViewModel>();
         
         return service;
     }

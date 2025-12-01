@@ -7,8 +7,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock Text="Hello World from MainWindow!" HorizontalAlignment="Center"
-                   VerticalAlignment="Center" FontSize="32"/>
-        <ContentControl Content="{Binding NavigationStore.CurrentViewModel}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Grid.Column="1" Text="Hello World from Main View!" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontSize="18"/>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,0, 0, 20">
+            <Button Content="Bookings" Command="{Binding BookingsCommand}" Margin="5"/>
+            <Button Content="Rooms" Command="{Binding RoomsCommand}" Margin="5"/>
+        </StackPanel>
+        
+        <ContentControl Grid.Row="2" Grid.Column="1" 
+                        Content="{Binding NavigationStore.CurrentViewModel}" />
     </Grid>
 </Window>
