@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.Application", "HM.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.Infrastructure", "HM.Infrastructure\HM.Infrastructure.csproj", "{39F81A8F-6D4F-4DBA-95C4-E1D60A0274AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM.Presentation.WPF", "HM.Presentation.WPF\HM.Presentation.WPF.csproj", "{BA6F3377-9B3B-4C4C-B385-886EC1E93341}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,7 +28,12 @@ Global
 		{39F81A8F-6D4F-4DBA-95C4-E1D60A0274AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39F81A8F-6D4F-4DBA-95C4-E1D60A0274AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39F81A8F-6D4F-4DBA-95C4-E1D60A0274AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6F3377-9B3B-4C4C-B385-886EC1E93341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6F3377-9B3B-4C4C-B385-886EC1E93341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6F3377-9B3B-4C4C-B385-886EC1E93341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6F3377-9B3B-4C4C-B385-886EC1E93341}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{BA6F3377-9B3B-4C4C-B385-886EC1E93341} = {1F8310D9-E1CC-4159-AC35-4C54F753F7CE}
 	EndGlobalSection
 EndGlobal
