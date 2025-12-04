@@ -9,6 +9,8 @@ namespace HM.Domain.Rooms.Entities;
 
 public sealed class Room : Entity
 {
+    private Room() { }
+
     private Room(Guid id, RoomType roomType, RoomLocation location,
         List<Feautre> features, RatingSummary rating, RoomStatus status, Money price) 
         : base(id)

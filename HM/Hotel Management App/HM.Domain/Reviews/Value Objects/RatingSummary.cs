@@ -5,6 +5,8 @@ namespace HM.Domain.Reviews.Value_Objects;
 
 public sealed record RatingSummary(Guid RoomId, float Average, int Count)
 {
+    private RatingSummary() : this(Guid.Empty, 0, 0) { }
+
     public async Task<Result<RatingSummary>> Update(IReviewRepository roomRepository,
         CancellationToken cancellationToken = default)
     {

@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <UserSecretsId>d4c27cd9-b98a-46cd-9fa1-29214f08ab4f</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +14,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.0" />
@@ -20,6 +25,11 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
       <PackageReference Include="Prism.Core" Version="9.0.537" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HM.Application\HM.Application.csproj" />
+      <ProjectReference Include="..\HM.Infrastructure\HM.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

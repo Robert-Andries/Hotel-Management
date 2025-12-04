@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-using System.Data;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
+using HM.Infrastructure;
+using HM.Application;
 using HM.Presentation.WPF.Startup;
 using HM.Presentation.WPF.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace HM.Presentation.WPF;
 
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -22,7 +22,8 @@ public partial class App : Application
             .AddUserSecrets<App>()
             .Build();
 
-
+        service.AddDependencyInjection(configuration);
+        service.AddApplication();
         service.AddWpfViewModels();
         service.AddSingleton<MainWindow>();
         

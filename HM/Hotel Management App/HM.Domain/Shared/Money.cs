@@ -2,6 +2,8 @@
 
 public sealed record Money(decimal Amount, Currency Currency)
 {
+    private Money() : this(0, Currency.None) { }
+
     public static Money operator +(Money first, Money second)
     {
         if (first.Currency != second.Currency) throw new InvalidOperationException("Currencies have to be equal");

@@ -5,6 +5,8 @@ namespace HM.Domain.Users.Entities;
 
 public sealed class User : Entity
 {
+    private User() { }
+
     private User(Guid id, Name name, ContactInfo contact, DateOnly dateOfBirth) : base(id)
     {
         Name = name;

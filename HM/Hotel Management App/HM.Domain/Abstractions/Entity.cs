@@ -1,4 +1,6 @@
-﻿namespace HM.Domain.Abstractions;
+﻿using HM.Domain.Abstractions;
+
+namespace HM.Domain.Abstractions;
 
 public abstract class Entity
 {
@@ -7,6 +9,10 @@ public abstract class Entity
     protected Entity(Guid id)
     {
         Id = id;
+    }
+
+    protected Entity()
+    {
     }
 
     public Guid Id { get; init; }

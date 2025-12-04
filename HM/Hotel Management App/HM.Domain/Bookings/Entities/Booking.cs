@@ -7,15 +7,17 @@ namespace HM.Domain.Bookings.Entities;
 
 public sealed class Booking : Entity
 {
+    private Booking() { }
+
     private Booking(Guid id, Guid userId, Guid roomId, DateRange duration, Money price,
-        DateTime createdOnUtc, BookingStatus status)
+        DateTime reservedOnUtc, BookingStatus status)
         : base(id)
     {
         UserId = userId;
         RoomId = roomId;
         Duration = duration;
         Price = price;
-        ReservedOnUtc = createdOnUtc;
+        ReservedOnUtc = reservedOnUtc;
         Status = status;
     }
 
@@ -71,7 +73,7 @@ public sealed class Booking : Entity
     /// <summary>
     /// Updates Status to BookingStatus.Completed
     /// </summary>
-    /// <param name="checkOutUtc">The time when the check out occured</param>
+    /// <param name="checkOutUtc">The time when the check-out occured</param>
     public Result CheckOut(DateTime checkOutUtc)
     {
         if (Status != BookingStatus.CheckedIn)
