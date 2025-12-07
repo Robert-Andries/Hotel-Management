@@ -22,9 +22,11 @@ public partial class App : System.Windows.Application
             .AddUserSecrets<App>()
             .Build();
 
-        service.AddDependencyInjection(configuration);
-        service.AddApplication();
-        service.AddWpfViewModels();
+        service.AddApplicationDependencyInjection();
+        service.AddInfrastructureDependencyInjection(configuration);
+        service.AddWpfViewModels(GetViewModel);
+        service.AddLogging();
+        
         service.AddSingleton<MainWindow>();
         
         service.AddScoped<Func<Type, BaseViewModel>>(_ => GetViewModel);

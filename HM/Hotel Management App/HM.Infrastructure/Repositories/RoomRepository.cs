@@ -26,6 +26,8 @@ internal sealed class RoomRepository : IRoomRepository
         {
             return Result.Failure(Error.OperationCanceled);
         }
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 
@@ -60,11 +62,11 @@ internal sealed class RoomRepository : IRoomRepository
         return Result.Success(rooms);
     }
 
-    public Task<Result> UpdateRoomAsync(Guid id, Room room, CancellationToken cancellationToken = default)
+    public async Task<Result> UpdateRoomAsync(Guid id, Room room, CancellationToken cancellationToken = default)
     {
         _dbContext.Rooms.Update(room);
-        _dbContext.SaveChanges();
-        return Task.FromResult(Result.Success());
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return Result.Success();
     }
 
     public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)

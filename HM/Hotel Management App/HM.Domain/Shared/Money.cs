@@ -25,4 +25,9 @@ public sealed record Money(decimal Amount, Currency Currency)
     {
         return Amount == 0;
     }
+
+    public override string ToString()
+    {
+        return $"{Amount} {Currency.Code}";
+    }
 }

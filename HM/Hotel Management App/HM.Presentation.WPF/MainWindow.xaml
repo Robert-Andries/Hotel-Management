@@ -19,9 +19,6 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         
-        <TextBlock Grid.Column="1" Text="Hello World from Main View!" HorizontalAlignment="Center"
-                   VerticalAlignment="Center" FontSize="18"/>
-        
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,0, 0, 20">
             <Button Content="Bookings" Command="{Binding BookingsCommand}" Margin="5"/>
             <Button Content="Rooms" Command="{Binding RoomsCommand}" Margin="5"/>

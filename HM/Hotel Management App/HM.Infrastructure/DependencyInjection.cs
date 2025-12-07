@@ -13,7 +13,7 @@ namespace HM.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddDependencyInjection(
+    public static IServiceCollection AddInfrastructureDependencyInjection(
         this IServiceCollection services,
         IConfiguration configuration)
     {

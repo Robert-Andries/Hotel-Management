@@ -20,4 +20,9 @@ public sealed record RatingSummary(Guid RoomId, float Average, int Count)
 
         return Result.Success(new RatingSummary(RoomId, newAvg, newCount));
     }
+
+    public override string ToString()
+    {
+        return $"{Average:F2} ({Count})";
+    }
 }
