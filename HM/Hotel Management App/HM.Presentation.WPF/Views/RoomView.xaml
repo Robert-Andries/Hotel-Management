@@ -63,7 +63,8 @@
         </StackPanel>
 
         <DataGrid Grid.Row="2" 
-                  ItemsSource="{Binding Rooms}" 
+                  ItemsSource="{Binding Rooms}"
+                  SelectedItem="{Binding Room}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   IsReadOnly="True"
@@ -77,7 +78,7 @@
             <DataGrid.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick" 
                               Command="{Binding EditRoomCommand}" 
-                              CommandParameter="{Binding Rooms/}" />
+                              CommandParameter="{Binding Rooms}" />
             </DataGrid.InputBindings>
             
             <DataGrid.Columns>

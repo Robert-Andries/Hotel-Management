@@ -9,7 +9,8 @@ namespace HM.Presentation.WPF.Startup;
 internal static class AddViewModels
 {
     /// <summary>
-    /// Adds the necessary view models and navigation store for quiz functionality to the service collection.
+    /// Adds the necessary view models, navigation store and maps
+    /// DialogViewModel with DialogView for quiz functionality to the service collection.
     /// </summary>
     internal static IServiceCollection AddWpfViewModels(this IServiceCollection service, Func<Type, BaseViewModel> GetViewModel)
     {
@@ -20,8 +21,10 @@ internal static class AddViewModels
         service.AddScoped<BookingViewModel>();
         service.AddScoped<RoomViewModel>();
         service.AddScoped<AddRoomDialogViewModel>();
+        service.AddScoped<EditRoomDialogViewModel>();
         
         dialogService.Register<AddRoomDialogViewModel, AddRoomDialogView>();
+        dialogService.Register<EditRoomDialogViewModel, EditRoomDialogView>();
         
         service.AddSingleton<Services.IDialogService>(dialogService);
         
