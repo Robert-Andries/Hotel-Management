@@ -1,6 +1,8 @@
 ﻿namespace HM.Presentation.WPF.Services;
 
-//TODO Add summary
+/// <summary>
+/// Interface specific for dialog window viewmodel
+/// </summary>
 public interface IDialogViewModel
 {
     /// <summary>

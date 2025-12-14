@@ -8,21 +8,24 @@ using HM.Presentation.WPF.Models;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HM.Presentation.WPF.ViewModels;
 
 public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 {
-    public AddRoomDialogViewModel(INavigationStore navigationStore, IMediator mediator) : base(navigationStore)
+    public AddRoomDialogViewModel(INavigationStore navigationStore, IMediator mediator, 
+        ILogger<AddRoomDialogViewModel> logger)
+        : base(navigationStore)
     {
         InitializeFeatures();
         _mediator = mediator;
-        SaveCommand = new DelegateCommand(async void () => await SaveExecute(), CanSaveExecute);
+        _logger = logger;
+        SaveCommand = new DelegateCommand(async void () => await SaveExecute(), SaveCanExecute);
         CancelCommand = new DelegateCommand(CancelExecute);
     }
 
     #region Proprieties
-
     public IEnumerable<RoomType> RoomTypes { get; }
         = Enum.GetValues(typeof(RoomType)).Cast<RoomType>();
     public ObservableCollection<FeatureSelectionItemModel> FeatureList { get; } = new();
@@ -86,18 +89,15 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             OnPropertyChanged();
         }
     }
-
     #endregion
 
     #region Methods
-
     private void InitializeFeatures()
     {
         var allFeatures = Enum.GetValues(typeof(Feautre)).Cast<Feautre>();
         foreach (var feature in allFeatures)
             FeatureList.Add(new FeatureSelectionItemModel(feature, false));
     }
-
     private List<Feautre> GetSelectedFeatures()
     {
         return FeatureList
@@ -105,36 +105,34 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             .Select(item => item.Value)
             .ToList();
     }
-
     #endregion
 
     #region Events
-
     public event Action<bool?>? RequestClose;
-
     #endregion
 
     #region Commands
-
     public ICommand SaveCommand { get; }
     public ICommand CancelCommand { get; }
-
     #endregion
-
-    #region Execute
-
-    private bool CanSaveExecute()
+    
+    #region CanExecute
+    private bool SaveCanExecute()
     {
         bool isFloorValid = Floor >= 0;
         bool isRoomValid = RoomNumber > 0;
         bool isPriceValid = PriceAmount > 0;
         bool isCurrencyValid = SelectedCurrency != null;
-
-        return isFloorValid && isRoomValid && isPriceValid && isCurrencyValid;
+        bool canSave = isFloorValid && isRoomValid && isPriceValid && isCurrencyValid;
+        
+        return canSave;
     }
+    #endregion
 
+    #region Execute
     private async Task SaveExecute()
     {
+        _logger.LogInformation("Saving Room Details");
         RoomLocation selectedLocation = new(Floor, RoomNumber);
         var selectedFeautres = GetSelectedFeatures();
         var selectedPrice = new Money(PriceAmount, SelectedCurrency!);
@@ -144,29 +142,28 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 
         if (result.IsFailure)
         {
+            _logger.LogWarning("Failed to save the Room, Error: {ErrorCode} : {ErrorName}", result.Error.Code, result.Error.Name);
             ErrorMessage = result.Error.Name;
             return;
         }
-
+        _logger.LogInformation("Room Details Saved, requesting to close the window...");
         RequestClose?.Invoke(true);
     }
-
     private void CancelExecute()
     {
+        _logger.LogInformation("Add room dialog cancelled, requesting to close the window...");
         RequestClose?.Invoke(false);
     }
-
     #endregion
 
     #region PrivateFields
-
     private readonly IMediator _mediator;
+    private readonly ILogger<AddRoomDialogViewModel> _logger;
     private Currency? _selectedCurrency;
     private RoomType _selectedRoomType;
     private string _errorMessage = string.Empty;
     private decimal _priceAmount;
     private int _floor;
     private int _roomNumber;
-
     #endregion
 }
