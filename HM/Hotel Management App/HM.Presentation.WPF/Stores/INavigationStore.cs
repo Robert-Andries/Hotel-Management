@@ -3,7 +3,7 @@
 namespace HM.Presentation.WPF.Stores;
 
 /// <summary>
-/// Interface for navigation store to manage current view model and navigation.
+///     Interface for navigation store to manage current view model and navigation.
 /// </summary>
 public interface INavigationStore
 {

@@ -7,7 +7,11 @@ namespace HM.Domain.Bookings.Entities;
 
 public sealed class Booking : Entity
 {
-    private Booking() { }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    private Booking()
+    {
+    }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     private Booking(Guid id, Guid userId, Guid roomId, DateRange duration, Money price,
         DateTime reservedOnUtc, BookingStatus status)
@@ -21,20 +25,8 @@ public sealed class Booking : Entity
         Status = status;
     }
 
-    #region Proprieties
-    public Guid UserId { get; private set; }
-    public Guid RoomId { get; private set; }
-    public DateRange Duration { get; private set; }
-    public Money Price { get; private set; }
-    public BookingStatus Status { get; private set; }
-    public DateTime ReservedOnUtc { get; private set; }
-    public DateTime? CheckedInOnUtc { get; private set; }
-    public DateTime? CancelledOnUtc { get; private set; }
-    public DateTime? CompletedOnUtc { get; private set; }
-    #endregion
-
     /// <summary>
-    /// Factory method for creating and reserving a booking
+    ///     Factory method for creating and reserving a booking
     /// </summary>
     /// <returns>The freshly created booking</returns>
     public static Booking Reserve(Guid roomId, Guid userId, DateRange duration, DateTime utcNow, Money price)
@@ -52,9 +44,9 @@ public sealed class Booking : Entity
 
         return booking;
     }
-    
+
     /// <summary>
-    /// Updates Status to BookingStatus.CheckedIn
+    ///     Updates Status to BookingStatus.CheckedIn
     /// </summary>
     /// <param name="checkInUtc">The time when the check in occured</param>
     public Result CheckIn(DateTime checkInUtc)
@@ -64,14 +56,14 @@ public sealed class Booking : Entity
 
         Status = BookingStatus.CheckedIn;
         CheckedInOnUtc = checkInUtc;
-        
+
         RaiseDomainEvent(new BookingCheckedInDomainEvent(Id));
-        
+
         return Result.Success();
     }
 
     /// <summary>
-    /// Updates Status to BookingStatus.Completed
+    ///     Updates Status to BookingStatus.Completed
     /// </summary>
     /// <param name="checkOutUtc">The time when the check-out occured</param>
     public Result CheckOut(DateTime checkOutUtc)
@@ -81,14 +73,14 @@ public sealed class Booking : Entity
 
         Status = BookingStatus.Completed;
         CompletedOnUtc = checkOutUtc;
-        
+
         RaiseDomainEvent(new BookingCheckedOutDomainEvent(Id));
-        
+
         return Result.Success();
     }
-    
+
     /// <summary>
-    /// Updates Status to BookingStatus.Cancelled
+    ///     Updates Status to BookingStatus.Cancelled
     /// </summary>
     /// <param name="cancelledUtc">The time when the cancel occured</param>
     public Result Cancel(DateTime cancelledUtc)
@@ -98,9 +90,23 @@ public sealed class Booking : Entity
 
         Status = BookingStatus.Cancelled;
         CancelledOnUtc = cancelledUtc;
-        
+
         RaiseDomainEvent(new BookingCanceledDomainEvent(Id));
-        
+
         return Result.Success();
     }
+
+    #region Proprieties
+
+    public Guid UserId { get; private set; }
+    public Guid RoomId { get; private set; }
+    public DateRange Duration { get; private set; }
+    public Money Price { get; private set; }
+    public BookingStatus Status { get; private set; }
+    public DateTime ReservedOnUtc { get; private set; }
+    public DateTime? CheckedInOnUtc { get; private set; }
+    public DateTime? CancelledOnUtc { get; private set; }
+    public DateTime? CompletedOnUtc { get; private set; }
+
+    #endregion
 }

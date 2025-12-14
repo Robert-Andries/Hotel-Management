@@ -3,7 +3,7 @@ using HM.Domain.Rooms.Entities;
 using HM.Domain.Rooms.Value_Objects;
 using HM.Domain.Shared;
 
-namespace HM.Application.Rooms.GetAllRooms;
+namespace HM.Application.Rooms.GetRoom;
 
 public class RoomResponse
 {
@@ -18,7 +18,7 @@ public class RoomResponse
         Price = room.Price;
         LastBookedOnUtc = room.LastBookedOnUtc;
     }
-    
+
     public Guid Id { get; set; }
     public RoomType RoomType { get; private set; }
     public RoomLocation Location { get; private set; }

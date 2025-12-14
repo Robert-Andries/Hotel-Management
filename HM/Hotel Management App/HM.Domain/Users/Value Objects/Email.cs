@@ -2,5 +2,7 @@
 
 public record Email(string Value, string Domain)
 {
-    private Email() : this(null!, null!) { }
+    private Email() : this(null!, null!)
+    {
+    }
 }

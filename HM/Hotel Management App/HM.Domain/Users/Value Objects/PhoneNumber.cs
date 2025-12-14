@@ -2,5 +2,7 @@
 
 public record PhoneNumber(string Value, string CountryCode)
 {
-    private PhoneNumber() : this(null!, null!) { }
+    private PhoneNumber() : this(null!, null!)
+    {
+    }
 }

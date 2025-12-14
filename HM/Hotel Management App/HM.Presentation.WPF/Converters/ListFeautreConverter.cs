@@ -11,9 +11,9 @@ public class ListFeautreConverter : IValueConverter
     {
         if (value is List<Feautre> feautre)
         {
-            bool isFirst = true;
+            var isFirst = true;
             StringBuilder sb = new();
-            foreach (Feautre feautreItem in feautre)
+            foreach (var feautreItem in feautre)
             {
                 if (isFirst)
                 {
@@ -21,10 +21,13 @@ public class ListFeautreConverter : IValueConverter
                     isFirst = false;
                     continue;
                 }
+
                 sb.Append($", {feautreItem.ToString()}");
             }
+
             return sb.ToString();
         }
+
         throw new ArgumentException("Value is not a List of Feautre");
     }
 

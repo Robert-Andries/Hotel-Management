@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Add New Room" 
+        Title="Add New Room"
         Height="Auto" Width="500"
         SizeToContent="Height"
         ResizeMode="NoResize"
@@ -13,85 +13,88 @@
 
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="LabelStyle">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="3"/>
-            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="Height" Value="26" />
         </Style>
 
         <Style TargetType="Button">
-            <Setter Property="Width" Value="80"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="5,0,0,0" />
         </Style>
     </Window.Resources>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <RowDefinition Height="Auto"/> <RowDefinition Height="Auto"/> <RowDefinition Height="Auto"/> <RowDefinition Height="Auto"/> </Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <RowDefinition Height="Auto" /> <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" /> <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <TextBlock Text="Create New Room" 
-                   FontSize="22" 
-                   FontWeight="Bold" 
+        <TextBlock Text="Create New Room"
+                   FontSize="22"
+                   FontWeight="Bold"
                    Foreground="#000000"
-                   Margin="0,0,0,15"/>
+                   Margin="0,0,0,15" />
 
-        <TextBlock Grid.Row="1" 
-                   Text="{Binding ErrorMessage}" 
-                   Foreground="Red" 
+        <TextBlock Grid.Row="1"
+                   Text="{Binding ErrorMessage}"
+                   Foreground="Red"
                    TextWrapping="Wrap"
                    Margin="0,0,0,10"
-                   FontWeight="Bold"/>
+                   FontWeight="Bold" />
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="110"/> <ColumnDefinition Width="*"/>   </Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110" /> <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Room Type:" Style="{StaticResource LabelStyle}"/>
-            <ComboBox Grid.Row="0" Grid.Column="1" 
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Room Type:" Style="{StaticResource LabelStyle}" />
+            <ComboBox Grid.Row="0" Grid.Column="1"
                       ItemsSource="{Binding RoomTypes}"
                       SelectedItem="{Binding SelectedRoomType}"
-                      Margin="0,0,0,10" Height="26"/>
+                      Margin="0,0,0,10" Height="26" />
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Floor:" Style="{StaticResource LabelStyle}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" 
-                     Text="{Binding Floor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="0,0,0,10"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Floor:" Style="{StaticResource LabelStyle}" />
+            <TextBox Grid.Row="1" Grid.Column="1"
+                     Text="{Binding Floor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,0,0,10" />
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Room Number:" Style="{StaticResource LabelStyle}"/>
-            <TextBox Grid.Row="2" Grid.Column="1" 
-                     Text="{Binding RoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="0,0,0,10"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Room Number:" Style="{StaticResource LabelStyle}" />
+            <TextBox Grid.Row="2" Grid.Column="1"
+                     Text="{Binding RoomNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,0,0,10" />
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Price:" Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Price:" Style="{StaticResource LabelStyle}" />
             <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
-                
-                <TextBox Grid.Column="0" 
-                         Text="{Binding PriceAmount, UpdateSourceTrigger=PropertyChanged}" 
-                         Margin="0,0,5,0"/>
-                
-                <ComboBox Grid.Column="1" 
+
+                <TextBox Grid.Column="0"
+                         Text="{Binding PriceAmount, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,0,5,0" />
+
+                <ComboBox Grid.Column="1"
                           ItemsSource="{Binding CurrencyOptions}"
                           SelectedItem="{Binding SelectedCurrency}"
                           DisplayMemberPath="Code"
-                          Height="26"/>
+                          Height="26" />
             </Grid>
         </Grid>
 
@@ -99,14 +102,14 @@
             <ItemsControl ItemsSource="{Binding FeatureList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="2"/> 
+                        <UniformGrid Columns="2" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}" 
-                                  IsChecked="{Binding IsSelected}" 
-                                  Margin="0,5,10,5"/>
+                        <CheckBox Content="{Binding Name}"
+                                  IsChecked="{Binding IsSelected}"
+                                  Margin="0,5,10,5" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -114,15 +117,15 @@
 
         <Border Grid.Row="4" BorderThickness="0,1,0,0" BorderBrush="#DDDDDD" Padding="0,15,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Cancel" 
-                        Command="{Binding CancelCommand}" 
+                <Button Content="Cancel"
+                        Command="{Binding CancelCommand}"
                         IsCancel="True"
-                        Background="White" BorderBrush="#CCCCCC"/>
-                
-                <Button Content="Save" 
-                        Command="{Binding SaveCommand}" 
+                        Background="White" BorderBrush="#CCCCCC" />
+
+                <Button Content="Save"
+                        Command="{Binding SaveCommand}"
                         IsDefault="True"
-                        Background="#007ACC" Foreground="White" BorderThickness="0" FontWeight="Bold"/>
+                        Background="#007ACC" Foreground="White" BorderThickness="0" FontWeight="Bold" />
             </StackPanel>
         </Border>
     </Grid>

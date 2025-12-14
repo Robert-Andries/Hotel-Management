@@ -28,11 +28,13 @@ public class FinishMaintenanceCommandHandler : ICommandHandler<FinishMaintenance
                 , request.RoomId, roomResult.Error.Code, roomResult.Error.Name);
             return roomResult;
         }
+
         var room = roomResult.Value;
 
         if (room.Status != RoomStatus.Maintanance)
         {
-            _logger.LogError("The room with Id: {Id} is already in the maintainance room, Error: {error.code} {error.Name}",
+            _logger.LogError(
+                "The room with Id: {Id} is already in the maintainance room, Error: {error.code} {error.Name}",
                 room.Id, roomResult.Error.Code, roomResult.Error.Name);
             return Result.Failure(RoomErrors.InvalidStatus);
         }

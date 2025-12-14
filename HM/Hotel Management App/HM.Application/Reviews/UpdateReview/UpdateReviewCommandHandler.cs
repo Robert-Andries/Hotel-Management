@@ -1,15 +1,14 @@
 using HM.Application.Abstractions.Messaging;
 using HM.Domain.Abstractions;
 using HM.Domain.Reviews.Abstractions;
-using HM.Domain.Reviews.Entities;
 
 namespace HM.Application.Reviews.UpdateReview;
 
 internal sealed class UpdateReviewCommandHandler : ICommandHandler<UpdateReviewCommand, Result>
 {
     private readonly IReviewRepository _reviewRepository;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly ITime _time;
+    private readonly IUnitOfWork _unitOfWork;
 
     public UpdateReviewCommandHandler(IReviewRepository reviewRepository, IUnitOfWork unitOfWork, ITime time)
     {
@@ -22,10 +21,7 @@ internal sealed class UpdateReviewCommandHandler : ICommandHandler<UpdateReviewC
     {
         var reviewResult = await _reviewRepository.GetReview(request.ReviewId, cancellationToken);
 
-        if (reviewResult.IsFailure)
-        {
-            return Result.Failure(reviewResult.Error);
-        }
+        if (reviewResult.IsFailure) return Result.Failure(reviewResult.Error);
 
         var review = reviewResult.Value;
 

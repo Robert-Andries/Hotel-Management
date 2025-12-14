@@ -1,18 +1,16 @@
-using HM.Domain.Abstractions;
 using HM.Domain.Reviews.Abstractions;
 using HM.Domain.Reviews.Events;
 using HM.Domain.Rooms.Abstractions;
 using MediatR;
-
 using Microsoft.Extensions.Logging;
 
 namespace HM.Application.Reviews.Events;
 
 internal sealed class ReviewUpdatedDomainEventHandler : INotificationHandler<ReviewUpdatedDomainEvent>
 {
-    private readonly IRoomRepository _roomRepository;
-    private readonly IReviewRepository _reviewRepository;
     private readonly ILogger<ReviewUpdatedDomainEventHandler> _logger;
+    private readonly IReviewRepository _reviewRepository;
+    private readonly IRoomRepository _roomRepository;
 
     public ReviewUpdatedDomainEventHandler(
         IRoomRepository roomRepository,
@@ -38,7 +36,8 @@ internal sealed class ReviewUpdatedDomainEventHandler : INotificationHandler<Rev
         var ratingUpdateResult = await room.Rating.Update(_reviewRepository, cancellationToken);
         if (ratingUpdateResult.IsFailure)
         {
-            _logger.LogError("Failed to calculate new rating for room {RoomId}: {Error}", room.Id, ratingUpdateResult.Error);
+            _logger.LogError("Failed to calculate new rating for room {RoomId}: {Error}", room.Id,
+                ratingUpdateResult.Error);
             return;
         }
 
@@ -50,7 +49,7 @@ internal sealed class ReviewUpdatedDomainEventHandler : INotificationHandler<Rev
         }
 
         await _roomRepository.UpdateRoomAsync(room.Id, room, cancellationToken);
-        
+
         // No need to call SaveChangesAsync here, as it's handled by the main transaction
     }
 }

@@ -3,29 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:HM.Presentation.WPF.Views"
         mc:Ignorable="d"
         Title="Room Details" Height="500" Width="400">
     <Window.Resources>
         <Style x:Key="LabelText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#666666"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,8,15,8"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Foreground" Value="#666666" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,8,15,8" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
 
         <Style x:Key="ValueText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="0,8"/>
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0,8" />
         </Style>
 
         <Style TargetType="Button">
-            <Setter Property="Padding" Value="100,10"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="100,10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -34,7 +33,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="4"
                                 Padding="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -44,7 +43,9 @@
 
     <Grid Margin="30">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <RowDefinition Height="Auto"/> <RowDefinition Height="*"/>    <RowDefinition Height="Auto"/> </Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <RowDefinition Height="Auto" /> <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
                    Text="Room Details"
@@ -52,40 +53,45 @@
                    FontWeight="Bold"
                    Foreground="#333333"
                    HorizontalAlignment="Center"
-                   Margin="0,0,0,25"/>
+                   Margin="0,0,0,25" />
 
         <TextBlock Grid.Row="1"
                    Text="{Binding Error}"
                    FontSize="22"
                    FontWeight="Bold"
-                   Foreground="#D32F2F" 
+                   Foreground="#D32F2F"
                    HorizontalAlignment="Center"
-                   Margin="0,0,0,35"/>
+                   Margin="0,0,0,35" />
         <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/> <ColumnDefinition Width="Auto"/> </Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" /> <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Room Type:" Style="{StaticResource LabelText}"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Room.RoomType}" Style="{StaticResource ValueText}"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Room Type:" Style="{StaticResource LabelText}" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Room.RoomType}" Style="{StaticResource ValueText}" />
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Room Number:" Style="{StaticResource LabelText}"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Room.Location.RoomNumber}" Style="{StaticResource ValueText}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Room Number:" Style="{StaticResource LabelText}" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Room.Location.RoomNumber}"
+                       Style="{StaticResource ValueText}" />
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Floor:" Style="{StaticResource LabelText}"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Room.Location.Floor}" Style="{StaticResource ValueText}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Floor:" Style="{StaticResource LabelText}" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Room.Location.Floor}"
+                       Style="{StaticResource ValueText}" />
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Current Status:" Style="{StaticResource LabelText}"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Room.Status}" Style="{StaticResource ValueText}" FontWeight="Bold"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Current Status:" Style="{StaticResource LabelText}" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Room.Status}" Style="{StaticResource ValueText}"
+                       FontWeight="Bold" />
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Price per Night:" Style="{StaticResource LabelText}"/>
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Room.Price}" Style="{StaticResource ValueText}" FontWeight="Bold" Foreground="#007ACC"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Price per Night:" Style="{StaticResource LabelText}" />
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Room.Price}" Style="{StaticResource ValueText}"
+                       FontWeight="Bold" Foreground="#007ACC" />
         </Grid>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
@@ -95,15 +101,14 @@
                     BorderBrush="#CCCCCC"
                     BorderThickness="1"
                     Foreground="#333333"
-                    Margin="0,0,15,0"/>
+                    Margin="0,0,15,0" />
 
             <Button Content="Clear Maintenance"
                     Command="{Binding ClearMaintenanceCommand}"
                     Background="#A8D02F"
                     BorderThickness="0"
                     Foreground="White"
-                    FontWeight="SemiBold">
-            </Button>
+                    FontWeight="SemiBold" />
         </StackPanel>
     </Grid>
 </Window>

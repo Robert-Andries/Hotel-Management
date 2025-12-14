@@ -2,5 +2,7 @@
 
 public record Name(string FirstName, string LastName)
 {
-    private Name() : this(null!, null!) { }
+    private Name() : this(null!, null!)
+    {
+    }
 }

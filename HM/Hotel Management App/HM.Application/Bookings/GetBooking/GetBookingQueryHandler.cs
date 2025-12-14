@@ -31,10 +31,7 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Re
                 b.ReservedOnUtc))
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (booking is null)
-        {
-            return Result.Failure<BookingResponse>(BookingErrors.NotFound);
-        }
+        if (booking is null) return Result.Failure<BookingResponse>(BookingErrors.NotFound);
 
         return Result.Success(booking);
     }

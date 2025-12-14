@@ -19,7 +19,7 @@ public class BookingErrors
     public static Error NotCheckedIn = new(
         "Booking.NotCheckedIn",
         "The booking is not checked in.");
-        
+
     public static Error AlreadyStarted = new(
         "Booking.AlreadyStarted",
         "The booking has already started.");

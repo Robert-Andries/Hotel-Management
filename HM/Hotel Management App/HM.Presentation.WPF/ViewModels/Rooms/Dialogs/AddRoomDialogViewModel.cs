@@ -13,7 +13,7 @@ namespace HM.Presentation.WPF.ViewModels.Rooms.Dialogs;
 
 public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 {
-    public AddRoomDialogViewModel(INavigationStore navigationStore, IMediator mediator, 
+    public AddRoomDialogViewModel(INavigationStore navigationStore, IMediator mediator,
         ILogger<AddRoomDialogViewModel> logger)
         : base(navigationStore)
     {
@@ -24,11 +24,35 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         CancelCommand = new DelegateCommand(CancelExecute);
     }
 
+    #region Events
+
+    public event Action<bool?>? RequestClose;
+
+    #endregion
+
+    #region CanExecute
+
+    private bool SaveCanExecute()
+    {
+        var isFloorValid = Floor >= 0;
+        var isRoomValid = RoomNumber > 0;
+        var isPriceValid = PriceAmount > 0;
+        var isCurrencyValid = SelectedCurrency != null;
+        var canSave = isFloorValid && isRoomValid && isPriceValid && isCurrencyValid;
+
+        return canSave;
+    }
+
+    #endregion
+
     #region Proprieties
+
     public IEnumerable<RoomType> RoomTypes { get; }
         = Enum.GetValues(typeof(RoomType)).Cast<RoomType>();
+
     public ObservableCollection<FeatureSelectionItemModel> FeatureList { get; } = new();
     public IEnumerable<Currency> CurrencyOptions => Currency.All;
+
     public int Floor
     {
         get => _floor;
@@ -39,6 +63,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
+
     public int RoomNumber
     {
         get => _roomNumber;
@@ -49,6 +74,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
+
     public decimal PriceAmount
     {
         get => _priceAmount;
@@ -59,6 +85,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
+
     public Currency? SelectedCurrency
     {
         get => _selectedCurrency;
@@ -69,6 +96,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
+
     public RoomType SelectedRoomType
     {
         get => _selectedRoomType;
@@ -79,6 +107,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
+
     public string ErrorMessage
     {
         get => _errorMessage;
@@ -88,15 +117,18 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Methods
+
     private void InitializeFeatures()
     {
         var allFeatures = Enum.GetValues(typeof(Feautre)).Cast<Feautre>();
         foreach (var feature in allFeatures)
             FeatureList.Add(new FeatureSelectionItemModel(feature, false));
     }
+
     private List<Feautre> GetSelectedFeatures()
     {
         return FeatureList
@@ -104,31 +136,18 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
             .Select(item => item.Value)
             .ToList();
     }
-    #endregion
 
-    #region Events
-    public event Action<bool?>? RequestClose;
     #endregion
 
     #region Commands
+
     public ICommand SaveCommand { get; }
     public ICommand CancelCommand { get; }
-    #endregion
-    
-    #region CanExecute
-    private bool SaveCanExecute()
-    {
-        bool isFloorValid = Floor >= 0;
-        bool isRoomValid = RoomNumber > 0;
-        bool isPriceValid = PriceAmount > 0;
-        bool isCurrencyValid = SelectedCurrency != null;
-        bool canSave = isFloorValid && isRoomValid && isPriceValid && isCurrencyValid;
-        
-        return canSave;
-    }
+
     #endregion
 
     #region Execute
+
     private async Task SaveExecute()
     {
         _logger.LogInformation("Saving Room Details");
@@ -141,21 +160,26 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 
         if (result.IsFailure)
         {
-            _logger.LogWarning("Failed to save the Room, Error: {ErrorCode} : {ErrorName}", result.Error.Code, result.Error.Name);
+            _logger.LogWarning("Failed to save the Room, Error: {ErrorCode} : {ErrorName}", result.Error.Code,
+                result.Error.Name);
             ErrorMessage = result.Error.Name;
             return;
         }
+
         _logger.LogInformation("Room Details Saved, requesting to close the window...");
         RequestClose?.Invoke(true);
     }
+
     private void CancelExecute()
     {
         _logger.LogInformation("Add room dialog cancelled, requesting to close the window...");
         RequestClose?.Invoke(false);
     }
+
     #endregion
 
     #region PrivateFields
+
     private readonly IMediator _mediator;
     private readonly ILogger<AddRoomDialogViewModel> _logger;
     private Currency? _selectedCurrency;
@@ -164,5 +188,6 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
     private decimal _priceAmount;
     private int _floor;
     private int _roomNumber;
+
     #endregion
 }

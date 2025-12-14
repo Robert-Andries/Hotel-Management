@@ -7,8 +7,8 @@ namespace HM.Application.Bookings.CancelBooking;
 internal sealed class CancelBookingCommandHandler : ICommandHandler<CancelBookingCommand, Result>
 {
     private readonly IBookingRepository _bookingRepository;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly ITime _time;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CancelBookingCommandHandler(IBookingRepository bookingRepository, IUnitOfWork unitOfWork, ITime time)
     {
@@ -20,15 +20,15 @@ internal sealed class CancelBookingCommandHandler : ICommandHandler<CancelBookin
     public async Task<Result> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
     {
         var bookingResult = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
-        if(bookingResult.IsFailure)
+        if (bookingResult.IsFailure)
             return Result.Failure(bookingResult.Error);
         var booking = bookingResult.Value;
-        
+
         var result = booking.Cancel(_time.NowUtc);
 
         if (result.IsFailure)
             return Result.Failure(result.Error);
-        
+
         await _bookingRepository.Update(booking.Id, booking, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

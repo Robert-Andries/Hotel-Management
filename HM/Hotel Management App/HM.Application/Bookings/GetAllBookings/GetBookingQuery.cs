@@ -4,4 +4,4 @@ using HM.Domain.Abstractions;
 
 namespace HM.Application.Bookings.GetAllBookings;
 
-public sealed record GetAllBookingsQuery() : IQuery<Result<List<BookingResponse>>>;
+public sealed record GetAllBookingsQuery : IQuery<Result<List<BookingResponse>>>;

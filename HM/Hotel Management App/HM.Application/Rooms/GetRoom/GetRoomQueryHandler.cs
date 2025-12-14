@@ -1,6 +1,5 @@
 ﻿using HM.Application.Abstractions.Data;
 using HM.Application.Abstractions.Messaging;
-using HM.Application.Rooms.GetAllRooms;
 using HM.Domain.Abstractions;
 using HM.Domain.Rooms;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ namespace HM.Application.Rooms.GetRoom;
 
 public class GetRoomQueryHandler : IQueryHandler<GetRoomQuery, Result<RoomResponse>>
 {
-    private readonly IApplicationDbContext  _context;
+    private readonly IApplicationDbContext _context;
 
     public GetRoomQueryHandler(IApplicationDbContext context)
     {
@@ -23,7 +22,7 @@ public class GetRoomQueryHandler : IQueryHandler<GetRoomQuery, Result<RoomRespon
             return Result.Failure<RoomResponse>(RoomErrors.NotFound);
 
         var roomResponse = new RoomResponse(rooms);
-        
+
         return Result.Success(roomResponse);
     }
 }

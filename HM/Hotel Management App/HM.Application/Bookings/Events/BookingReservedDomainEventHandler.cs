@@ -3,7 +3,6 @@ using HM.Domain.Bookings.Abstractions;
 using HM.Domain.Bookings.Events;
 using HM.Domain.Rooms.Abstractions;
 using MediatR;
-
 using Microsoft.Extensions.Logging;
 
 namespace HM.Application.Bookings.Events;
@@ -11,9 +10,9 @@ namespace HM.Application.Bookings.Events;
 internal sealed class BookingReservedDomainEventHandler : INotificationHandler<BookingReservedDomainEvent>
 {
     private readonly IBookingRepository _bookingRepository;
+    private readonly ILogger<BookingReservedDomainEventHandler> _logger;
     private readonly IRoomRepository _roomRepository;
     private readonly ITime _time;
-    private readonly ILogger<BookingReservedDomainEventHandler> _logger;
 
     public BookingReservedDomainEventHandler(
         IBookingRepository bookingRepository,

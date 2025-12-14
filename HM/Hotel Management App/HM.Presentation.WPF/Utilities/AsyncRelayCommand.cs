@@ -4,8 +4,8 @@ namespace HM.Presentation.WPF.Utilities;
 
 public class AsyncRelayCommand : ICommand
 {
-    private readonly Func<Task> _execute;
     private readonly Func<bool>? _canExecute;
+    private readonly Func<Task> _execute;
     private readonly Action<Exception>? _onException;
     private bool _isExecuting;
 
@@ -35,12 +35,11 @@ public class AsyncRelayCommand : ICommand
     public async Task ExecuteAsync()
     {
         if (CanExecute(null))
-        {
             try
             {
                 _isExecuting = true;
                 CommandManager.InvalidateRequerySuggested();
-                
+
                 await _execute();
             }
             catch (Exception ex)
@@ -52,6 +51,5 @@ public class AsyncRelayCommand : ICommand
                 _isExecuting = false;
                 CommandManager.InvalidateRequerySuggested();
             }
-        }
     }
 }

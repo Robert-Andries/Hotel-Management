@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
-using HM.Infrastructure;
 using HM.Application;
+using HM.Infrastructure;
 using HM.Presentation.WPF.Startup;
 using HM.Presentation.WPF.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +18,7 @@ public partial class App : System.Windows.Application
         IServiceCollection service = new ServiceCollection();
         IConfiguration configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.json", false, true)
             .AddUserSecrets<App>()
             .Build();
 
@@ -26,11 +26,11 @@ public partial class App : System.Windows.Application
         service.AddInfrastructureDependencyInjection(configuration);
         service.AddWpfViewModels(GetViewModel);
         service.AddLogging();
-        
+
         service.AddSingleton<MainWindow>();
-        
+
         service.AddScoped<Func<Type, BaseViewModel>>(_ => GetViewModel);
-        
+
         _serviceProvider = service.BuildServiceProvider();
     }
 

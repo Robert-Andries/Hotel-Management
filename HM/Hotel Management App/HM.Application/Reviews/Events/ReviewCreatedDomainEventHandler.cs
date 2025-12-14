@@ -3,17 +3,16 @@ using HM.Domain.Reviews.Abstractions;
 using HM.Domain.Reviews.Events;
 using HM.Domain.Rooms.Abstractions;
 using MediatR;
-
 using Microsoft.Extensions.Logging;
 
 namespace HM.Application.Reviews.Events;
 
 internal sealed class ReviewCreatedDomainEventHandler : INotificationHandler<ReviewCreatedDomainEvent>
 {
-    private readonly IRoomRepository _roomRepository;
-    private readonly IReviewRepository _reviewRepository;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<ReviewCreatedDomainEventHandler> _logger;
+    private readonly IReviewRepository _reviewRepository;
+    private readonly IRoomRepository _roomRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public ReviewCreatedDomainEventHandler(
         IRoomRepository roomRepository,
@@ -33,7 +32,7 @@ internal sealed class ReviewCreatedDomainEventHandler : INotificationHandler<Rev
         if (roomResult.IsFailure)
         {
             _logger.LogError("Room with ID {RoomId} was not found", notification.RoomId);
-            return; 
+            return;
         }
 
         var room = roomResult.Value;
@@ -41,9 +40,11 @@ internal sealed class ReviewCreatedDomainEventHandler : INotificationHandler<Rev
         var ratingUpdateResult = await room.Rating.Update(_reviewRepository, cancellationToken);
         if (ratingUpdateResult.IsFailure)
         {
-            _logger.LogError("Failed to calculate new rating for room {RoomId}: {Error}", room.Id, ratingUpdateResult.Error);
+            _logger.LogError("Failed to calculate new rating for room {RoomId}: {Error}", room.Id,
+                ratingUpdateResult.Error);
             return;
         }
+
         var ratingUpdate = ratingUpdateResult.Value;
 
         var result = room.UpdateRating(ratingUpdate);
@@ -54,7 +55,7 @@ internal sealed class ReviewCreatedDomainEventHandler : INotificationHandler<Rev
         }
 
         await _roomRepository.UpdateRoomAsync(room.Id, room, cancellationToken);
-        
+
         // No need to call SaveChangesAsync here, as it's handled by the main transaction
     }
 }

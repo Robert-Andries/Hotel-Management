@@ -2,7 +2,6 @@ using HM.Domain.Abstractions;
 using HM.Domain.Rooms;
 using HM.Domain.Rooms.Abstractions;
 using HM.Domain.Rooms.Entities;
-using HM.Domain.Rooms.Value_Objects;
 using Microsoft.EntityFrameworkCore;
 
 namespace HM.Infrastructure.Repositories;
@@ -42,12 +41,13 @@ internal sealed class RoomRepository : IRoomRepository
         {
             return Result.Failure<Room>(Error.OperationCanceled);
         }
+
         if (room is null)
             return Result.Failure<Room>(RoomErrors.NotFound);
-        
+
         return Result.Success(room);
     }
-    
+
     public async Task<Result<List<Room>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         List<Room> rooms;
@@ -59,6 +59,7 @@ internal sealed class RoomRepository : IRoomRepository
         {
             return Result.Failure<List<Room>>(Error.OperationCanceled);
         }
+
         return Result.Success(rooms);
     }
 
@@ -71,7 +72,7 @@ internal sealed class RoomRepository : IRoomRepository
 
     public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        int rowsDeleted = 0;
+        var rowsDeleted = 0;
         try
         {
             rowsDeleted = await _dbContext.Rooms
@@ -82,6 +83,7 @@ internal sealed class RoomRepository : IRoomRepository
         {
             return Result.Failure(Error.OperationCanceled);
         }
+
         if (rowsDeleted == 0)
             return Result.Failure(RoomErrors.NotFound);
 

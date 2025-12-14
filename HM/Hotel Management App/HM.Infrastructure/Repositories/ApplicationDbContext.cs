@@ -18,16 +18,10 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationD
         _publisher = publisher;
     }
 
-    public DbSet<Booking> Bookings { get; set; }
     public DbSet<User> Users { get; set; }
+
+    public DbSet<Booking> Bookings { get; set; }
     public DbSet<Room> Rooms { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-
-        base.OnModelCreating(modelBuilder);
-    }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -38,6 +32,13 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationD
         var result = await base.SaveChangesAsync(cancellationToken);
 
         return result;
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
     }
 
     private async Task PublishDomainEventsAsync()
@@ -53,9 +54,6 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationD
             })
             .ToList();
 
-        foreach (var domainEvent in domainEvents)
-        {
-            await _publisher.Publish(domainEvent);
-        }
+        foreach (var domainEvent in domainEvents) await _publisher.Publish(domainEvent);
     }
 }

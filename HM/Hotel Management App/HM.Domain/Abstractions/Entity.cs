@@ -1,6 +1,4 @@
-﻿using HM.Domain.Abstractions;
-
-namespace HM.Domain.Abstractions;
+﻿namespace HM.Domain.Abstractions;
 
 public abstract class Entity
 {

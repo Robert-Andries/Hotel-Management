@@ -8,8 +8,8 @@ namespace HM.Application.Rooms.AddRoom;
 
 public class AddRoomCommandHandler : ICommandHandler<AddRoomCommand, Result>
 {
-    private readonly IRoomRepository _roomRepository;
     private readonly ILogger<AddRoomCommandHandler> _logger;
+    private readonly IRoomRepository _roomRepository;
 
     public AddRoomCommandHandler(IRoomRepository roomRepository, ILogger<AddRoomCommandHandler> logger)
     {
@@ -26,14 +26,16 @@ public class AddRoomCommandHandler : ICommandHandler<AddRoomCommand, Result>
             _logger.LogError("Room could not be created {error}", roomResult.Error);
             return Result.Failure(roomResult.Error);
         }
+
         var room = roomResult.Value;
-        
+
         var result = await _roomRepository.AddAsync(room, cancellationToken);
-        if(result.IsFailure)
+        if (result.IsFailure)
         {
             _logger.LogError("Room could not be added {error}", result.Error);
             return Result.Failure(result.Error);
         }
+
         return Result.Success();
     }
 }

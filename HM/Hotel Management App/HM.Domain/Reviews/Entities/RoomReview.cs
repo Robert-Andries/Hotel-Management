@@ -35,12 +35,13 @@ public sealed class RoomReview : Entity
 
         return review;
     }
+
     public void Update(int rating, Comment comment, DateTime updatedAtUtc)
     {
         Rating = rating;
         Comment = comment;
         UpdatedAtUtc = updatedAtUtc;
 
-        this.RaiseDomainEvent(new ReviewUpdatedDomainEvent(Id, RoomId));
+        RaiseDomainEvent(new ReviewUpdatedDomainEvent(Id, RoomId));
     }
 }

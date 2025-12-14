@@ -14,9 +14,9 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
 {
     private readonly IBookingRepository _bookingRepository;
     private readonly IRoomRepository _roomRepository;
+    private readonly ITime _time;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
-    private readonly ITime _time;
 
     public AddBookingCommandHandler(
         IRoomRepository roomRepository,
@@ -52,7 +52,7 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
 
         var isOverlappingResult =
             await _bookingRepository.IsOverlappingAsync(roomResult.Value, dateRange, cancellationToken);
-        if (isOverlappingResult.IsFailure || isOverlappingResult.Value == true)
+        if (isOverlappingResult.IsFailure || isOverlappingResult.Value)
             return Result.Failure<Guid>(BookingErrors.Overlapping);
 
         var booking = Booking.Reserve(

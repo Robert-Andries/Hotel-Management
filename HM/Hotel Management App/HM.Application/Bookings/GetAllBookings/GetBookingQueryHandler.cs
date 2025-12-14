@@ -15,7 +15,8 @@ internal sealed class GetAllBookingsQueryHandler : IQueryHandler<GetAllBookingsQ
         _context = context;
     }
 
-    public async Task<Result<List<BookingResponse>>> Handle(GetAllBookingsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<BookingResponse>>> Handle(GetAllBookingsQuery request,
+        CancellationToken cancellationToken)
     {
         var booking = await _context.Bookings
             .Select(b => new BookingResponse(
@@ -29,7 +30,7 @@ internal sealed class GetAllBookingsQueryHandler : IQueryHandler<GetAllBookingsQ
                 b.Duration.End,
                 b.ReservedOnUtc))
             .ToListAsync(cancellationToken);
-        
+
         return Result.Success(booking);
     }
 }

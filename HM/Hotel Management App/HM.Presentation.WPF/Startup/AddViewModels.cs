@@ -3,34 +3,35 @@ using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.ViewModels;
 using HM.Presentation.WPF.ViewModels.Rooms;
 using HM.Presentation.WPF.ViewModels.Rooms.Dialogs;
-using HM.Presentation.WPF.Views;
 using HM.Presentation.WPF.Views.Rooms.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
+using IDialogService = HM.Presentation.WPF.Services.IDialogService;
 
 namespace HM.Presentation.WPF.Startup;
 
 internal static class AddViewModels
 {
     /// <summary>
-    /// Adds the necessary view models, navigation store and maps
-    /// DialogViewModel with DialogView for quiz functionality to the service collection.
+    ///     Adds the necessary view models, navigation store and maps
+    ///     DialogViewModel with DialogView for quiz functionality to the service collection.
     /// </summary>
-    internal static IServiceCollection AddWpfViewModels(this IServiceCollection service, Func<Type, BaseViewModel> GetViewModel)
+    internal static IServiceCollection AddWpfViewModels(this IServiceCollection service,
+        Func<Type, BaseViewModel> GetViewModel)
     {
         var dialogService = new DialogService(GetViewModel);
-        
+
         service.AddScoped<INavigationStore, NavigationStore>();
         service.AddScoped<MainViewModel>();
         service.AddScoped<BookingViewModel>();
         service.AddScoped<RoomViewModel>();
         service.AddScoped<AddRoomDialogViewModel>();
         service.AddScoped<EditRoomDialogViewModel>();
-        
+
         dialogService.Register<AddRoomDialogViewModel, AddRoomDialogView>();
         dialogService.Register<EditRoomDialogViewModel, EditRoomDialogView>();
-        
-        service.AddSingleton<Services.IDialogService>(dialogService);
-        
+
+        service.AddSingleton<IDialogService>(dialogService);
+
         return service;
     }
 }

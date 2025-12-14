@@ -1,7 +1,7 @@
 using HM.Domain.Bookings.Entities;
-using HM.Domain.Bookings.Entities;
-using HM.Domain.Bookings.Value_Objects;
+using HM.Domain.Rooms.Entities;
 using HM.Domain.Shared;
+using HM.Domain.Users.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,17 +25,17 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         });
 
         builder.Property(b => b.Status);
-        
+
         builder.Property(b => b.ReservedOnUtc);
         builder.Property(b => b.CheckedInOnUtc);
         builder.Property(b => b.CancelledOnUtc);
         builder.Property(b => b.CompletedOnUtc);
-        
-        builder.HasOne<HM.Domain.Users.Entities.User>()
+
+        builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(b => b.UserId);
 
-        builder.HasOne<HM.Domain.Rooms.Entities.Room>()
+        builder.HasOne<Room>()
             .WithMany()
             .HasForeignKey(b => b.RoomId);
     }
