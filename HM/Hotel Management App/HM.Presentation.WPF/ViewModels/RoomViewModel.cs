@@ -4,6 +4,7 @@ using HM.Application.Rooms.GetAllRooms;
 using HM.Presentation.WPF.Stores;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using HM.Presentation.WPF.Utilities;
 
 namespace HM.Presentation.WPF.ViewModels;
 
@@ -41,10 +42,14 @@ public class RoomViewModel : BaseViewModel
     #region Initialise
     private void InitialiseCommands()
     {
-        RefreshCommand = new DelegateCommand(async void () => await RefreshExecute());
-        AddCommand = new DelegateCommand(async void () => await AddExecute());
-        EditRoomCommand =
-            new DelegateCommand(async void () => await EditRoomExecute());
+        RefreshCommand = new AsyncRelayCommand(RefreshExecute, null, OnException);
+        AddCommand = new AsyncRelayCommand(AddExecute, null, OnException);
+        EditRoomCommand = new AsyncRelayCommand(EditRoomExecute, null, OnException);
+    }
+
+    private void OnException(Exception ex)
+    {
+        _logger.LogError(ex, "Command execution failed");
     }
     #endregion
     #endregion
@@ -58,13 +63,20 @@ public class RoomViewModel : BaseViewModel
     #region Execute
     private async Task RefreshExecute()
     {
-        Rooms.Clear();
-        var roomsResponseResult = await _mediator.Send(new GetAllRoomsQuery());
+        _logger.LogInformation("Refresh rooms called");
+        var roomsResponseResult = await Task.Run(async () => await _mediator.Send(new GetAllRoomsQuery()));
         if (roomsResponseResult.IsFailure)
+        {
+            _logger.LogWarning("Refresh failed, Error: {ErrorCode} : {ErrorName}",
+                roomsResponseResult.Error.Code, roomsResponseResult.Error.Name);
             return;
+        }
         var roomResponse = roomsResponseResult.Value;
+        
+        Rooms.Clear();
         foreach (var room in roomResponse)
             Rooms.Add(room);
+        
         _logger.LogInformation("Room list updated with {count} rooms", Rooms.Count);
     }
     private async Task AddExecute()
