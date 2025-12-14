@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Security.AccessControl;
 using System.Windows.Input;
 using HM.Application.Rooms.AddRoom;
 using HM.Domain.Rooms.Value_Objects;
@@ -10,7 +9,7 @@ using HM.Presentation.WPF.Stores;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace HM.Presentation.WPF.ViewModels;
+namespace HM.Presentation.WPF.ViewModels.Rooms.Dialogs;
 
 public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 {

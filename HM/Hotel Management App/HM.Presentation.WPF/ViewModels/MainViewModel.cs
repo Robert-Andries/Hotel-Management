@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HM.Presentation.WPF.Stores;
+using HM.Presentation.WPF.ViewModels.Rooms;
 using Microsoft.Extensions.Logging;
 
 namespace HM.Presentation.WPF.ViewModels;

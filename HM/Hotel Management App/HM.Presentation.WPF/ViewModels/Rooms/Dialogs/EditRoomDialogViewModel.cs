@@ -7,7 +7,7 @@ using HM.Presentation.WPF.Stores;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace HM.Presentation.WPF.ViewModels;
+namespace HM.Presentation.WPF.ViewModels.Rooms.Dialogs;
 
 public class EditRoomDialogViewModel : BaseViewModel, IDialogViewModel
 {

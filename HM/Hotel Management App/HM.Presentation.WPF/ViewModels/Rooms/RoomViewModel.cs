@@ -2,11 +2,12 @@
 using System.Windows.Input;
 using HM.Application.Rooms.GetAllRooms;
 using HM.Presentation.WPF.Stores;
+using HM.Presentation.WPF.Utilities;
+using HM.Presentation.WPF.ViewModels.Rooms.Dialogs;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using HM.Presentation.WPF.Utilities;
 
-namespace HM.Presentation.WPF.ViewModels;
+namespace HM.Presentation.WPF.ViewModels.Rooms;
 
 //TODO Fix freeze when refreshing
 public class RoomViewModel : BaseViewModel
