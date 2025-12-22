@@ -20,7 +20,6 @@ public class BookingViewModel : BaseViewModel
         _dialogService = dialogService;
         _mediator = mediator;
         _editBookingDialogViewModel = editBookingDialogViewModel;
-        AddCommand = new AsyncRelayCommand(AddExecute, null, OnException);
         RefreshCommand = new AsyncRelayCommand(RefreshExecute, null, OnException);
         EditBookingsCommand = new AsyncRelayCommand(EditBookingExecute, null, OnException);
     }
@@ -59,9 +58,6 @@ public class BookingViewModel : BaseViewModel
     #endregion
     
     #region Commands
-
-    public ICommand AddCommand { get; set; }
-
     public ICommand RefreshCommand { get; set; }
 
     public ICommand EditBookingsCommand { get; set; }
@@ -69,22 +65,6 @@ public class BookingViewModel : BaseViewModel
     #endregion
     
     #region Execute
-    
-    private async Task AddExecute()
-    {
-        _logger.LogInformation("Adding new booking...");
-        var flag = _dialogService.ShowDialog<AddBookingDialogViewModel>();
-        
-        if (flag == true)
-        {
-            _logger.LogInformation("A new booking has been added");
-            await RefreshExecute();
-        }
-        else
-        {
-            _logger.LogInformation("Adding new booking operation was cancelled");
-        }
-    }
     
     private async Task RefreshExecute()
     {

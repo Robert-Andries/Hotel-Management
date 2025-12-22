@@ -30,12 +30,10 @@ internal static class AddViewModels
         
         service.AddScoped<AddRoomDialogViewModel>();
         service.AddScoped<EditRoomDialogViewModel>();
-        service.AddScoped<AddBookingDialogViewModel>();
         service.AddScoped<EditBookingDialogViewModel>();
 
         dialogService.Register<AddRoomDialogViewModel, AddRoomDialogView>();
         dialogService.Register<EditRoomDialogViewModel, EditRoomDialogView>();
-        dialogService.Register<AddBookingDialogViewModel, AddBookingDialogView>();
         dialogService.Register<EditBookingDialogViewModel, EditBookingDialogView>();
 
         service.AddSingleton<IDialogService>(dialogService);
