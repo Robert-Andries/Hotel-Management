@@ -6,8 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="750">
     <UserControl.Resources>
-        <!-- <converters:ListFeautreConverter x:Key="ListFeautreConverter" /> -->
-
         <Style TargetType="Button" x:Key="PrimaryButtonStyle">
             <Setter Property="Padding" Value="15,6" />
             <Setter Property="Margin" Value="0,0,10,0" />
@@ -15,20 +13,6 @@
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="4" />
-                </Style>
-            </Style.Resources>
-        </Style>
-
-        <Style TargetType="Button" x:Key="SecondaryButtonStyle">
-            <Setter Property="Padding" Value="15,6" />
-            <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="#333333" />
-            <Setter Property="BorderBrush" Value="#CCCCCC" />
-            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Cursor" Value="Hand" />
             <Style.Resources>
                 <Style TargetType="Border">
@@ -44,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="Room Management"
+                   Text="Booking Management"
                    FontSize="24"
                    FontWeight="Bold"
                    Foreground="#333333"
@@ -54,10 +38,10 @@
             <Button Content="Refresh"
                     Command="{Binding RefreshCommand}"
                     Style="{StaticResource PrimaryButtonStyle}" />
-            
+
             <CheckBox Content="Show completed bookings"
                       IsChecked="{Binding SeeCompletedBookings}"
-                      VerticalAlignment="Center"/>
+                      VerticalAlignment="Center" />
         </StackPanel>
 
         <DataGrid Grid.Row="2"
@@ -75,8 +59,7 @@
 
             <DataGrid.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick"
-                              Command="{Binding EditBookingsCommand}"
-                              />
+                              Command="{Binding EditBookingsCommand}" />
             </DataGrid.InputBindings>
 
             <DataGrid.Columns>
@@ -88,7 +71,7 @@
                 <DataGridTextColumn Header="Start Date"
                                     Binding="{Binding StartDate}"
                                     Width="0.5*" />
-                
+
                 <DataGridTextColumn Header="EndDate"
                                     Binding="{Binding EndDate}"
                                     Width="0.5*" />
