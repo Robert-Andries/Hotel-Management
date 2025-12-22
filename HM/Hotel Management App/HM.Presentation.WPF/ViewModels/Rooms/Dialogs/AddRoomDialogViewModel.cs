@@ -6,6 +6,7 @@ using HM.Domain.Shared;
 using HM.Presentation.WPF.Models;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
+using HM.Presentation.WPF.Utilities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -20,8 +21,8 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         InitializeFeatures();
         _mediator = mediator;
         _logger = logger;
-        SaveCommand = new DelegateCommand(async void () => await SaveExecute(), SaveCanExecute);
-        CancelCommand = new DelegateCommand(CancelExecute);
+        SaveCommand = new AsyncRelayCommand(SaveExecute, SaveCanExecute);
+        CancelCommand = new RelayCommand(CancelExecute);
     }
 
     #region Events
@@ -60,7 +61,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _floor = value;
             OnPropertyChanged();
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -71,7 +72,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _roomNumber = value;
             OnPropertyChanged();
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -82,7 +83,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _priceAmount = value;
             OnPropertyChanged();
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -93,7 +94,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _selectedCurrency = value;
             OnPropertyChanged();
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -104,7 +105,7 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _selectedRoomType = value;
             OnPropertyChanged();
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 

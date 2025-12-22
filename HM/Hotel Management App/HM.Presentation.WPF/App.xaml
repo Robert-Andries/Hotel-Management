@@ -4,10 +4,12 @@
              xmlns:views="clr-namespace:HM.Presentation.WPF.Views"
              xmlns:viewModels="clr-namespace:HM.Presentation.WPF.ViewModels"
              xmlns:rooms="clr-namespace:HM.Presentation.WPF.ViewModels.Rooms"
-             xmlns:rooms1="clr-namespace:HM.Presentation.WPF.Views.Rooms">
+             xmlns:rooms1="clr-namespace:HM.Presentation.WPF.Views.Rooms"
+             xmlns:bookings="clr-namespace:HM.Presentation.WPF.ViewModels.Bookings"
+             xmlns:bookings1="clr-namespace:HM.Presentation.WPF.Views.Bookings">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewModels:BookingViewModel}">
-            <views:BookingsView />
+        <DataTemplate DataType="{x:Type bookings:BookingViewModel}">
+            <bookings1:BookingsView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type rooms:RoomViewModel}">
             <rooms1:RoomView />

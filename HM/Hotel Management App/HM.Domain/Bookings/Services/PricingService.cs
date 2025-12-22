@@ -5,7 +5,7 @@ using HM.Domain.Shared;
 
 namespace HM.Domain.Bookings.Services;
 
-public sealed class PricingService
+public sealed class PricingService : IPricingService
 {
     public PricingDetails CalculatePrice(Room apartment, DateRange period)
     {

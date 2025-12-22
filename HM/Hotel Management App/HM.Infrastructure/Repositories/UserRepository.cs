@@ -25,6 +25,11 @@ internal sealed class UserRepository : IUserRepository
         return Result.Success(user);
     }
 
+    public async Task<bool> IsEmailUniqueAsync(Domain.Users.Value_Objects.Email email, CancellationToken cancellationToken = default)
+    {
+        return !await _dbContext.Users.AnyAsync(u => u.Contact.Email.Value == email.Value, cancellationToken);
+    }
+
     public void Add(User user)
     {
         _dbContext.Users.Add(user);

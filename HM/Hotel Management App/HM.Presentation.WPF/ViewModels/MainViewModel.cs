@@ -1,5 +1,7 @@
 ﻿using System.Windows.Input;
 using HM.Presentation.WPF.Stores;
+using HM.Presentation.WPF.Utilities;
+using HM.Presentation.WPF.ViewModels.Bookings;
 using HM.Presentation.WPF.ViewModels.Rooms;
 using Microsoft.Extensions.Logging;
 
@@ -19,8 +21,8 @@ internal class MainViewModel : BaseViewModel
         if (navigationStore.CurrentViewModel == null)
             navigationStore.NavigateTo<BookingViewModel>();
 
-        BookingsCommand = new DelegateCommand(ExecuteBookings);
-        RoomsCommand = new DelegateCommand(ExecuteRooms);
+        BookingsCommand = new RelayCommand(ExecuteBookings);
+        RoomsCommand = new RelayCommand(ExecuteRooms);
     }
 
     #region Commands

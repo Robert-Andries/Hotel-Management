@@ -23,7 +23,7 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Re
                 b.Id,
                 b.UserId,
                 b.RoomId,
-                (int)b.Status,
+                b.Status,
                 b.Price.Amount,
                 b.Price.Currency.Code,
                 b.Duration.Start,

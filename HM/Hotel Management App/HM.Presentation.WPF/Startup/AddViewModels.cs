@@ -1,8 +1,11 @@
 ﻿using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.ViewModels;
+using HM.Presentation.WPF.ViewModels.Bookings;
+using HM.Presentation.WPF.ViewModels.Bookings.Dialogs;
 using HM.Presentation.WPF.ViewModels.Rooms;
 using HM.Presentation.WPF.ViewModels.Rooms.Dialogs;
+using HM.Presentation.WPF.Views.Bookings.Dialogs;
 using HM.Presentation.WPF.Views.Rooms.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using IDialogService = HM.Presentation.WPF.Services.IDialogService;
@@ -24,11 +27,16 @@ internal static class AddViewModels
         service.AddScoped<MainViewModel>();
         service.AddScoped<BookingViewModel>();
         service.AddScoped<RoomViewModel>();
+        
         service.AddScoped<AddRoomDialogViewModel>();
         service.AddScoped<EditRoomDialogViewModel>();
+        service.AddScoped<AddBookingDialogViewModel>();
+        service.AddScoped<EditBookingDialogViewModel>();
 
         dialogService.Register<AddRoomDialogViewModel, AddRoomDialogView>();
         dialogService.Register<EditRoomDialogViewModel, EditRoomDialogView>();
+        dialogService.Register<AddBookingDialogViewModel, AddBookingDialogView>();
+        dialogService.Register<EditBookingDialogViewModel, EditBookingDialogView>();
 
         service.AddSingleton<IDialogService>(dialogService);
 

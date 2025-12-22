@@ -4,6 +4,7 @@ using HM.Application.Rooms.GetRoom;
 using HM.Domain.Rooms.Value_Objects;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
+using HM.Presentation.WPF.Utilities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -16,9 +17,8 @@ public class EditRoomDialogViewModel : BaseViewModel, IDialogViewModel
     {
         _mediator = mediator;
         _logger = logger;
-        CancelCommand = new DelegateCommand(CancelExecute);
-        ClearMaintenanceCommand = new DelegateCommand(async void () => await ClearMaintenanceExecute(),
-            ClearMaintenanceCanExecute);
+        CancelCommand = new RelayCommand(CancelExecute);
+        ClearMaintenanceCommand = new AsyncRelayCommand(ClearMaintenanceExecute, ClearMaintenanceCanExecute);
     }
 
     #region Events

@@ -14,7 +14,7 @@ public class DialogService : IDialogService
     }
 
     public bool? ShowDialog<TViewModel>(TViewModel? viewModel = null)
-        where TViewModel : BaseViewModel
+        where TViewModel : BaseViewModel, IDialogViewModel
     {
         var viewModelType = typeof(TViewModel);
         var effectiveViewModel = viewModel ?? _viewModelFactory(viewModelType);

@@ -1,5 +1,6 @@
 ﻿using HM.Application.Abstractions.Data;
 using HM.Domain.Abstractions;
+using HM.Domain.Bookings.Services;
 using HM.Domain.Bookings.Abstractions;
 using HM.Domain.Rooms.Abstractions;
 using HM.Domain.Users.Abstractions;
@@ -30,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IPricingService, PricingService>();
 
         return services;
     }
