@@ -22,7 +22,8 @@ internal sealed class GetAllBookingsQueryHandler : IQueryHandler<GetAllBookingsQ
     {
         var query = from b in _context.Bookings
             join u in _context.Users on b.UserId equals u.Id
-            select new { Booking = b, User = u };
+            join r in _context.Rooms on b.RoomId equals r.Id
+            select new { Booking = b, User = u, Room = r };
 
         if (!request.SeeCompletedBookings)
         {
@@ -35,6 +36,7 @@ internal sealed class GetAllBookingsQueryHandler : IQueryHandler<GetAllBookingsQ
                 x.Booking.Id,
                 new UserResponse(x.User),
                 x.Booking.RoomId,
+                $"floor {x.Room.Location.Floor} roomnumber {x.Room.Location.RoomNumber}",
                 x.Booking.Status,
                 x.Booking.Price.Amount,
                 x.Booking.Price.Currency.Code,

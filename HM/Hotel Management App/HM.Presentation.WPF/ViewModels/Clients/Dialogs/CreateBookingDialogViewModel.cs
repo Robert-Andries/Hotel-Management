@@ -22,9 +22,6 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
         ConfirmCommand = new AsyncRelayCommand(ConfirmExecute, CanConfirmExecute, OnException);
         CancelCommand = new RelayCommand(CancelExecute);
         RefreshRoomsCommand = new RelayCommand(LoadRooms);
-
-        // Asynchronously load rooms
-        LoadRooms();
     }
 
     #region Events
@@ -38,6 +35,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
     public void InitializeUser(Guid userId)
     {
         _userId = userId;
+        LoadRooms();
     }
 
     private async void LoadRooms()

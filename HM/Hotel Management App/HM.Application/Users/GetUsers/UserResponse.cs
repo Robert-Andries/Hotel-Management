@@ -12,4 +12,6 @@ public record UserResponse(Guid Id, string FirstName, string LastName, string Em
         $"{user.Contact.PhoneNumber.CountryCode} {user.Contact.PhoneNumber.Value}")
     {
     }
+
+    public string FullName => $"{FirstName} {LastName}";
 }

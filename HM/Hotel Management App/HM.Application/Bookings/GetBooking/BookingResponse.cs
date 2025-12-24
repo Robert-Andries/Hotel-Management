@@ -7,6 +7,7 @@ public sealed record BookingResponse(
     Guid Id,
     UserResponse User,
     Guid RoomId,
+    string Location,
     BookingStatus Status,
     decimal PriceAmount,
     string PriceCurrency,

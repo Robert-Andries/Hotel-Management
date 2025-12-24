@@ -104,7 +104,7 @@ public class ClientViewModel : BaseViewModel
 
         var filter = new UserFilter(SearchTerm, Page, PageSize);
         var query = new GetUsersQuery(filter);
-        var result = await _mediator.Send(query);
+        var result = await Task.Run(() => _mediator.Send(query));
 
         if (result.IsFailure)
         {

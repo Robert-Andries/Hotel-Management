@@ -63,6 +63,11 @@
             </DataGrid.InputBindings>
 
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Booked By"
+                                    Binding="{Binding User.FullName}"
+                                    Width="1.5*"
+                                    FontWeight="SemiBold" />
+
                 <DataGridTextColumn Header="Location"
                                     Binding="{Binding Location}"
                                     Width="1.5*"
@@ -76,35 +81,45 @@
                                     Binding="{Binding EndDate}"
                                     Width="0.5*" />
 
-                <DataGridTextColumn Header="Status"
-                                    Binding="{Binding Status}"
-                                    Width="1*">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Status}" Value="Reserved">
-                                    <Setter Property="Foreground" Value="#15909F" />
-                                    <Setter Property="FontWeight" Value="SemiBold" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Status}" Value="CheckedIn">
-                                    <Setter Property="Foreground" Value="#2E7D32" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Status}" Value="Cancelled">
-                                    <Setter Property="Foreground" Value="#C62828" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Status}" Value="Completed">
-                                    <Setter Property="Foreground" Value="#C4D52A" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Status" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Status}" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="Reserved">
+                                                <Setter Property="Foreground" Value="#15909F" />
+                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="CheckedIn">
+                                                <Setter Property="Foreground" Value="#2E7D32" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Cancelled">
+                                                <Setter Property="Foreground" Value="#C62828" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Completed">
+                                                <Setter Property="Foreground" Value="#C4D52A" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding PriceAmount}"
-                                    Width="Auto"
-                                    FontWeight="Bold" />
+                <DataGridTemplateColumn Header="Price" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding PriceAmount, StringFormat={}{0:N2}}" FontWeight="Bold" />
+                                <TextBlock Text=" " />
+                                <TextBlock Text="{Binding PriceCurrency}" FontWeight="Bold" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -22,11 +22,13 @@ internal sealed class
     {
         var bookings = await (from b in _context.Bookings
                 join u in _context.Users on b.UserId equals u.Id
+                join r in _context.Rooms on b.RoomId equals r.Id
                 where b.UserId == request.UserId
                 select new BookingResponse(
                     b.Id,
                     new UserResponse(u),
                     b.RoomId,
+                    $"floor {r.Location.Floor} roomnumber {r.Location.RoomNumber}",
                     b.Status,
                     b.Price.Amount,
                     b.Price.Currency.Code,
