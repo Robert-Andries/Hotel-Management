@@ -64,7 +64,7 @@
         </StackPanel>
 
         <DataGrid Grid.Row="2"
-                  ItemsSource="{Binding Bookings}"
+                  ItemsSource="{Binding Rooms}"
                   SelectedItem="{Binding Room}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
