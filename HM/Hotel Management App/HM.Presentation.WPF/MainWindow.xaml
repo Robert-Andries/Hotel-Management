@@ -5,26 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Robert Hotel Management" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="NavButtonStyle">
+            <Setter Property="Padding" Value="25,12" />
+            <Setter Property="Margin" Value="0,0,15,0" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5F5F5" />
+                    <Setter Property="BorderBrush" Value="#CCCCCC" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#F9F9F9">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,0, 0, 20">
-            <Button Content="Bookings" Command="{Binding BookingsCommand}" Margin="5" />
-            <Button Content="Rooms" Command="{Binding RoomsCommand}" Margin="5" />
-            <Button Content="Clients" Command="{Binding ClientsCommand}" Margin="5" />
-        </StackPanel>
+        <!-- Navigation Bar -->
+        <Border Grid.Row="0" Background="White" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        <ContentControl Grid.Row="2" Grid.Column="1"
-                        Content="{Binding NavigationStore.CurrentViewModel}" />
+                <TextBlock Grid.Column="0"
+                           Text="Robert Hotels"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="#007ACC"
+                           VerticalAlignment="Center"
+                           Margin="0,0,40,0" />
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Bookings" Command="{Binding BookingsCommand}"
+                            Style="{StaticResource NavButtonStyle}" />
+                    <Button Content="Rooms" Command="{Binding RoomsCommand}" Style="{StaticResource NavButtonStyle}" />
+                    <Button Content="Clients" Command="{Binding ClientsCommand}"
+                            Style="{StaticResource NavButtonStyle}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Content Area -->
+        <ContentControl Grid.Row="1"
+                        Content="{Binding NavigationStore.CurrentViewModel}"
+                        Margin="20" />
     </Grid>
 </Window>

@@ -137,8 +137,11 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 
     #region Commands
 
+    // ReSharper disable UnusedAutoPropertyAccessor.Global
     public ICommand SaveCommand { get; }
+
     public ICommand CancelCommand { get; }
+    // ReSharper restore UnusedAutoPropertyAccessor.Global
 
     #endregion
 

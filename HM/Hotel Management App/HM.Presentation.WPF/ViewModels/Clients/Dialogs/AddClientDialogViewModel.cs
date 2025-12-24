@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HM.Application.Users.AddUser;
 using HM.Presentation.WPF.Services;
@@ -11,16 +10,6 @@ namespace HM.Presentation.WPF.ViewModels.Clients.Dialogs;
 
 public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
 {
-    private readonly ILogger<AddClientDialogViewModel> _logger;
-    private readonly IMediator _mediator;
-    private string _countryCode = "+40";
-    private DateTime _dateOfBirth = DateTime.Today.AddYears(-18);
-    private string _email = string.Empty;
-    private string _errorMessage = string.Empty;
-    private string _firstName = string.Empty;
-    private string _lastName = string.Empty;
-    private string _phoneNumber = string.Empty;
-
     public AddClientDialogViewModel(INavigationStore navigationStore, IMediator mediator,
         ILogger<AddClientDialogViewModel> logger)
         : base(navigationStore)
@@ -38,6 +27,29 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
 
     #endregion
 
+    #region Methods
+
+    private void OnException(Exception ex)
+    {
+        _logger.LogError(ex, "Error in AddClientDialogViewModel");
+        ErrorMessage = "An unexpected error occurred.";
+    }
+
+    #endregion
+
+    #region CanExecute
+
+    private bool CanConfirmExecute()
+    {
+        return !string.IsNullOrWhiteSpace(FirstName) &&
+               !string.IsNullOrWhiteSpace(LastName) &&
+               !string.IsNullOrWhiteSpace(Email) &&
+               !string.IsNullOrWhiteSpace(PhoneNumber) &&
+               !string.IsNullOrWhiteSpace(CountryCode);
+    }
+
+    #endregion
+
     #region Properties
 
     public string FirstName
@@ -45,7 +57,10 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
         get => _firstName;
         set
         {
-            if (SetProperty(ref _firstName, value)) OnPropertyChanged(nameof(CanConfirmExecute));
+            if (value == _firstName) return;
+            _firstName = value;
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 
@@ -54,7 +69,10 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
         get => _lastName;
         set
         {
-            if (SetProperty(ref _lastName, value)) OnPropertyChanged(nameof(CanConfirmExecute));
+            if (value == _lastName) return;
+            _lastName = value;
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 
@@ -63,7 +81,10 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
         get => _email;
         set
         {
-            if (SetProperty(ref _email, value)) OnPropertyChanged(nameof(CanConfirmExecute));
+            if (value == _email) return;
+            _email = value;
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 
@@ -72,7 +93,10 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
         get => _phoneNumber;
         set
         {
-            if (SetProperty(ref _phoneNumber, value)) OnPropertyChanged(nameof(CanConfirmExecute));
+            if (value == _phoneNumber) return;
+            _phoneNumber = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanConfirmExecute));
         }
     }
 
@@ -81,20 +105,33 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
         get => _countryCode;
         set
         {
-            if (SetProperty(ref _countryCode, value)) OnPropertyChanged(nameof(CanConfirmExecute));
+            if (value == _countryCode) return;
+            _countryCode = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanConfirmExecute));
         }
     }
 
     public DateTime DateOfBirth
     {
         get => _dateOfBirth;
-        set => SetProperty(ref _dateOfBirth, value);
+        set
+        {
+            if (value == _dateOfBirth) return;
+            _dateOfBirth = value;
+            OnPropertyChanged();
+        }
     }
 
     public string ErrorMessage
     {
         get => _errorMessage;
-        set => SetProperty(ref _errorMessage, value);
+        set
+        {
+            if (value == _errorMessage) return;
+            _errorMessage = value;
+            OnPropertyChanged();
+        }
     }
 
     #endregion
@@ -129,34 +166,24 @@ public class AddClientDialogViewModel : BaseViewModel, IDialogViewModel
         RequestClose?.Invoke(true);
     }
 
-    private bool CanConfirmExecute()
-    {
-        return !string.IsNullOrWhiteSpace(FirstName) &&
-               !string.IsNullOrWhiteSpace(LastName) &&
-               !string.IsNullOrWhiteSpace(Email) &&
-               !string.IsNullOrWhiteSpace(PhoneNumber) &&
-               !string.IsNullOrWhiteSpace(CountryCode);
-    }
-
     private void CancelExecute()
     {
         RequestClose?.Invoke(false);
     }
 
-    private void OnException(Exception ex)
-    {
-        _logger.LogError(ex, "Error in AddClientDialogViewModel");
-        ErrorMessage = "An unexpected error occurred.";
-    }
+    #endregion
 
-    // Helper for property setting and notification
-    private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
+    #region Private Fields
+
+    private readonly ILogger<AddClientDialogViewModel> _logger;
+    private readonly IMediator _mediator;
+    private string _countryCode = "+40";
+    private DateTime _dateOfBirth = DateTime.Today.AddYears(-18);
+    private string _email = string.Empty;
+    private string _errorMessage = string.Empty;
+    private string _firstName = string.Empty;
+    private string _lastName = string.Empty;
+    private string _phoneNumber = string.Empty;
 
     #endregion
 }

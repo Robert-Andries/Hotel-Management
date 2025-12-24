@@ -30,8 +30,7 @@ public class DialogService : IDialogService
 
         if (effectiveViewModel is IDialogViewModel dialogVm)
         {
-            Action<bool?> handler = null;
-            handler = result =>
+            Action<bool?> handler = result =>
             {
                 try
                 {
@@ -39,7 +38,6 @@ public class DialogService : IDialogService
                 }
                 catch (InvalidOperationException)
                 {
-                    // Ignore if window is already closed or not a dialog
                     window.Close();
                 }
             };

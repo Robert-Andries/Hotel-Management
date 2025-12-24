@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:HM.Presentation.WPF.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="900"
-             Background="White">
+             d:DesignHeight="600" d:DesignWidth="900">
 
     <UserControl.Resources>
         <converters:ListFeautreConverter x:Key="ListFeautreConverter" />
@@ -107,7 +106,7 @@
 
                 <DataGridTextColumn Header="Status"
                                     Binding="{Binding Status}"
-                                    Width="1*">
+                                    Width="0.75*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center" />
@@ -132,7 +131,7 @@
 
                 <DataGridTextColumn Header="Price"
                                     Binding="{Binding Price}"
-                                    Width="Auto"
+                                    Width="0.5*"
                                     FontWeight="Bold" />
             </DataGrid.Columns>
         </DataGrid>

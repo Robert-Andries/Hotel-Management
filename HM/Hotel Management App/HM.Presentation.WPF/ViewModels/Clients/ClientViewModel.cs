@@ -80,16 +80,6 @@ public class ClientViewModel : BaseViewModel
 
     #endregion
 
-    #region Commands
-
-    public ICommand RefreshCommand { get; }
-    public ICommand NextPageCommand { get; }
-    public ICommand PreviousPageCommand { get; }
-    public ICommand ShowDetailsCommand { get; }
-    public ICommand AddClientCommand { get; }
-
-    #endregion
-
     #region Methods
 
     private void OnException(Exception ex)
@@ -117,6 +107,18 @@ public class ClientViewModel : BaseViewModel
 
         _logger.LogInformation("Loaded {Count} users", Users.Count);
     }
+
+    #endregion
+
+    #region Commands
+
+    public ICommand RefreshCommand { get; }
+    public ICommand NextPageCommand { get; }
+    public ICommand PreviousPageCommand { get; }
+    public ICommand ShowDetailsCommand { get; }
+    public ICommand AddClientCommand { get; }
+
+    #endregion
 
     #region CanExecute
 
@@ -175,8 +177,6 @@ public class ClientViewModel : BaseViewModel
             await RefreshExecute();
         }
     }
-
-    #endregion
 
     #endregion
 

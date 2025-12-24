@@ -19,7 +19,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
         _mediator = mediator;
         _logger = logger;
 
-        ConfirmCommand = new AsyncRelayCommand(ConfirmExecute, CanConfirmExecute, OnException);
+        ConfirmCommand = new AsyncRelayCommand(ConfirmExecute, ConfirmCanExecute, OnException);
         CancelCommand = new RelayCommand(CancelExecute);
         RefreshRoomsCommand = new RelayCommand(LoadRooms);
     }
@@ -27,6 +27,15 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
     #region Events
 
     public event Action<bool?>? RequestClose;
+
+    #endregion
+
+    #region CanExecute
+
+    private bool ConfirmCanExecute()
+    {
+        return SelectedRoom != null && EndDate > StartDate;
+    }
 
     #endregion
 
@@ -40,22 +49,33 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
 
     private async void LoadRooms()
     {
-        // Use the current dates for the query
-        var query = new GetAvailableRoomsQuery(DateOnly.FromDateTime(StartDate), DateOnly.FromDateTime(EndDate));
-        var result = await _mediator.Send(query);
-
-        if (result.IsFailure)
+        try
         {
-            _logger.LogError("Failed to load rooms: {Error}", result.Error);
-            Rooms.Clear(); // Clear if failed or invalid dates
-            return;
+            var query = new GetAvailableRoomsQuery(DateOnly.FromDateTime(StartDate), DateOnly.FromDateTime(EndDate));
+            var result = await _mediator.Send(query);
+
+            if (result.IsFailure)
+            {
+                _logger.LogError("Failed to load rooms: {Error}", result.Error);
+                return;
+            }
+
+            Rooms.Clear();
+            foreach (var room in result.Value) Rooms.Add(room);
+
+            if (SelectedRoom != null && Rooms.All(r => r.Id != SelectedRoom.Id)) SelectedRoom = null;
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error in LoadRooms");
+            ErrorMessage = "Failed to load rooms due to an unexpected error.";
+        }
+    }
 
-        Rooms.Clear();
-        foreach (var room in result.Value) Rooms.Add(room);
-
-        // Clear selection if the previously selected room is no longer available
-        if (SelectedRoom != null && !Rooms.Any(r => r.Id == SelectedRoom.Id)) SelectedRoom = null;
+    private void OnException(Exception ex)
+    {
+        _logger.LogError(ex, "Error in CreateBookingDialogViewModel");
+        ErrorMessage = "An unexpected error occurred.";
     }
 
     #endregion
@@ -72,7 +92,8 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             if (_startDate == value) return;
             _startDate = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(CanConfirmExecute));
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
             LoadRooms();
         }
     }
@@ -85,7 +106,8 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             if (_endDate == value) return;
             _endDate = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(CanConfirmExecute));
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
             LoadRooms();
         }
     }
@@ -98,7 +120,8 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             if (Equals(_selectedRoom, value)) return;
             _selectedRoom = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(CanConfirmExecute));
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 
@@ -150,20 +173,9 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
         RequestClose?.Invoke(true);
     }
 
-    private bool CanConfirmExecute()
-    {
-        return SelectedRoom != null && EndDate > StartDate;
-    }
-
     private void CancelExecute()
     {
         RequestClose?.Invoke(false);
-    }
-
-    private void OnException(Exception ex)
-    {
-        _logger.LogError(ex, "Error in CreateBookingDialogViewModel");
-        ErrorMessage = "An unexpected error occurred.";
     }
 
     #endregion
