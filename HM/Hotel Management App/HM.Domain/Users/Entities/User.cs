@@ -18,11 +18,14 @@ public sealed class User : Entity
         DateOfBirth = dateOfBirth;
     }
 
-    public static User Create(Name name, ContactInfo contact, DateOnly dateOfBirth)
+    public static Result<User> Create(Name name, ContactInfo contact, DateOnly dateOfBirth, DateOnly today)
     {
         var user = new User(Guid.NewGuid(), name, contact, dateOfBirth);
 
-        return user;
+        var age = user.GetAge(today);
+        if (age < 18 || age > 110) return Result.Failure<User>(UserErrors.InvalidAge);
+
+        return Result.Success(user);
     }
 
     #region Properties

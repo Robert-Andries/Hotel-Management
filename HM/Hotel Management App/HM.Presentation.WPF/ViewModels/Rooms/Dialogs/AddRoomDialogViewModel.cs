@@ -61,7 +61,6 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _floor = value;
             OnPropertyChanged();
-            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -72,7 +71,6 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _roomNumber = value;
             OnPropertyChanged();
-            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -83,7 +81,6 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _priceAmount = value;
             OnPropertyChanged();
-            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -94,7 +91,6 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _selectedCurrency = value;
             OnPropertyChanged();
-            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 
@@ -105,7 +101,6 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
         {
             _selectedRoomType = value;
             OnPropertyChanged();
-            ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 

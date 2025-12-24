@@ -10,32 +10,42 @@ namespace HM.Application.Users.AddUser;
 
 public sealed class AddUserCommandHandler : ICommandHandler<AddUserCommand, Result>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly ITime _time;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
 
-    public AddUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public AddUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, ITime time)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _time = time;
     }
 
     public async Task<Result> Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
         var emailResult = StringToEmail(request.Email);
-        if(emailResult.IsFailure)
+        if (emailResult.IsFailure)
             return Result.Failure(emailResult.Error);
         var email = emailResult.Value;
-        
+
         if (await _userRepository.IsEmailUniqueAsync(email, cancellationToken) == false)
         {
             return Result.Failure(UserErrors.EmailNotUnique);
         }
 
         var name = new Name(request.FirstName, request.LastName);
-        var phoneNumber = new PhoneNumber(request.PhoneNumber, request.CountryCode);
+
+        var phoneNumberResult = PhoneNumber.Create(request.PhoneNumber, request.CountryCode);
+        if (phoneNumberResult.IsFailure) return Result.Failure(phoneNumberResult.Error);
+
+        var phoneNumber = phoneNumberResult.Value;
+
         var contactInfo = new ContactInfo(email, phoneNumber);
 
-        var user = User.Create(name, contactInfo, request.DateOfBirth);
+        var userResult = User.Create(name, contactInfo, request.DateOfBirth, DateOnly.FromDateTime(_time.NowUtc));
+        if (userResult.IsFailure) return Result.Failure(userResult.Error);
+
+        var user = userResult.Value;
 
         _userRepository.Add(user);
 
@@ -47,7 +57,7 @@ public sealed class AddUserCommandHandler : ICommandHandler<AddUserCommand, Resu
     private Result<Email> StringToEmail(string email)
     {
         try
-        { 
+        {
             var emailAddress = new MailAddress(email);
             var output = new Email(emailAddress.User, emailAddress.Host);
             return Result.Success(output);
@@ -56,6 +66,5 @@ public sealed class AddUserCommandHandler : ICommandHandler<AddUserCommand, Resu
         {
             return Result.Failure<Email>(UserErrors.InvalidEmail);
         }
-
     }
 }

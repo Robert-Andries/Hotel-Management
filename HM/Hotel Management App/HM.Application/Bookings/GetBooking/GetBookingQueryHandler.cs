@@ -1,5 +1,6 @@
 using HM.Application.Abstractions.Data;
 using HM.Application.Abstractions.Messaging;
+using HM.Application.Users.GetUsers;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +18,19 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Re
 
     public async Task<Result<BookingResponse>> Handle(GetBookingQuery request, CancellationToken cancellationToken)
     {
-        var booking = await _context.Bookings
-            .Where(b => b.Id == request.BookingId)
-            .Select(b => new BookingResponse(
-                b.Id,
-                b.UserId,
-                b.RoomId,
-                b.Status,
-                b.Price.Amount,
-                b.Price.Currency.Code,
-                b.Duration.Start,
-                b.Duration.End,
-                b.ReservedOnUtc))
+        var booking = await (from b in _context.Bookings
+                join u in _context.Users on b.UserId equals u.Id
+                where b.Id == request.BookingId
+                select new BookingResponse(
+                    b.Id,
+                    new UserResponse(u),
+                    b.RoomId,
+                    b.Status,
+                    b.Price.Amount,
+                    b.Price.Currency.Code,
+                    b.Duration.Start,
+                    b.Duration.End,
+                    b.ReservedOnUtc))
             .FirstOrDefaultAsync(cancellationToken);
 
         if (booking is null) return Result.Failure<BookingResponse>(BookingErrors.NotFound);

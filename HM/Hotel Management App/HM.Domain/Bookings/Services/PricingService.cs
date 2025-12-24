@@ -7,28 +7,27 @@ namespace HM.Domain.Bookings.Services;
 
 public sealed class PricingService : IPricingService
 {
-    public PricingDetails CalculatePrice(Room apartment, DateRange period)
+    public PricingDetails CalculatePrice(Room apartment, DateRange? period = null)
     {
         var currency = apartment.Price.Currency;
+        period ??= DateRange.OneDay;
 
         var priceForPeriod = new Money(
             apartment.Price.Amount * period.LengthInDays,
             currency);
 
-        decimal percentageUpCharge = 0;
-        foreach (var amenity in apartment.Features)
-            percentageUpCharge += amenity switch
-            {
-                Feautre.GardenView or Feautre.MountainView => 0.05m,
-                Feautre.AirConditioning => 0.01m,
-                Feautre.Parking => 0.01m,
-                Feautre.Tv => 0.01m,
-                Feautre.Terrace => 0.02m,
-                Feautre.PetFriendly => 0.03m,
-                Feautre.Balcony => 0.02m,
-                Feautre.WiFi => 0.01m,
-                _ => 0
-            };
+        var percentageUpCharge = apartment.Features.Sum(amenity => amenity switch
+        {
+            Feautre.GardenView or Feautre.MountainView => 0.05m,
+            Feautre.AirConditioning => 0.01m,
+            Feautre.Parking => 0.01m,
+            Feautre.Tv => 0.01m,
+            Feautre.Terrace => 0.02m,
+            Feautre.PetFriendly => 0.03m,
+            Feautre.Balcony => 0.02m,
+            Feautre.WiFi => 0.01m,
+            _ => 0
+        });
 
         var amenitiesUpCharge = Money.Zero(currency);
         if (percentageUpCharge > 0)

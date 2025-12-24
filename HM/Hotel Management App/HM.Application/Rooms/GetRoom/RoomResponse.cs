@@ -7,15 +7,17 @@ namespace HM.Application.Rooms.GetRoom;
 
 public class RoomResponse
 {
-    public RoomResponse(Room room)
+    public RoomResponse(Room room, Money? finalPrice = null)
     {
+        finalPrice ??= room.Price;
+
         Id = room.Id;
         RoomType = room.RoomType;
         Location = room.Location;
         Features = room.Features;
         Rating = room.Rating;
         Status = room.Status;
-        Price = room.Price;
+        Price = finalPrice;
         LastBookedOnUtc = room.LastBookedOnUtc;
     }
 

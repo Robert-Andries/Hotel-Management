@@ -2,6 +2,7 @@
 using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.Utilities;
 using HM.Presentation.WPF.ViewModels.Bookings;
+using HM.Presentation.WPF.ViewModels.Clients;
 using HM.Presentation.WPF.ViewModels.Rooms;
 using Microsoft.Extensions.Logging;
 
@@ -23,12 +24,14 @@ internal class MainViewModel : BaseViewModel
 
         BookingsCommand = new RelayCommand(ExecuteBookings);
         RoomsCommand = new RelayCommand(ExecuteRooms);
+        ClientsCommand = new RelayCommand(ExecuteClients);
     }
 
     #region Commands
 
     public ICommand BookingsCommand { get; set; }
     public ICommand RoomsCommand { get; set; }
+    public ICommand ClientsCommand { get; set; }
 
     #endregion
 
@@ -44,6 +47,12 @@ internal class MainViewModel : BaseViewModel
     {
         _logger.LogDebug("Navigating to RoomViewModel");
         NavigationStore.NavigateTo<RoomViewModel>();
+    }
+
+    private void ExecuteClients()
+    {
+        _logger.LogDebug("Navigating to ClientViewModel");
+        NavigationStore.NavigateTo<ClientViewModel>();
     }
 
     #endregion

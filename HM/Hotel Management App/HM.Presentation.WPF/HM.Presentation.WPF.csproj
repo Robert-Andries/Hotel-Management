@@ -56,4 +56,9 @@
         </Page>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="ViewModels\Clients\Dialogs\"/>
+        <Folder Include="Views\Clients\"/>
+    </ItemGroup>
+
 </Project>

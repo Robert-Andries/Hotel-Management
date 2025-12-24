@@ -1,0 +1,94 @@
+<Window x:Class="HM.Presentation.WPF.Views.Clients.Dialogs.CreateBookingDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:HM.Presentation.WPF.Converters"
+        mc:Ignorable="d"
+        d:DesignHeight="400" d:DesignWidth="400"
+        Width="400"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        Title="Create Booking"
+        WindowStartupLocation="CenterScreen"
+        Background="White">
+
+    <Window.Resources>
+        <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,0,0,5" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#333333" />
+        </Style>
+        <Style TargetType="Button" x:Key="PrimaryButtonStyle">
+            <Setter Property="Padding" Value="20,8" />
+            <Setter Property="Background" Value="#007ACC" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="Button" x:Key="SecondaryButtonStyle">
+            <Setter Property="Padding" Value="20,8" />
+            <Setter Property="Background" Value="#F0F0F0" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="BorderBrush" Value="#CCCCCC" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+
+    <Border Padding="20">
+        <StackPanel>
+            <TextBlock Text="Start Date" />
+            <DatePicker SelectedDate="{Binding StartDate}" Margin="0,0,0,15" />
+
+            <TextBlock Text="End Date" />
+            <DatePicker SelectedDate="{Binding EndDate}" Margin="0,0,0,15" />
+
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Room" VerticalAlignment="Center" />
+                <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshRoomsCommand}"
+                        Padding="5,2" Background="Transparent" BorderThickness="0" Foreground="#007ACC" Cursor="Hand" />
+            </Grid>
+            <ComboBox ItemsSource="{Binding Rooms}"
+                      SelectedItem="{Binding SelectedRoom}"
+                      Margin="0,0,0,15">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Location}" />
+                            <TextBlock Text=" - " />
+                            <TextBlock Text="{Binding TotalPrice.Amount, StringFormat={}{0:N2}}" />
+                            <TextBlock Text=" " />
+                            <TextBlock Text="{Binding TotalPrice.Currency.Code}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" Margin="0,0,0,10"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="Cancel" Command="{Binding CancelCommand}"
+                        Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0" />
+                <Button Content="Create" Command="{Binding ConfirmCommand}" Style="{StaticResource PrimaryButtonStyle}" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

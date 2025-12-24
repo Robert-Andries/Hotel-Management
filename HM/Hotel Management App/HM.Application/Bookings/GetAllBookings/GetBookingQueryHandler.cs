@@ -1,6 +1,7 @@
 using HM.Application.Abstractions.Data;
 using HM.Application.Abstractions.Messaging;
 using HM.Application.Bookings.GetBooking;
+using HM.Application.Users.GetUsers;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings.Value_Objects;
 using Microsoft.EntityFrameworkCore;
@@ -19,25 +20,27 @@ internal sealed class GetAllBookingsQueryHandler : IQueryHandler<GetAllBookingsQ
     public async Task<Result<List<BookingResponse>>> Handle(GetAllBookingsQuery request,
         CancellationToken cancellationToken)
     {
-        var query = _context.Bookings.AsQueryable();
+        var query = from b in _context.Bookings
+            join u in _context.Users on b.UserId equals u.Id
+            select new { Booking = b, User = u };
 
         if (!request.SeeCompletedBookings)
         {
-            query = query.Where(b => b.Status != BookingStatus.Completed 
-                                     && b.Status != BookingStatus.Cancelled);
+            query = query.Where(x => x.Booking.Status != BookingStatus.Completed
+                                     && x.Booking.Status != BookingStatus.Cancelled);
         }
 
         var bookings = await query
-            .Select(b => new BookingResponse(
-                b.Id,
-                b.UserId,
-                b.RoomId,
-                b.Status,
-                b.Price.Amount,
-                b.Price.Currency.Code,
-                b.Duration.Start,
-                b.Duration.End,
-                b.ReservedOnUtc))
+            .Select(x => new BookingResponse(
+                x.Booking.Id,
+                new UserResponse(x.User),
+                x.Booking.RoomId,
+                x.Booking.Status,
+                x.Booking.Price.Amount,
+                x.Booking.Price.Currency.Code,
+                x.Booking.Duration.Start,
+                x.Booking.Duration.End,
+                x.Booking.ReservedOnUtc))
             .ToListAsync(cancellationToken);
 
         return Result.Success(bookings);

@@ -1,10 +1,11 @@
-﻿using HM.Domain.Bookings.Value_Objects;
+﻿using HM.Application.Users.GetUsers;
+using HM.Domain.Bookings.Value_Objects;
 
 namespace HM.Application.Bookings.GetBooking;
 
 public sealed record BookingResponse(
     Guid Id,
-    Guid UserId,
+    UserResponse User,
     Guid RoomId,
     BookingStatus Status,
     decimal PriceAmount,

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Robert Hotel Management" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -21,6 +21,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,0, 0, 20">
             <Button Content="Bookings" Command="{Binding BookingsCommand}" Margin="5" />
             <Button Content="Rooms" Command="{Binding RoomsCommand}" Margin="5" />
+            <Button Content="Clients" Command="{Binding ClientsCommand}" Margin="5" />
         </StackPanel>
 
         <ContentControl Grid.Row="2" Grid.Column="1"

@@ -4,6 +4,12 @@ namespace HM.Domain.Bookings.Value_Objects;
 
 public record DateRange
 {
+    public static DateRange OneDay = new()
+    {
+        Start = DateOnly.MinValue,
+        End = DateOnly.MinValue.AddDays(1)
+    };
+
     private DateRange()
     {
     }
@@ -16,6 +22,7 @@ public record DateRange
 
     public static Result<DateRange> Create(DateOnly start, DateOnly end)
     {
+        // TODO Add a new error
         if (start >= end)
             return Result.Failure<DateRange>(new Error(
                 "DateRange.Invalid",

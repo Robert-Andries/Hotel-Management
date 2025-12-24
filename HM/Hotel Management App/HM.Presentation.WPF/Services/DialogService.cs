@@ -29,11 +29,24 @@ public class DialogService : IDialogService
         window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
         if (effectiveViewModel is IDialogViewModel dialogVm)
-            dialogVm.RequestClose += result =>
+        {
+            Action<bool?> handler = null;
+            handler = result =>
             {
-                window.DialogResult = result;
-                window.Close();
+                try
+                {
+                    window.DialogResult = result;
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignore if window is already closed or not a dialog
+                    window.Close();
+                }
             };
+
+            dialogVm.RequestClose += handler;
+            window.Closed += (s, e) => dialogVm.RequestClose -= handler;
+        }
 
         return window.ShowDialog();
     }
