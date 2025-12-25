@@ -22,11 +22,8 @@ public record DateRange
 
     public static Result<DateRange> Create(DateOnly start, DateOnly end)
     {
-        // TODO Add a new error
         if (start >= end)
-            return Result.Failure<DateRange>(new Error(
-                "DateRange.Invalid",
-                "End date precedes start date"));
+            return Result.Failure<DateRange>(DateRangeErrors.InvalidDate);
 
         DateRange output = new()
         {

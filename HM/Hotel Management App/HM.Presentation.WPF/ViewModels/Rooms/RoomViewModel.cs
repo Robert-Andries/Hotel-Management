@@ -11,7 +11,6 @@ using IDialogService = HM.Presentation.WPF.Services.IDialogService;
 
 namespace HM.Presentation.WPF.ViewModels.Rooms;
 
-//TODO Fix freeze when refreshing
 public class RoomViewModel : BaseViewModel
 {
     public RoomViewModel(INavigationStore navigationStore, IMediator mediator,
