@@ -1,6 +1,7 @@
 using HM.Application.Abstractions.Data;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings.Entities;
+using HM.Domain.Reviews.Entities;
 using HM.Domain.Rooms.Entities;
 using HM.Domain.Users.Entities;
 using MediatR;
@@ -17,6 +18,8 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationD
     {
         _publisher = publisher;
     }
+
+    public DbSet<RoomReview> Reviews { get; set; }
 
     public DbSet<User> Users { get; set; }
 

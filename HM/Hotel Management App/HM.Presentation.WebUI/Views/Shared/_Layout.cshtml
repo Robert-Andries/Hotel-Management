@@ -3,44 +3,69 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - HM.Presentation.WebUI</title>
+    <title>@ViewData["Title"]</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/HM.Presentation.WebUI.styles.css" asp-append-version="true"/>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HM.Presentation.WebUI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
-            </div>
+<header class="modern-header">
+    <nav class="modern-navbar">
+        <div class="navbar-content">
+            <a class="navbar-brand-modern" asp-area="" asp-controller="Home" asp-action="Index">Robert Hotel</a>
+            <ul class="navbar-links-modern">
+                <li><a class="nav-link-modern" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a class="nav-link-modern" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
+                <li><a class="nav-link-modern" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li><a class="nav-link-modern" asp-area="" asp-controller="Home"
+                       asp-action="TermsAndConditions">Terms</a></li>
+            </ul>
+            <!-- Placeholder for potential login/user actions -->
+            <div class="navbar-actions"></div>
         </div>
     </nav>
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
 
-<footer class="border-top footer text-muted">
+<main role="main"
+      class="@(ViewData["Title"]?.ToString() == "Home Page" || ViewData["Title"]?.ToString() == "About Us" || ViewData["Title"]?.ToString() == "Terms and conditions" || ViewData["Title"]?.ToString() == "Privacy Policy" ? "" : "page-content-padding")">
+    @RenderBody()
+</main>
+
+<footer class="modern-footer">
     <div class="container">
-        &copy; 2025 - HM.Presentation.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 class="footer-brand">Robert Hotel</h3>
+                <p class="footer-tagline">Experience luxury and comfort in the heart of the city.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Home" asp-action="AboutUs">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Legal</h4>
+                <ul class="footer-links">
+                    <li><a asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
+                    <li><a asp-controller="Home" asp-action="TermsAndConditions">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Contact Us</h4>
+                <ul class="footer-contact">
+                    <li>NoRoad, NoWhere, Romania 123456</li>
+                    <li>+40 0712 345 678 910</li>
+                    <li>dontcontactthis@roberthotel.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Robert Hotel. All rights reserved.</p>
+        </div>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
