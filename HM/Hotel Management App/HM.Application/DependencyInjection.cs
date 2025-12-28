@@ -1,4 +1,5 @@
-﻿using HM.Domain.Bookings.Services;
+﻿using HM.Application.Users.Services;
+using HM.Domain.Bookings.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HM.Application;
@@ -9,6 +10,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(config => { config.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly); });
         services.AddTransient<PricingService>();
+        services.AddTransient<UserCreationService>();
         services.AddLogging();
 
         return services;

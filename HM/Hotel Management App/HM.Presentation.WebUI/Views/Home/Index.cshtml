@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["UseTransparentHeader"] = true;
 }
 
 <div class="hero-section">
@@ -7,11 +8,11 @@
         <h1 class="hero-title">Experience Luxury</h1>
     </div>
     <div class="animate-fade-up delay-100">
-        <p class="hero-subtitle">Discover a world of comfort and elegance at Robert Hotel. <br> Where every stay is a
-            memory waiting to unfold.</p>
+        <p class="hero-subtitle">Discover a world of comfort and elegance at Robert Hotel.
+            <br> Where every stay is a memory waiting to unfold.</p>
     </div>
     <div class="animate-fade-up delay-200">
-        <a href="#" class="btn-primary-custom">Book Your Stay</a>
+        <a asp-controller="Booking" asp-action="Index" class="btn-primary-custom">Book Your Stay</a>
     </div>
 </div>
 

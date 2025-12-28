@@ -61,4 +61,8 @@
         <Folder Include="Views\Clients\"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Resource Include="logo.png"/>
+    </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@ public class BookingErrors
 {
     public static Error Overlapping = new(
         "Booking.Overlap",
-        "The given booking is overlapping with another booking.");
+        "This room has just been booked by another user for the selected dates. Please search again.");
 
     public static Error NotFound = new(
         "Booking.NotFound",

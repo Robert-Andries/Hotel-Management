@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        Icon="logo.png"
         Title="Robert Hotel Management" Height="450" Width="800">
     <Window.Resources>
         <Style TargetType="Button" x:Key="NavButtonStyle">

@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using HM.Application.Bookings.AddBooking;
 using HM.Application.Rooms.GetAvailableRooms;
+using HM.Domain.Rooms.Value_Objects;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.Utilities;
@@ -51,7 +52,10 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
     {
         try
         {
-            var query = new GetAvailableRoomsQuery(DateOnly.FromDateTime(StartDate), DateOnly.FromDateTime(EndDate));
+            var query = new GetAvailableRoomsQuery(
+                DateOnly.FromDateTime(StartDate),
+                DateOnly.FromDateTime(EndDate),
+                new List<Feautre>());
             var result = await _mediator.Send(query);
 
             if (result.IsFailure)
@@ -63,7 +67,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             Rooms.Clear();
             foreach (var room in result.Value) Rooms.Add(room);
 
-            if (SelectedRoom != null && Rooms.All(r => r.Id != SelectedRoom.Id)) SelectedRoom = null;
+            if (SelectedRoom != null && Rooms.All(r => r.RoomId != SelectedRoom.RoomId)) SelectedRoom = null;
         }
         catch (Exception ex)
         {
@@ -82,7 +86,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
 
     #region Properties
 
-    public ObservableCollection<AvailableRoomResponse> Rooms { get; } = new();
+    public ObservableCollection<RoomSearchResponse> Rooms { get; } = new();
 
     public DateTime StartDate
     {
@@ -112,7 +116,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
         }
     }
 
-    public AvailableRoomResponse? SelectedRoom
+    public RoomSearchResponse? SelectedRoom
     {
         get => _selectedRoom;
         set
@@ -156,10 +160,10 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
 
         if (SelectedRoom == null) return;
 
-        var command = new AddBookingCommand(_userId, start, end, SelectedRoom.Id);
+        var command = new AddBookingCommand(_userId, start, end, SelectedRoom.RoomId);
 
         _logger.LogInformation("Creating booking for user {UserId}, Room {RoomId}, Dates: {Start}-{End}", _userId,
-            SelectedRoom.Id, start, end);
+            SelectedRoom.RoomId, start, end);
         var result = await _mediator.Send(command);
 
         if (result.IsFailure)
@@ -187,7 +191,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
     private Guid _userId;
     private DateTime _startDate = DateTime.Today;
     private DateTime _endDate = DateTime.Today.AddDays(1);
-    private AvailableRoomResponse? _selectedRoom;
+    private RoomSearchResponse? _selectedRoom;
     private string _errorMessage = string.Empty;
 
     #endregion

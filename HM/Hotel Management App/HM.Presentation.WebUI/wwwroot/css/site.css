@@ -206,6 +206,13 @@ body {
     color: #fff;
 }
 
+.btn-custom-centered {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 /* Page Spacing for Fixed Navbar */
 .page-content-padding {
     padding-top: 120px;
@@ -327,6 +334,15 @@ body {
 
 .bg-light-caramel {
     background-color: rgba(240, 182, 127, 0.1);
+}
+
+.bg-premium-dark {
+    background-color: var(--color-dark-slate-grey);
+    color: white;
+}
+
+.text-gold {
+    color: var(--color-light-caramel) !important;
 }
 
 .section-title {

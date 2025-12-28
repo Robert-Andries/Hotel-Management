@@ -23,4 +23,8 @@ public class RoomErrors
     public static Error InvalidStatus = new(
         "Room.InvalidStatus",
         "The room status does not let you do that action.");
+
+    public static Error NoneAvailable = new(
+        "Room.NoneAvailable",
+        "No rooms available for the selected dates and criteria.");
 }

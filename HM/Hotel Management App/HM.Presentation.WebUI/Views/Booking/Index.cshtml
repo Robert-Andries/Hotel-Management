@@ -1,18 +1,112 @@
-﻿@model TModel
+﻿@using HM.Domain.Rooms.Value_Objects
+@model HM.Presentation.WebUI.ViewModels.SearchRoomViewModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Search Room";
+    ViewData["UseTransparentHeader"] = true;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-
+<div class="page-header">
+    <div class="container">
+        <div class="animate-fade-up">
+            <h1 class="page-title">Find Your Perfect Room</h1>
+            <p class="page-subtitle">Begin your journey to relaxation. Check availability and features below.</p>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 animate-fade-up delay-100">
+                <div class="feature-card p-5">
+                    <form asp-action="Search" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                        <h4 class="mb-4" style="color: var(--color-saddle-brown);">Personal Details</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label text-muted">First Name</label>
+                                <input asp-for="FirstName" class="form-control" placeholder="John"/>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label text-muted">Last Name</label>
+                                <input asp-for="LastName" class="form-control" placeholder="Doe"/>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label text-muted">Email</label>
+                                <input asp-for="Email" type="email" class="form-control"
+                                       placeholder="john@example.com"/>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label text-muted">Phone</label>
+                                <div class="input-group">
+                                    <input asp-for="CountryCode" class="form-control" style="max-width: 80px;"
+                                           placeholder="+40"/>
+                                    <input asp-for="PhoneNumber" class="form-control" placeholder="123 456 7890"/>
+                                </div>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="DateOfBirth" class="form-label text-muted">Date of Birth</label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control"/>
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+
+                        <hr class="my-5" style="border-color: rgba(0,0,0,0.05);">
+
+                        <h4 class="mb-4" style="color: var(--color-saddle-brown);">Stay Details</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="StartDate" class="form-label text-muted">Check-in</label>
+                                <input asp-for="StartDate" type="date" class="form-control"/>
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="EndDate" class="form-label text-muted">Check-out</label>
+                                <input asp-for="EndDate" type="date" class="form-control"/>
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="RoomType" class="form-label text-muted">Room Type</label>
+                            <select asp-for="RoomType" class="form-select"
+                                    asp-items="Html.GetEnumSelectList<RoomType>()"></select>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label text-muted mb-3">Desired Features</label>
+                            <div class="row g-3">
+                                @foreach (var feature in Enum.GetValues<Feautre>())
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="SelectedFeatures"
+                                                   value="@feature" id="feature_@feature"/>
+                                            <label class="form-check-label" for="feature_@feature">@feature</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary-custom btn-lg">Search Available Room</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

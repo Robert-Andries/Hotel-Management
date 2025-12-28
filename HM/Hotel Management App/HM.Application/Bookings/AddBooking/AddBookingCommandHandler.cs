@@ -3,22 +3,22 @@ using HM.Domain.Abstractions;
 using HM.Domain.Bookings;
 using HM.Domain.Bookings.Abstractions;
 using HM.Domain.Bookings.Entities;
+using HM.Domain.Bookings.Services;
 using HM.Domain.Bookings.Value_Objects;
 using HM.Domain.Rooms.Abstractions;
-using HM.Domain.Shared;
 using HM.Domain.Users.Abstractions;
-using HM.Domain.Bookings.Services;
 
 namespace HM.Application.Bookings.AddBooking;
 
+//TODO Make so that i can t book a room in the past
 internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingCommand, Result<Guid>>
 {
     private readonly IBookingRepository _bookingRepository;
+    private readonly IPricingService _pricingService;
     private readonly IRoomRepository _roomRepository;
     private readonly ITime _time;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
-    private readonly IPricingService _pricingService;
 
     public AddBookingCommandHandler(
         IRoomRepository roomRepository,
@@ -44,6 +44,7 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
         {
             return Result.Failure<Guid>(userResult.Error);
         }
+
         var user = userResult.Value;
 
         var roomResult = await _roomRepository.GetByIdAsync(request.RoomId, cancellationToken);
@@ -51,6 +52,7 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
         {
             return Result.Failure<Guid>(roomResult.Error);
         }
+
         var room = roomResult.Value;
 
         var dateRangeResult = DateRange.Create(request.StartDate, request.EndDate);
@@ -58,6 +60,7 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
         {
             return Result.Failure<Guid>(dateRangeResult.Error);
         }
+
         var dateRange = dateRangeResult.Value;
 
         var isOverlappingResult =
@@ -66,7 +69,7 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
         {
             return Result.Failure<Guid>(BookingErrors.Overlapping);
         }
-        
+
         var priceDetails = _pricingService.CalculatePrice(room, dateRange);
 
         var booking = Booking.Reserve(
@@ -75,6 +78,12 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
             dateRange,
             _time.NowUtc,
             priceDetails.TotalPrice);
+
+        // Re-check for overlap right before saving to minimize race condition window
+        var isOverlappingReCheck =
+            await _bookingRepository.IsOverlappingAsync(room, dateRange, cancellationToken);
+        if (isOverlappingReCheck.IsFailure || isOverlappingReCheck.Value)
+            return Result.Failure<Guid>(BookingErrors.Overlapping);
 
         await _bookingRepository.AddAsync(booking, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

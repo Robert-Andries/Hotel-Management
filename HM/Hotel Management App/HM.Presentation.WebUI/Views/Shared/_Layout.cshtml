@@ -5,30 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"]</title>
     <script type="importmap"></script>
+    <link rel="icon" type="image/x-icon" href="/images/Logo.png">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/HM.Presentation.WebUI.styles.css" asp-append-version="true"/>
 </head>
 <body>
 <header class="modern-header">
     <nav class="modern-navbar">
         <div class="navbar-content">
-            <a class="navbar-brand-modern" asp-area="" asp-controller="Home" asp-action="Index">Robert Hotel</a>
+            <a class="navbar-brand-modern" asp-controller="Home" asp-action="Index">Robert Hotel</a>
             <ul class="navbar-links-modern">
-                <li><a class="nav-link-modern" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a class="nav-link-modern" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
-                <li><a class="nav-link-modern" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                <li><a class="nav-link-modern" asp-area="" asp-controller="Home"
-                       asp-action="TermsAndConditions">Terms</a></li>
+                <li><a class="nav-link-modern" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a class="nav-link-modern" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
+                <li><a class="nav-link-modern" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li><a class="nav-link-modern" asp-controller="Home" asp-action="TermsAndConditions">Terms</a></li>
             </ul>
-            <!-- Placeholder for potential login/user actions -->
-            <div class="navbar-actions"></div>
         </div>
     </nav>
 </header>
 
-<main role="main"
-      class="@(ViewData["Title"]?.ToString() == "Home Page" || ViewData["Title"]?.ToString() == "About Us" || ViewData["Title"]?.ToString() == "Terms and conditions" || ViewData["Title"]?.ToString() == "Privacy Policy" ? "" : "page-content-padding")">
+<main role="main" class="@(ViewData["UseTransparentHeader"] as bool? == true ? "" : "page-content-padding")">
     @RenderBody()
 </main>
 
@@ -44,7 +40,6 @@
                 <ul class="footer-links">
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-controller="Home" asp-action="AboutUs">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-col">

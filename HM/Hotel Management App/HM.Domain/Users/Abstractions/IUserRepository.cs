@@ -7,6 +7,7 @@ namespace HM.Domain.Users.Abstractions;
 public interface IUserRepository
 {
     Task<Result<User>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Result<User>> GetByEmailAsync(Email email, CancellationToken cancellationToken = default);
     Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken = default);
     void Add(User user);
 }
