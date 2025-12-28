@@ -8,14 +8,14 @@ using HM.Domain.Rooms;
 using HM.Domain.Rooms.Value_Objects;
 using Microsoft.EntityFrameworkCore;
 
-namespace HM.Application.Rooms.FindAvailableRoom;
+namespace HM.Application.Rooms.FindBestRoom;
 
-internal sealed class FindAvailableRoomQueryHandler : IQueryHandler<FindAvailableRoomQuery, Result<RoomSearchResponse>>
+internal sealed class FindBestRoomQueryHandler : IQueryHandler<FindBestRoomQuery, Result<RoomSearchResponse>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IPricingService _pricingService;
 
-    public FindAvailableRoomQueryHandler(
+    public FindBestRoomQueryHandler(
         IApplicationDbContext context,
         IPricingService pricingService)
     {
@@ -23,7 +23,7 @@ internal sealed class FindAvailableRoomQueryHandler : IQueryHandler<FindAvailabl
         _pricingService = pricingService;
     }
 
-    public async Task<Result<RoomSearchResponse>> Handle(FindAvailableRoomQuery request,
+    public async Task<Result<RoomSearchResponse>> Handle(FindBestRoomQuery request,
         CancellationToken cancellationToken)
     {
         var dateRangeResult = DateRange.Create(request.StartDate, request.EndDate);

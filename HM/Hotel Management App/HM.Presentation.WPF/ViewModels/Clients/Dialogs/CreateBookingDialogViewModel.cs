@@ -22,7 +22,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
 
         ConfirmCommand = new AsyncRelayCommand(ConfirmExecute, ConfirmCanExecute, OnException);
         CancelCommand = new RelayCommand(CancelExecute);
-        RefreshRoomsCommand = new RelayCommand(LoadRooms);
+        RefreshRoomsCommand = new RelayCommand(RefreshRoomsExecute);
     }
 
     #region Events
@@ -45,35 +45,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
     public void InitializeUser(Guid userId)
     {
         _userId = userId;
-        LoadRooms();
-    }
-
-    private async void LoadRooms()
-    {
-        try
-        {
-            var query = new GetAvailableRoomsQuery(
-                DateOnly.FromDateTime(StartDate),
-                DateOnly.FromDateTime(EndDate),
-                new List<Feautre>());
-            var result = await _mediator.Send(query);
-
-            if (result.IsFailure)
-            {
-                _logger.LogError("Failed to load rooms: {Error}", result.Error);
-                return;
-            }
-
-            Rooms.Clear();
-            foreach (var room in result.Value) Rooms.Add(room);
-
-            if (SelectedRoom != null && Rooms.All(r => r.RoomId != SelectedRoom.RoomId)) SelectedRoom = null;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Unexpected error in LoadRooms");
-            ErrorMessage = "Failed to load rooms due to an unexpected error.";
-        }
+        RefreshRoomsExecute();
     }
 
     private void OnException(Exception ex)
@@ -98,7 +70,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             OnPropertyChanged();
             OnPropertyChanged();
             CommandManager.InvalidateRequerySuggested();
-            LoadRooms();
+            RefreshRoomsExecute();
         }
     }
 
@@ -112,7 +84,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             OnPropertyChanged();
             OnPropertyChanged();
             CommandManager.InvalidateRequerySuggested();
-            LoadRooms();
+            RefreshRoomsExecute();
         }
     }
 
@@ -180,6 +152,34 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
     private void CancelExecute()
     {
         RequestClose?.Invoke(false);
+    }
+
+    private async void RefreshRoomsExecute()
+    {
+        try
+        {
+            var query = new GetAvailableRoomsQuery(
+                DateOnly.FromDateTime(StartDate),
+                DateOnly.FromDateTime(EndDate),
+                new List<Feautre>());
+            var result = await _mediator.Send(query);
+
+            if (result.IsFailure)
+            {
+                _logger.LogError("Failed to load rooms: {Error}", result.Error);
+                return;
+            }
+
+            Rooms.Clear();
+            foreach (var room in result.Value) Rooms.Add(room);
+
+            if (SelectedRoom != null && Rooms.All(r => r.RoomId != SelectedRoom.RoomId)) SelectedRoom = null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error in LoadRooms");
+            ErrorMessage = "Failed to load rooms due to an unexpected error.";
+        }
     }
 
     #endregion

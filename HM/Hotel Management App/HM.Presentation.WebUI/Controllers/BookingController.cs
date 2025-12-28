@@ -1,5 +1,5 @@
 ﻿using HM.Application.Bookings.CreateBookingForGuest;
-using HM.Application.Rooms.FindAvailableRoom;
+using HM.Application.Rooms.FindBestRoom;
 using HM.Presentation.WebUI.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,7 @@ public class BookingController : Controller
     {
         if (!ModelState.IsValid) return View("Index", model);
 
-        var query = new FindAvailableRoomQuery(
+        var query = new FindBestRoomQuery(
             model.StartDate,
             model.EndDate,
             model.RoomType,
