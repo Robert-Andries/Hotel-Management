@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using HM.Application.Rooms.GetAllRooms;
-using HM.Application.Rooms.GetRoom;
+using HM.Application.Rooms.Shared;
 using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.Utilities;
 using HM.Presentation.WPF.ViewModels.Rooms.Dialogs;

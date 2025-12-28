@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using HM.Application.Rooms.FinishMaintenance;
-using HM.Application.Rooms.GetRoom;
+using HM.Application.Rooms.Shared;
 using HM.Domain.Rooms.Value_Objects;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;

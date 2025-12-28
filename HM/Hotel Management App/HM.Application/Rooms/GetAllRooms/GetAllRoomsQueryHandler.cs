@@ -1,6 +1,6 @@
 ﻿using HM.Application.Abstractions.Data;
 using HM.Application.Abstractions.Messaging;
-using HM.Application.Rooms.GetRoom;
+using HM.Application.Rooms.Shared;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings.Services;
 using Microsoft.EntityFrameworkCore;

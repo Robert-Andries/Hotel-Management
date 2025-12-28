@@ -3,7 +3,7 @@ using HM.Domain.Rooms.Entities;
 using HM.Domain.Rooms.Value_Objects;
 using HM.Domain.Shared;
 
-namespace HM.Application.Rooms.GetRoom;
+namespace HM.Application.Rooms.Shared;
 
 public class RoomResponse
 {
