@@ -1,12 +1,17 @@
 using HM.Application;
 using HM.Infrastructure;
+using HM.Presentation.WebUI.StartupConfig;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddInfrastructureDependencyInjection(builder.Configuration);
 builder.Services.AddApplicationDependencyInjection();
+
 builder.Services.AddControllersWithViews();
+builder.EnableRateLimiter();
+builder.Services.AddSerilog(opts => opts.WriteTo.Console());
 
 var app = builder.Build();
 
