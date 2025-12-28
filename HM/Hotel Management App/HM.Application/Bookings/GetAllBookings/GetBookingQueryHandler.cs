@@ -1,7 +1,7 @@
 using HM.Application.Abstractions.Data;
 using HM.Application.Abstractions.Messaging;
 using HM.Application.Bookings.Shared;
-using HM.Application.Users.GetUsers;
+using HM.Application.Users.Shared;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings.Value_Objects;
 using Microsoft.EntityFrameworkCore;

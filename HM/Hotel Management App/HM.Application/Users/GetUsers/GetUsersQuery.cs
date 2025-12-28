@@ -1,4 +1,5 @@
 ﻿using HM.Application.Abstractions.Messaging;
+using HM.Application.Users.Shared;
 using HM.Domain.Abstractions;
 
 namespace HM.Application.Users.GetUsers;

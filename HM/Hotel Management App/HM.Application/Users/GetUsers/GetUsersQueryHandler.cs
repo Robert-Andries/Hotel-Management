@@ -1,5 +1,6 @@
-﻿using HM.Application.Abstractions.Messaging;
-using HM.Application.Abstractions.Data;
+﻿using HM.Application.Abstractions.Data;
+using HM.Application.Abstractions.Messaging;
+using HM.Application.Users.Shared;
 using HM.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,8 @@ public class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, Result<IReadOnl
         _context = context;
     }
 
-    public async Task<Result<IReadOnlyList<UserResponse>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IReadOnlyList<UserResponse>>> Handle(GetUsersQuery request,
+        CancellationToken cancellationToken)
     {
         var usersQuery = _context.Users.AsNoTracking();
 

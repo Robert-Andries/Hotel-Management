@@ -1,6 +1,6 @@
 using HM.Domain.Users.Entities;
 
-namespace HM.Application.Users.GetUsers;
+namespace HM.Application.Users.Shared;
 
 public record UserResponse(Guid Id, string FirstName, string LastName, string Email, string PhoneNumber)
 {
@@ -8,8 +8,8 @@ public record UserResponse(Guid Id, string FirstName, string LastName, string Em
         user.Id,
         user.Name.FirstName,
         user.Name.LastName,
-        $"{user.Contact.Email.Value}@{user.Contact.Email.Domain}",
-        $"{user.Contact.PhoneNumber.CountryCode} {user.Contact.PhoneNumber.Value}")
+        user.Contact.Email.ToString(),
+        user.Contact.PhoneNumber.ToString())
     {
     }
 

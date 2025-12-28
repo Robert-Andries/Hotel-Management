@@ -28,4 +28,9 @@ public record PhoneNumber
 
         return Result.Success(new PhoneNumber(value, countryCode));
     }
+
+    public override string ToString()
+    {
+        return $"{CountryCode} {Value}";
+    }
 }

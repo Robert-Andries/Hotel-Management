@@ -1,4 +1,4 @@
-﻿using HM.Application.Users.GetUsers;
+﻿using HM.Application.Users.Shared;
 using HM.Domain.Bookings.Value_Objects;
 
 namespace HM.Application.Bookings.Shared;

@@ -19,11 +19,10 @@ public class UserCreationService
     public async Task<Result<User>> GetUserByEmailAsync(string emailString,
         CancellationToken cancellationToken = default)
     {
-        var emailParts = emailString.Split('@');
-        if (emailParts.Length != 2)
-            return Result.Failure<User>(new Error("Email.Invalid", "Invalid email format"));
-
-        var email = new Email(emailParts[0], emailParts[1]);
+        var emailResult = Email.Create(emailString);
+        if (emailResult.IsFailure)
+            return Result.Failure<User>(emailResult.Error);
+        var email = emailResult.Value;
 
         return await _userRepository.GetByEmailAsync(email, cancellationToken);
     }
@@ -36,19 +35,19 @@ public class UserCreationService
         string countryCode,
         DateOnly dateOfBirth)
     {
-        var emailParts = emailString.Split('@');
-        if (emailParts.Length != 2)
-            return Result.Failure<User>(new Error("Email.Invalid", "Invalid email format"));
-
-        var email = new Email(emailParts[0], emailParts[1]);
+        var emailResult = Email.Create(emailString);
+        if (emailResult.IsFailure)
+            return Result.Failure<User>(emailResult.Error);
+        var email = emailResult.Value;
 
         var name = new Name(firstName, lastName);
 
         var phoneNumberResult = PhoneNumber.Create(phoneNumberString, countryCode);
         if (phoneNumberResult.IsFailure)
             return Result.Failure<User>(phoneNumberResult.Error);
+        var phoneNumber = phoneNumberResult.Value;
 
-        var contactInfo = new ContactInfo(email, phoneNumberResult.Value);
+        var contactInfo = new ContactInfo(email, phoneNumber);
 
         var today = DateOnly.FromDateTime(_time.NowUtc);
 

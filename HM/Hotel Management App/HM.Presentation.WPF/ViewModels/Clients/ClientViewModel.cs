@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using HM.Application.Users.GetUsers;
+using HM.Application.Users.Shared;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.Utilities;
