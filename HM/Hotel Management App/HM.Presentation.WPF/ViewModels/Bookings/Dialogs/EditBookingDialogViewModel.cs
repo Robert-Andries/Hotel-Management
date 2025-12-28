@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using HM.Application.Bookings.CheckInGuest;
 using HM.Application.Bookings.CheckOutGuest;
-using HM.Application.Bookings.GetBooking;
+using HM.Application.Bookings.Shared;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings.Value_Objects;
 using HM.Presentation.WPF.Services;

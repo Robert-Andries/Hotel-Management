@@ -1,7 +1,7 @@
 ﻿using HM.Application.Users.GetUsers;
 using HM.Domain.Bookings.Value_Objects;
 
-namespace HM.Application.Bookings.GetBooking;
+namespace HM.Application.Bookings.Shared;
 
 public sealed record BookingResponse(
     Guid Id,

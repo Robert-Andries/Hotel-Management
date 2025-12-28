@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using HM.Application.Bookings.GetAllBookings;
-using HM.Application.Bookings.GetBooking;
+using HM.Application.Bookings.Shared;
 using HM.Presentation.WPF.Services;
 using HM.Presentation.WPF.Stores;
 using HM.Presentation.WPF.Utilities;
@@ -14,7 +14,8 @@ namespace HM.Presentation.WPF.ViewModels.Bookings;
 public class BookingViewModel : BaseViewModel
 {
     public BookingViewModel(INavigationStore navigationStore, ILogger<BookingViewModel> logger,
-        IDialogService dialogService, IMediator mediator, EditBookingDialogViewModel editBookingDialogViewModel) : base(navigationStore)
+        IDialogService dialogService, IMediator mediator,
+        EditBookingDialogViewModel editBookingDialogViewModel) : base(navigationStore)
     {
         _logger = logger;
         _dialogService = dialogService;
@@ -23,10 +24,20 @@ public class BookingViewModel : BaseViewModel
         RefreshCommand = new AsyncRelayCommand(RefreshExecute, null, OnException);
         EditBookingsCommand = new AsyncRelayCommand(EditBookingExecute, null, OnException);
     }
-    
+
+    #region Methods
+
+    private void OnException(Exception ex)
+    {
+        _logger.LogError(ex, "Command execution failed");
+    }
+
+    #endregion
+
     #region Proprieties
 
     public ObservableCollection<BookingResponse> Bookings { get; set; } = new();
+
     public BookingResponse? Booking
     {
         get => _booking;
@@ -37,6 +48,7 @@ public class BookingViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
     public bool SeeCompletedBookings
     {
         get => _seeCompletedBookings;
@@ -49,28 +61,24 @@ public class BookingViewModel : BaseViewModel
     }
 
     #endregion
-    
-    #region Methods
-    private void OnException(Exception ex)
-    {
-        _logger.LogError(ex, "Command execution failed");
-    }
-    #endregion
-    
+
     #region Commands
+
     public ICommand RefreshCommand { get; set; }
 
     public ICommand EditBookingsCommand { get; set; }
 
     #endregion
-    
+
     #region Execute
-    
+
     private async Task RefreshExecute()
     {
-        _logger.LogInformation("Refresh bookings was called with completed bookings set to: {CompletedBookings}", SeeCompletedBookings);
-        
-        var bookingResponseResult = await Task.Run(async () => await _mediator.Send(new GetAllBookingsQuery(SeeCompletedBookings)));
+        _logger.LogInformation("Refresh bookings was called with completed bookings set to: {CompletedBookings}",
+            SeeCompletedBookings);
+
+        var bookingResponseResult =
+            await Task.Run(async () => await _mediator.Send(new GetAllBookingsQuery(SeeCompletedBookings)));
         if (bookingResponseResult.IsFailure)
         {
             _logger.LogWarning("Refresh failed, Error: {ErrorCode} : {ErrorName}",
@@ -104,11 +112,11 @@ public class BookingViewModel : BaseViewModel
             _logger.LogInformation("The edit operation for room with ID: {id} has been cancelled", Booking.Id);
         }
     }
-    
+
     #endregion
-    
+
     #region Private Fields
-    
+
     private readonly ILogger<BookingViewModel> _logger;
     private readonly IDialogService _dialogService;
     private readonly IMediator _mediator;

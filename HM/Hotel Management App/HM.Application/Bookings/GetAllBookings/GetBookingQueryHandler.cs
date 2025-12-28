@@ -1,6 +1,6 @@
 using HM.Application.Abstractions.Data;
 using HM.Application.Abstractions.Messaging;
-using HM.Application.Bookings.GetBooking;
+using HM.Application.Bookings.Shared;
 using HM.Application.Users.GetUsers;
 using HM.Domain.Abstractions;
 using HM.Domain.Bookings.Value_Objects;

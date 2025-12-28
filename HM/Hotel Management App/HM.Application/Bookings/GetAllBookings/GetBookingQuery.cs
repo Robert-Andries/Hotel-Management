@@ -1,5 +1,5 @@
 using HM.Application.Abstractions.Messaging;
-using HM.Application.Bookings.GetBooking;
+using HM.Application.Bookings.Shared;
 using HM.Domain.Abstractions;
 
 namespace HM.Application.Bookings.GetAllBookings;
