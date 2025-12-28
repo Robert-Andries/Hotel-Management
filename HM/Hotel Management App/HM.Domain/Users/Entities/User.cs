@@ -37,7 +37,8 @@ public sealed class User : Entity
     public int GetAge(DateOnly today)
     {
         var age = today.Year - DateOfBirth.Year;
-        if (DateOfBirth > today.AddYears(-age)) age--;
+        if (DateOfBirth > today.AddYears(-age))
+            age--;
         return age;
     }
 
