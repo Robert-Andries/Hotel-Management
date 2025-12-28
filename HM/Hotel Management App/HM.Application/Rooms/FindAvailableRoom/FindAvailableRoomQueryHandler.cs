@@ -58,6 +58,7 @@ internal sealed class FindAvailableRoomQueryHandler : IQueryHandler<FindAvailabl
             bestRoom.Price,
             priceDetails.TotalPrice,
             bestRoom.Features,
-            priceDetails.TotalPrice.Currency.Code));
+            priceDetails.TotalPrice.Currency.Code,
+            bestRoom.Location));
     }
 }

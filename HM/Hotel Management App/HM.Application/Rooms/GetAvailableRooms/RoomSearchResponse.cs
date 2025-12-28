@@ -9,4 +9,5 @@ public sealed record RoomSearchResponse(
     Money PricePerNight,
     Money TotalPrice,
     List<Feautre> Features,
-    string Currency);
+    string Currency,
+    RoomLocation Location);

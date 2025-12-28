@@ -57,7 +57,8 @@ internal sealed class
                 room.Price,
                 priceDetails.TotalPrice,
                 room.Features,
-                priceDetails.TotalPrice.Currency.Code));
+                priceDetails.TotalPrice.Currency.Code,
+                room.Location));
         }
 
         return Result.Success(response);
