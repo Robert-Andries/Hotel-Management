@@ -10,7 +10,6 @@ using HM.Domain.Users.Abstractions;
 
 namespace HM.Application.Bookings.AddBooking;
 
-//TODO Make so that i can t book a room in the past
 internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingCommand, Result<Guid>>
 {
     private readonly IBookingRepository _bookingRepository;
