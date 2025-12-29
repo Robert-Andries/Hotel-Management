@@ -7,4 +7,4 @@ namespace HM.Application.Rooms.GetAvailableRooms;
 public sealed record GetAvailableRoomsQuery(
     DateOnly StartDate,
     DateOnly EndDate,
-    List<Feautre> RequiredFeatures) : IQuery<Result<List<RoomSearchResponse>>>;
+    List<Feature> RequiredFeatures) : IQuery<Result<List<RoomSearchResponse>>>;

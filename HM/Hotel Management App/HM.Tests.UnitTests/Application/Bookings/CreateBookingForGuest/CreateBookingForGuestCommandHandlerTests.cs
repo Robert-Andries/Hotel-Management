@@ -204,7 +204,7 @@ public class CreateBookingForGuestCommandHandlerTests
         return Room.Create(
             RoomType.Single,
             new RoomLocation(1, 101),
-            new List<Feautre>(),
+            new List<Feature>(),
             new Money(100, Currency.Usd)
         ).Value;
     }

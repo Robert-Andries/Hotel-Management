@@ -33,9 +33,9 @@ public class GetAllRoomsQueryHandlerTests
         // Arrange
         var rooms = new List<Room>
         {
-            Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(), new Money(100, Currency.Usd))
+            Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(), new Money(100, Currency.Usd))
                 .Value,
-            Room.Create(RoomType.Double, new RoomLocation(1, 102), new List<Feautre>(), new Money(150, Currency.Usd))
+            Room.Create(RoomType.Double, new RoomLocation(1, 102), new List<Feature>(), new Money(150, Currency.Usd))
                 .Value
         };
 

@@ -37,7 +37,7 @@ public class GetAllBookingsQueryHandlerTests
             DateOnly.FromDateTime(DateTime.UtcNow)).Value;
 
         // Room
-        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
 
         // Bookings
@@ -79,7 +79,7 @@ public class GetAllBookingsQueryHandlerTests
             new ContactInfo(Email.Create("test@test.com").Value, PhoneNumber.Create("123456789", "+1").Value),
             new DateOnly(1990, 1, 1),
             DateOnly.FromDateTime(DateTime.UtcNow)).Value;
-        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
 
         var activeBooking = Booking.Reserve(room.Id, user.Id,

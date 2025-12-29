@@ -161,7 +161,7 @@ public class CreateBookingDialogViewModel : BaseViewModel, IDialogViewModel
             var query = new GetAvailableRoomsQuery(
                 DateOnly.FromDateTime(StartDate),
                 DateOnly.FromDateTime(EndDate),
-                new List<Feautre>());
+                new List<Feature>());
             var result = await _mediator.Send(query);
 
             if (result.IsFailure)

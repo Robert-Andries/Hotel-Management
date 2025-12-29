@@ -29,7 +29,7 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
             .HasConversion(
                 v => string.Join(',', v),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(s => Enum.Parse<Feautre>(s))
+                    .Select(s => Enum.Parse<Feature>(s))
                     .ToList());
     }
 }

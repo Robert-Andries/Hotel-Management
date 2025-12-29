@@ -17,6 +17,9 @@ public sealed record RatingSummary(Guid RoomId, float Average, int Count)
             return Result.Failure<RatingSummary>(reviewsResult.Error);
 
         var reviews = reviewsResult.Value;
+
+        if (reviews.Count == 0) return Result.Success(new RatingSummary(RoomId, 0, 0));
+
         var newAvg = (float)reviews.Average(x => x.Rating);
         var newCount = reviews.Count;
 

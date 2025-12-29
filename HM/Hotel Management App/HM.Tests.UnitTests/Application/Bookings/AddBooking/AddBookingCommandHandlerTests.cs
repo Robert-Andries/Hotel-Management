@@ -70,7 +70,7 @@ public class AddBookingCommandHandlerTests
             .ReturnsAsync(Result.Success(user));
 
         // Room Mock
-        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
         _roomRepositoryMock.Setup(x => x.GetByIdAsync(command.RoomId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Success(room));
@@ -150,7 +150,7 @@ public class AddBookingCommandHandlerTests
                 new ContactInfo(Email.Create("a@a.com").Value, PhoneNumber.Create("123", "+1").Value),
                 new DateOnly(1990, 1, 1), DateOnly.FromDateTime(DateTime.UtcNow)).Value));
         _roomRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Success(Room.Create(RoomType.Single, new RoomLocation(1, 1), new List<Feautre>(),
+            .ReturnsAsync(Result.Success(Room.Create(RoomType.Single, new RoomLocation(1, 1), new List<Feature>(),
                 new Money(100, Currency.Usd)).Value));
 
         // Overlap Mock (Returns true = Yes Overlap)

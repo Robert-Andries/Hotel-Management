@@ -18,14 +18,14 @@ public sealed class PricingService : IPricingService
 
         var percentageUpCharge = apartment.Features.Sum(amenity => amenity switch
         {
-            Feautre.GardenView or Feautre.MountainView => 0.05m,
-            Feautre.AirConditioning => 0.01m,
-            Feautre.Parking => 0.01m,
-            Feautre.Tv => 0.01m,
-            Feautre.Terrace => 0.02m,
-            Feautre.PetFriendly => 0.03m,
-            Feautre.Balcony => 0.02m,
-            Feautre.WiFi => 0.01m,
+            Feature.GardenView or Feature.MountainView => 0.05m,
+            Feature.AirConditioning => 0.01m,
+            Feature.Parking => 0.01m,
+            Feature.Tv => 0.01m,
+            Feature.Terrace => 0.02m,
+            Feature.PetFriendly => 0.03m,
+            Feature.Balcony => 0.02m,
+            Feature.WiFi => 0.01m,
             _ => 0
         });
 

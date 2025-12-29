@@ -15,7 +15,7 @@ public sealed class Room : Entity
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     private Room(Guid id, RoomType roomType, RoomLocation location,
-        List<Feautre> features, RatingSummary rating, RoomStatus status, Money price)
+        List<Feature> features, RatingSummary rating, RoomStatus status, Money price)
         : base(id)
     {
         RoomType = roomType;
@@ -30,7 +30,7 @@ public sealed class Room : Entity
     ///     Factory method to create a Room entity
     /// </summary>
     /// <returns>The newly created room entity</returns>
-    public static Result<Room> Create(RoomType roomType, RoomLocation location, List<Feautre> features, Money price)
+    public static Result<Room> Create(RoomType roomType, RoomLocation location, List<Feature> features, Money price)
     {
         if (price.Amount <= 0)
             return Result.Failure<Room>(RoomErrors.InvalidPrice);
@@ -122,7 +122,7 @@ public sealed class Room : Entity
 
     public RoomType RoomType { get; private set; }
     public RoomLocation Location { get; private set; }
-    public List<Feautre> Features { get; private set; }
+    public List<Feature> Features { get; private set; }
     public RatingSummary Rating { get; private set; }
     public RoomStatus Status { get; private set; }
     public Money Price { get; private set; }

@@ -11,7 +11,7 @@ public class ConfirmBookingViewModel
     public decimal PricePerNightAmount { get; set; }
     public decimal TotalPriceAmount { get; set; }
     public string Currency { get; set; } = string.Empty;
-    public List<Feautre> Features { get; set; } = new();
+    public List<Feature> Features { get; set; } = new();
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;

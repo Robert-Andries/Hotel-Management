@@ -13,5 +13,5 @@ public class SearchRoomViewModel
     public string CountryCode { get; set; } = "+40";
     public string PhoneNumber { get; set; } = string.Empty;
     public DateOnly DateOfBirth { get; set; } = DateOnly.FromDateTime(DateTime.Today.AddYears(-18));
-    public List<Feautre> SelectedFeatures { get; set; } = new();
+    public List<Feature> SelectedFeatures { get; set; } = new();
 }

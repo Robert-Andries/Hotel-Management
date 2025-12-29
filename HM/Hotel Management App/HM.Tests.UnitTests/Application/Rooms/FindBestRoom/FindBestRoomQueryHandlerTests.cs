@@ -35,7 +35,7 @@ public class FindBestRoomQueryHandlerTests
             new DateOnly(2023, 1, 1),
             new DateOnly(2023, 1, 10),
             RoomType.Single,
-            new List<Feautre>());
+            new List<Feature>());
 
         _contextMock.Setup(x => x.Rooms).Returns(MockDbSetHelper.GetQueryableMockDbSet(new List<Room>()));
         _contextMock.Setup(x => x.Bookings).Returns(MockDbSetHelper.GetQueryableMockDbSet(new List<Booking>()));
@@ -56,18 +56,18 @@ public class FindBestRoomQueryHandlerTests
             new DateOnly(2023, 1, 1),
             new DateOnly(2023, 1, 10),
             RoomType.Single,
-            new List<Feautre> { Feautre.WiFi });
+            new List<Feature> { Feature.WiFi });
 
         // Room 1: Fits criteria, Expensive
-        var room1 = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre> { Feautre.WiFi },
+        var room1 = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature> { Feature.WiFi },
             new Money(200, Currency.Usd)).Value;
 
         // Room 2: Fits criteria, Cheaper
-        var room2 = Room.Create(RoomType.Single, new RoomLocation(1, 102), new List<Feautre> { Feautre.WiFi },
+        var room2 = Room.Create(RoomType.Single, new RoomLocation(1, 102), new List<Feature> { Feature.WiFi },
             new Money(100, Currency.Usd)).Value;
 
         // Room 3: Features mismatch
-        var room3 = Room.Create(RoomType.Single, new RoomLocation(1, 103), new List<Feautre>(),
+        var room3 = Room.Create(RoomType.Single, new RoomLocation(1, 103), new List<Feature>(),
             new Money(50, Currency.Usd)).Value;
 
         var rooms = new List<Room> { room1, room2, room3 };

@@ -9,4 +9,4 @@ public sealed record FindBestRoomQuery(
     DateOnly StartDate,
     DateOnly EndDate,
     RoomType RoomType,
-    List<Feautre> RequiredFeatures) : IQuery<Result<RoomSearchResponse>>;
+    List<Feature> RequiredFeatures) : IQuery<Result<RoomSearchResponse>>;

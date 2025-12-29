@@ -120,12 +120,12 @@ public class AddRoomDialogViewModel : BaseViewModel, IDialogViewModel
 
     private void InitializeFeatures()
     {
-        var allFeatures = Enum.GetValues(typeof(Feautre)).Cast<Feautre>();
+        var allFeatures = Enum.GetValues(typeof(Feature)).Cast<Feature>();
         foreach (var feature in allFeatures)
             FeatureList.Add(new FeatureSelectionItemModel(feature, false));
     }
 
-    private List<Feautre> GetSelectedFeatures()
+    private List<Feature> GetSelectedFeatures()
     {
         return FeatureList
             .Where(item => item.IsSelected)

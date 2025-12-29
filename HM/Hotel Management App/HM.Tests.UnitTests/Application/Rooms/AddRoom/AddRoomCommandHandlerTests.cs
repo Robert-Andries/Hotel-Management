@@ -32,7 +32,7 @@ public class AddRoomCommandHandlerTests
         var command = new AddRoomCommand(
             RoomType.Single,
             new RoomLocation(1, 101),
-            new List<Feautre>(),
+            new List<Feature>(),
             new Money(100, Currency.Usd));
 
         _roomRepositoryMock
@@ -56,7 +56,7 @@ public class AddRoomCommandHandlerTests
         var command = new AddRoomCommand(
             RoomType.Single,
             new RoomLocation(1, 101),
-            new List<Feautre>(),
+            new List<Feature>(),
             new Money(0, Currency.Usd));
 
         // Act
@@ -75,7 +75,7 @@ public class AddRoomCommandHandlerTests
         var command = new AddRoomCommand(
             RoomType.Single,
             new RoomLocation(1, 101),
-            new List<Feautre>(),
+            new List<Feature>(),
             new Money(100, Currency.Usd));
 
         _roomRepositoryMock

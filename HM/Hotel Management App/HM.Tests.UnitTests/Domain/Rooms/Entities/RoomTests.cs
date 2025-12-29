@@ -14,7 +14,7 @@ public class RoomTests
     private static readonly Money DefaultPrice = new(100, Currency.Usd);
     private static readonly RoomType DefaultType = RoomType.Single;
     private static readonly RoomLocation DefaultLocation = new(1, 101);
-    private static readonly List<Feautre> DefaultFeatures = new(); // Typo in Domain 'Feautre' matches source
+    private static readonly List<Feature> DefaultFeatures = new(); // Typo in Domain 'Feautre' matches source
 
     [Fact]
     public void Create_Should_ReturnFailure_When_PriceIsZeroOrNegative()

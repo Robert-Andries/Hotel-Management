@@ -1,6 +1,6 @@
 ﻿namespace HM.Domain.Rooms.Value_Objects;
 
-public enum Feautre
+public enum Feature
 {
     WiFi = 1,
     AirConditioning = 2,

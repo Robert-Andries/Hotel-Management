@@ -9,7 +9,7 @@ public class ListFeautreConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is List<Feautre> feautre)
+        if (value is List<Feature> feautre)
         {
             var isFirst = true;
             StringBuilder sb = new();

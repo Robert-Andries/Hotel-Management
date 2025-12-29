@@ -33,10 +33,10 @@ public class GetAvailableRoomsQueryHandlerTests
         // Date Range: 2023-01-01 to 2023-01-10
         var startDate = new DateOnly(2023, 1, 1);
         var endDate = new DateOnly(2023, 1, 10);
-        var query = new GetAvailableRoomsQuery(startDate, endDate, new List<Feautre>());
+        var query = new GetAvailableRoomsQuery(startDate, endDate, new List<Feature>());
 
         // Room 1: Available
-        var room1 = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room1 = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
 
         // Rooms Mock
@@ -68,9 +68,9 @@ public class GetAvailableRoomsQueryHandlerTests
         // Arrange
         var startDate = new DateOnly(2023, 1, 1);
         var endDate = new DateOnly(2023, 1, 10);
-        var query = new GetAvailableRoomsQuery(startDate, endDate, new List<Feautre>());
+        var query = new GetAvailableRoomsQuery(startDate, endDate, new List<Feature>());
 
-        var room1 = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room1 = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
 
         // Existing Booking for Room1: 2023-01-05 to 2023-01-07 (Overlaps)

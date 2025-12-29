@@ -29,7 +29,7 @@ public class FinishMaintenanceCommandHandlerTests
     public async Task Handle_Should_ReturnSuccess_When_RoomIsUnderMaintenance()
     {
         // Arrange
-        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
 
         // Move to Occupied then Maintenance
@@ -58,7 +58,7 @@ public class FinishMaintenanceCommandHandlerTests
     public async Task Handle_Should_ReturnFailure_When_RoomNotInMaintenance()
     {
         // Arrange
-        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feautre>(),
+        var room = Room.Create(RoomType.Single, new RoomLocation(1, 101), new List<Feature>(),
             new Money(100, Currency.Usd)).Value;
         // Status is Available
 

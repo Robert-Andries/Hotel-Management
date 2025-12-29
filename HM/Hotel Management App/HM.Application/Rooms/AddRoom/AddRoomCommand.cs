@@ -8,5 +8,5 @@ namespace HM.Application.Rooms.AddRoom;
 public record AddRoomCommand(
     RoomType Type,
     RoomLocation Location,
-    List<Feautre> Feautres,
+    List<Feature> Feautres,
     Money Price) : ICommand<Result>;

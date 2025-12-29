@@ -4,14 +4,14 @@ namespace HM.Presentation.WPF.Models;
 
 public class FeatureSelectionItemModel
 {
-    public FeatureSelectionItemModel(Feautre value, bool isSelected)
+    public FeatureSelectionItemModel(Feature value, bool isSelected)
     {
         Value = value;
         Name = value.ToString();
         IsSelected = isSelected;
     }
 
-    public Feautre Value { get; init; }
+    public Feature Value { get; init; }
     public string Name { get; private set; }
     public bool IsSelected { get; set; }
 }

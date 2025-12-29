@@ -24,7 +24,7 @@ public class RoomResponse
     public Guid Id { get; set; }
     public RoomType RoomType { get; private set; }
     public RoomLocation Location { get; private set; }
-    public List<Feautre> Features { get; private set; }
+    public List<Feature> Features { get; private set; }
     public RatingSummary Rating { get; private set; }
     public RoomStatus Status { get; private set; }
     public Money Price { get; private set; }
