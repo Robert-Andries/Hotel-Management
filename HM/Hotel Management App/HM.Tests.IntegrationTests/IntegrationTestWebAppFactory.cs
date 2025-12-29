@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace HM.Tests.IntegrationTests.Infrastructure;
+namespace HM.Tests.IntegrationTests;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>
 {
