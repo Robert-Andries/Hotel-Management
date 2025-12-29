@@ -2,4 +2,4 @@ using HM.Domain.Abstractions;
 
 namespace HM.Domain.Reviews.Events;
 
-public record ReviewUpdatedDomainEvent(Guid ReviewId, Guid RoomId) : IDomainEvent;
+public sealed record ReviewUpdatedDomainEvent(Guid ReviewId, Guid RoomId) : IDomainEvent;

@@ -163,7 +163,7 @@ public class CreateBookingForGuestCommandHandlerTests
         // User not found (irrelevant to overlap, but needed for flow)
         _userRepositoryMock
             .Setup(x => x.GetByEmailAsync(It.IsAny<Email>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Failure<User>(new Error("User.NotFound", "User not found")));
+            .ReturnsAsync(Result.Failure<User>(UserErrors.NotFound));
 
         _roomRepositoryMock
             .Setup(x => x.GetByIdAsync(command.RoomId, It.IsAny<CancellationToken>()))

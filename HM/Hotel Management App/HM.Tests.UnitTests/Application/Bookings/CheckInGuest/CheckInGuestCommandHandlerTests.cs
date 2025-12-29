@@ -61,14 +61,14 @@ public class CheckInGuestCommandHandlerTests
         // Arrange
         var command = new CheckInGuestCommand(Guid.NewGuid());
         _bookingRepositoryMock.Setup(x => x.GetByIdAsync(command.BookingId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Failure<Booking>(new Error("Booking.NotFound", "Not found")));
+            .ReturnsAsync(Result.Failure<Booking>(BookingErrors.NotFound));
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Code.Should().Be("Booking.NotFound");
+        result.Error.Code.Should().Be(BookingErrors.NotFound.Code);
     }
 
     [Fact]

@@ -4,6 +4,7 @@ using HM.Domain.Abstractions;
 using HM.Domain.Reviews.Abstractions;
 using HM.Domain.Reviews.Entities;
 using HM.Domain.Reviews.Value_Objects;
+using HM.Domain.Rooms;
 using HM.Domain.Rooms.Abstractions;
 using HM.Domain.Rooms.Entities;
 using HM.Domain.Rooms.Value_Objects;
@@ -77,14 +78,14 @@ public class AddReviewCommandHandlerTests
 
         _roomRepositoryMock
             .Setup(x => x.GetByIdAsync(command.RoomId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Failure<Room>(new Error("Room.NotFound", "Not found")));
+            .ReturnsAsync(Result.Failure<Room>(RoomErrors.NotFound));
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Code.Should().Be("Room.NotFound");
+        result.Error.Code.Should().Be(RoomErrors.NotFound.Code);
 
         _reviewRepositoryMock.Verify(x => x.AddReview(It.IsAny<RoomReview>(), It.IsAny<CancellationToken>()),
             Times.Never);

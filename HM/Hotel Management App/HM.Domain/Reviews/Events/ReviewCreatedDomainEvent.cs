@@ -2,4 +2,4 @@
 
 namespace HM.Domain.Reviews.Events;
 
-public record ReviewCreatedDomainEvent(Guid ReviewId, Guid RoomId) : IDomainEvent;
+public sealed record ReviewCreatedDomainEvent(Guid ReviewId, Guid RoomId) : IDomainEvent;

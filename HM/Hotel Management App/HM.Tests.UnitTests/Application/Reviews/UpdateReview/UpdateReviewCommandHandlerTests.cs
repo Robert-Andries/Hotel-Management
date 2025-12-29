@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HM.Application.Reviews.UpdateReview;
 using HM.Domain.Abstractions;
+using HM.Domain.Reviews;
 using HM.Domain.Reviews.Abstractions;
 using HM.Domain.Reviews.Entities;
 using HM.Domain.Reviews.Value_Objects;
@@ -69,14 +70,14 @@ public class UpdateReviewCommandHandlerTests
 
         _reviewRepositoryMock
             .Setup(x => x.GetReview(command.ReviewId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Failure<RoomReview>(new Error("Review.NotFound", "Not found")));
+            .ReturnsAsync(Result.Failure<RoomReview>(ReviewErrors.NotFound));
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Code.Should().Be("Review.NotFound");
+        result.Error.Code.Should().Be(ReviewErrors.NotFound.Code);
 
         _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }

@@ -2,4 +2,4 @@
 
 namespace HM.Domain.Rooms.Events;
 
-public record RoomRatingUpdatedDomainEvent(Guid RoomId, double NewRating) : IDomainEvent;
+public sealed record RoomRatingUpdatedDomainEvent(Guid RoomId, double NewRating) : IDomainEvent;

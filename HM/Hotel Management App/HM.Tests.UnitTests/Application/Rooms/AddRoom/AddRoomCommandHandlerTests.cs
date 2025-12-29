@@ -13,6 +13,7 @@ namespace HM.Tests.UnitTests.Application.Rooms.AddRoom;
 
 public class AddRoomCommandHandlerTests
 {
+    private static readonly Error RepoError = new("Repo.Error", "Db Error");
     private readonly AddRoomCommandHandler _handler;
     private readonly Mock<ILogger<AddRoomCommandHandler>> _loggerMock;
     private readonly Mock<IRoomRepository> _roomRepositoryMock;
@@ -68,7 +69,7 @@ public class AddRoomCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_Should_ReturnFailure_When_RepositoryAddFails()
+    public async Task Handle_Should_ReturnFailure_When_RepositoryFails()
     {
         // Arrange
         var command = new AddRoomCommand(
@@ -79,13 +80,13 @@ public class AddRoomCommandHandlerTests
 
         _roomRepositoryMock
             .Setup(x => x.AddAsync(It.IsAny<Room>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Failure(new Error("Repo.Error", "Db Error")));
+            .ReturnsAsync(Result.Failure(RepoError));
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Code.Should().Be("Repo.Error");
+        result.Error.Code.Should().Be(RepoError.Code);
     }
 }

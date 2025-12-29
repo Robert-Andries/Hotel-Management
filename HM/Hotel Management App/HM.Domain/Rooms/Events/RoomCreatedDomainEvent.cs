@@ -2,4 +2,4 @@
 
 namespace HM.Domain.Rooms.Events;
 
-public record RoomCreatedDomainEvent(Guid RoomId) : IDomainEvent;
+public sealed record RoomCreatedDomainEvent(Guid RoomId) : IDomainEvent;
