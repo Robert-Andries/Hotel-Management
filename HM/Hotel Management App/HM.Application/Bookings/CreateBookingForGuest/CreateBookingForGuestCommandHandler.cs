@@ -39,7 +39,6 @@ internal sealed class CreateBookingForGuestCommandHandler : ICommandHandler<Crea
         _userCreationService = userCreationService;
     }
 
-    //todo check logic for unit of work
     public async Task<Result<Guid>> Handle(CreateBookingForGuestCommand request, CancellationToken cancellationToken)
     {
         // Validate Date Range

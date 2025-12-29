@@ -54,8 +54,8 @@ public class AddBookingCommandHandlerTests
         // Arrange
         var command = new AddBookingCommand(
             Guid.NewGuid(),
-            new DateOnly(2023, 1, 1),
-            new DateOnly(2023, 1, 5),
+            DateOnly.FromDateTime(DateTime.UtcNow),
+            DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)),
             Guid.NewGuid());
 
         _timeMock.Setup(x => x.NowUtc).Returns(DateTime.UtcNow);
