@@ -50,7 +50,7 @@ jobs:
     - name: Check Coverage Threshold
       shell: pwsh
       run: |
-        $xml = [xml](<Get-Content coverage/Cobertura.xml>)
+        $xml = [xml](Get-Content coverage/Cobertura.xml)
         $lineRate = [double]$xml.coverage.'line-rate'
         $percent = $lineRate * 100
         Write-Host "Current Line Coverage: $($percent)%"
