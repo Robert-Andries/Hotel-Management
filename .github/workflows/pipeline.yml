@@ -1,0 +1,66 @@
+name: Continous Integratiom (CI) pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+env:
+  Solution_Name: HM/Hotel Management App/Hotel Management App.sln
+  
+jobs:
+  build-windows:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    runs-on: windows-latest
+    steps:
+    # 1. Checkout the code
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    # 2. Install .NET SDK
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    # 3. Restore NuGet packages
+    - name: Restore
+      run: dotnet restore "${{ env.Solution_Name }}"
+    # 4. Build the solution
+    - name: Build
+      run: dotnet build "${{ env.Solution_Name }}" --configuration ${{ matrix.configuration }} --no-restore
+      env:
+        Configuration: ${{ matrix.configuration }}
+    # 5. Run tests
+    - name: Test
+      run: dotnet test "${{ env.Solution_Name }}" --configuration ${{ matrix.configuration }} --no-build
+      env:
+        Configuration: ${{ matrix.configuration }}
+  snyk-scan:
+    runs-on: ubuntu-latest
+    environment: SNYK_TOKENS
+    steps:
+      # 1. Checkout the code
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    # 2. Install .NET SDK
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    # 3. Restore NuGet packages
+    - name: Restore
+      run: dotnet restore "${{ env.Solution_Name }}" /p:EnableWindowsTargeting=true
+    - name: Snyk Security Scan
+      uses: snyk/actions@0.4.0
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: test
+        args: --file="${{ env.Solution_Name }}" --severity-threshold=medium
+        json: true
