@@ -39,6 +39,10 @@ internal sealed class AddBookingCommandHandler : ICommandHandler<AddBookingComma
 
     public async Task<Result<Guid>> Handle(AddBookingCommand request, CancellationToken cancellationToken)
     {
+        var nowTime = DateOnly.FromDateTime(_time.NowUtc);
+        if (request.StartDate < nowTime || request.EndDate < nowTime)
+            return Result.Failure<Guid>(BookingErrors.CanNotBookInThePast);
+
         var userResult = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
         if (userResult.IsFailure)
         {

@@ -42,13 +42,13 @@ internal sealed class CreateBookingForGuestCommandHandler : ICommandHandler<Crea
     //todo check logic for unit of work
     public async Task<Result<Guid>> Handle(CreateBookingForGuestCommand request, CancellationToken cancellationToken)
     {
-        // 0. Validate Date Range
+        // Validate Date Range
         var dateRangeResult = DateRange.Create(request.StartDate, request.EndDate);
         if (dateRangeResult.IsFailure) return Result.Failure<Guid>(dateRangeResult.Error);
 
         var dateRange = dateRangeResult.Value;
 
-        // 1. Gets user id 
+        // Gets user id 
         Guid userId;
         var existingUserResult = await _userCreationService.GetUserByEmailAsync(request.Email, cancellationToken);
         if (existingUserResult.IsSuccess)
@@ -72,20 +72,20 @@ internal sealed class CreateBookingForGuestCommandHandler : ICommandHandler<Crea
             userId = user.Id;
         }
 
-        // 2. Load Room
+        // Load Room
         var roomResult = await _roomRepository.GetByIdAsync(request.RoomId, cancellationToken);
         if (roomResult.IsFailure) return Result.Failure<Guid>(roomResult.Error);
         var room = roomResult.Value;
 
-        // 3. Check Overlap
+        // Check Overlap
         var isOverlappingResult = await _bookingRepository.IsOverlappingAsync(room, dateRange, cancellationToken);
         if (isOverlappingResult.IsFailure || isOverlappingResult.Value)
             return Result.Failure<Guid>(BookingErrors.Overlapping);
 
-        // 4. Calculate Price
+        // Calculate Price
         var priceDetails = _pricingService.CalculatePrice(room, dateRange);
 
-        // 5. Reserve Booking
+        // Reserve Booking
         var booking = Booking.Reserve(
             room.Id,
             userId,
@@ -93,12 +93,12 @@ internal sealed class CreateBookingForGuestCommandHandler : ICommandHandler<Crea
             _time.NowUtc,
             priceDetails.TotalPrice);
 
-        // 6. Final Overlap Check (Race Condition Mitigation)
+        // Final Overlap Check (Race Condition Mitigation)
         var isOverlappingReCheck = await _bookingRepository.IsOverlappingAsync(room, dateRange, cancellationToken);
         if (isOverlappingReCheck.IsFailure || isOverlappingReCheck.Value)
             return Result.Failure<Guid>(BookingErrors.Overlapping);
 
-        // 7. Save
+        // Save
         await _bookingRepository.AddAsync(booking, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -23,4 +23,8 @@ public class BookingErrors
     public static Error AlreadyStarted = new(
         "Booking.AlreadyStarted",
         "The booking has already started.");
+
+    public static Error CanNotBookInThePast = new(
+        "Booking.CanNotBookInThePast",
+        "You cannot create a booking with date range in the past. The booking date must be in the future.");
 }
