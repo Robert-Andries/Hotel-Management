@@ -60,6 +60,7 @@ public class BookingRepositoryTests : BaseIntegrationTest
             new Money(150, Currency.Usd));
 
         await _bookingRepository.AddAsync(existingBooking);
+        await DbContext.SaveChangesAsync();
 
         var newRange = DateRange.Create(DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
             DateOnly.FromDateTime(DateTime.Today.AddDays(2))).Value;
