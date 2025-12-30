@@ -76,7 +76,7 @@ jobs:
 
     # 10. Run tests with Coverage
     - name: Test
-      run: dotnet test "${{ env.Solution_Name }}" --configuration ${{ matrix.configuration }} --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[HM.Infrastructure]*,[HM.Presentation.*]*"
+      run: dotnet test "${{ env.Solution_Name }}" --configuration ${{ matrix.configuration }} --no-build --collect:"XPlat Code Coverage" --filter "FullyQualifiedName!~HM.Tests.Playwright" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[HM.Infrastructure]*,[HM.Presentation.*]*"
       env:
         Configuration: ${{ matrix.configuration }}
 
