@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HM.Infrastructure.Repositories;
 
+/// <summary>
+///     Repository for managing review entities.
+/// </summary>
 public sealed class ReviewRepository : IReviewRepository
 {
     private readonly ApplicationDbContext _dbContext;

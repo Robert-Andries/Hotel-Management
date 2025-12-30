@@ -5,8 +5,17 @@ using HM.Domain.Shared;
 
 namespace HM.Domain.Bookings.Services;
 
+/// <summary>
+///     Implementation of the pricing domain service.
+/// </summary>
 public sealed class PricingService : IPricingService
 {
+    /// <summary>
+    ///     Calculates pricing based on room rate, duration, and active amenities upcharges.
+    /// </summary>
+    /// <param name="apartment">The room entity.</param>
+    /// <param name="period">The date range for the booking. Defaults to one day if null.</param>
+    /// <returns>The calculated pricing details.</returns>
     public PricingDetails CalculatePrice(Room apartment, DateRange? period = null)
     {
         var currency = apartment.Price.Currency;

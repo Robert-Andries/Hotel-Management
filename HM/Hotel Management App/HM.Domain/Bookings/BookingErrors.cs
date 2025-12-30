@@ -2,6 +2,9 @@
 
 namespace HM.Domain.Bookings;
 
+/// <summary>
+///     Contains predefined domain errors for the Booking context.
+/// </summary>
 public class BookingErrors
 {
     public static Error Overlapping = new(

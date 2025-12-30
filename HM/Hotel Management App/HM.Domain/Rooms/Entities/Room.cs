@@ -6,6 +6,9 @@ using HM.Domain.Shared;
 
 namespace HM.Domain.Rooms.Entities;
 
+/// <summary>
+///     Represents a room within the hotel.
+/// </summary>
 public sealed class Room : Entity
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -27,9 +30,13 @@ public sealed class Room : Entity
     }
 
     /// <summary>
-    ///     Factory method to create a Room entity
+    ///     Factory method to create a new Room entity.
     /// </summary>
-    /// <returns>The newly created room entity</returns>
+    /// <param name="roomType">The type of the room (Single, Double, etc.).</param>
+    /// <param name="location">The location (floor, number).</param>
+    /// <param name="features">List of amenities.</param>
+    /// <param name="price">Price per night.</param>
+    /// <returns>The newly created room entity or failure if price is invalid.</returns>
     public static Result<Room> Create(RoomType roomType, RoomLocation location, List<Feature> features, Money price)
     {
         if (price.Amount <= 0)
@@ -107,7 +114,7 @@ public sealed class Room : Entity
     }
 
     /// <summary>
-    ///     Updates the room's rating.
+    ///     Updates the room's rating based on new reviews.
     /// </summary>
     /// <param name="newRating">The new rating summary.</param>
     /// <returns>Result indicating success or failure.</returns>
@@ -120,12 +127,25 @@ public sealed class Room : Entity
 
     #region Properties
 
+    /// <summary>Gets the type of the room.</summary>
     public RoomType RoomType { get; private set; }
+
+    /// <summary>Gets the physical location of the room.</summary>
     public RoomLocation Location { get; private set; }
+
+    /// <summary>Gets the list of features (amenities).</summary>
     public List<Feature> Features { get; private set; }
+
+    /// <summary>Gets the aggregate rating summary.</summary>
     public RatingSummary Rating { get; private set; }
+
+    /// <summary>Gets the current status (Available, Reserved, etc.).</summary>
     public RoomStatus Status { get; private set; }
+
+    /// <summary>Gets the price per night.</summary>
     public Money Price { get; private set; }
+
+    /// <summary>Gets the UTC timestamp of the last booking.</summary>
     public DateTime? LastBookedOnUtc { get; private set; }
 
     #endregion

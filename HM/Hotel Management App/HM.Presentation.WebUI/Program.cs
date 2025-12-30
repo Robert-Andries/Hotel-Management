@@ -5,7 +5,6 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddInfrastructureDependencyInjection(builder.Configuration);
 builder.Services.AddApplicationDependencyInjection();
 

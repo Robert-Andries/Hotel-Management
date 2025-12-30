@@ -2,6 +2,9 @@
 
 namespace HM.Domain.Users;
 
+/// <summary>
+///     Contains predefined domain errors for the User context.
+/// </summary>
 public class UserErrors
 {
     public static Error NotFound = new(

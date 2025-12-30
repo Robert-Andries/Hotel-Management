@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HM.Application.Bookings.Events;
 
+/// <summary>
+///     Handles the BookingCheckedOut domain event.
+/// </summary>
 internal sealed class BookingCheckedOutDomainEventHandler : INotificationHandler<BookingCheckedOutDomainEvent>
 {
     private readonly IBookingRepository _bookingRepository;

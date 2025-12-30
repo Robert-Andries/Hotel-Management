@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HM.Infrastructure.Repositories;
 
+/// <summary>
+///     Repository for managing booking entities.
+/// </summary>
 internal sealed class BookingRepository : IBookingRepository
 {
     private readonly ApplicationDbContext _dbContext;

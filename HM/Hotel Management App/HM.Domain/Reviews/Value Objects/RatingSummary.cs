@@ -3,12 +3,24 @@ using HM.Domain.Reviews.Abstractions;
 
 namespace HM.Domain.Reviews.Value_Objects;
 
+/// <summary>
+///     Aggregates rating statistics for a room.
+/// </summary>
+/// <param name="RoomId">The ID of the room.</param>
+/// <param name="Average">The average rating score.</param>
+/// <param name="Count">The total number of reviews.</param>
 public sealed record RatingSummary(Guid RoomId, float Average, int Count)
 {
     private RatingSummary() : this(Guid.Empty, 0, 0)
     {
     }
 
+    /// <summary>
+    ///     Recalculates the rating summary by fetching latest reviews from the repository.
+    /// </summary>
+    /// <param name="roomRepository">The review repository.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A new RatingSummary with updated values.</returns>
     public async Task<Result<RatingSummary>> Update(IReviewRepository roomRepository,
         CancellationToken cancellationToken = default)
     {

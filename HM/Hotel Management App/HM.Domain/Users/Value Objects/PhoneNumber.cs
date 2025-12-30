@@ -3,6 +3,9 @@ using HM.Domain.Abstractions;
 
 namespace HM.Domain.Users.Value_Objects;
 
+/// <summary>
+///     Represents a validated phone number with country code.
+/// </summary>
 public record PhoneNumber
 {
     private PhoneNumber(string value, string countryCode)
@@ -11,9 +14,18 @@ public record PhoneNumber
         CountryCode = countryCode;
     }
 
+    /// <summary>Gets the local number part.</summary>
     public string Value { get; init; }
+
+    /// <summary>Gets the country dialing code (e.g. +1, +40).</summary>
     public string CountryCode { get; init; }
 
+    /// <summary>
+    ///     Creates a new <see cref="PhoneNumber" /> value object using regex validation.
+    /// </summary>
+    /// <param name="value">The local number string.</param>
+    /// <param name="countryCode">The country code string.</param>
+    /// <returns>A Result containing the validated PhoneNumber or failure.</returns>
     public static Result<PhoneNumber> Create(string value, string countryCode)
     {
         if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(countryCode))

@@ -2,6 +2,9 @@
 
 namespace HM.Domain.Rooms;
 
+/// <summary>
+///     Contains predefined domain errors for the Room context.
+/// </summary>
 public class RoomErrors
 {
     public static Error NotFound = new(

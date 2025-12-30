@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HM.Infrastructure.Repositories;
 
+/// <summary>
+///     Repository for managing user entities.
+/// </summary>
 internal sealed class UserRepository : IUserRepository
 {
     private readonly ApplicationDbContext _dbContext;

@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HM.Application.Bookings.Events;
 
+/// <summary>
+///     Handles the BookingCanceled domain event.
+/// </summary>
 internal sealed class BookingCanceledDomainEventHandler : INotificationHandler<BookingCanceledDomainEvent>
 {
     private readonly IBookingRepository _bookingRepository;

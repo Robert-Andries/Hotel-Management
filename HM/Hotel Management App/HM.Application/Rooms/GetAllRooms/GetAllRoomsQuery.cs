@@ -4,4 +4,7 @@ using HM.Domain.Abstractions;
 
 namespace HM.Application.Rooms.GetAllRooms;
 
+/// <summary>
+///     Query to retrieve all rooms.
+/// </summary>
 public record GetAllRoomsQuery : IQuery<Result<List<RoomResponse>>>;

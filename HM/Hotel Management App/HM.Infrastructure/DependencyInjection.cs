@@ -13,6 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace HM.Infrastructure;
 
+/// <summary>
+///     Adds necessary services to the IServiceCollection for the infrastructure layer to work correctly.
+/// </summary>
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureDependencyInjection(

@@ -1,5 +1,8 @@
 ﻿namespace HM.Domain.Rooms.Value_Objects;
 
+/// <summary>
+///     Enumerates available room amenities.
+/// </summary>
 public enum Feature
 {
     WiFi = 1,

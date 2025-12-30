@@ -2,6 +2,9 @@
 
 namespace HM.Domain.Reviews;
 
+/// <summary>
+///     Contains predefined domain errors for the Review context.
+/// </summary>
 public static class ReviewErrors
 {
     public static readonly Error NotFound = new("Review.NotFound",

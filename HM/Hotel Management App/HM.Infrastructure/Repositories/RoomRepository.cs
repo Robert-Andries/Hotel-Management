@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HM.Infrastructure.Repositories;
 
+/// <summary>
+///     Repository for managing room entities.
+/// </summary>
 internal sealed class RoomRepository : IRoomRepository
 {
     private readonly ApplicationDbContext _dbContext;

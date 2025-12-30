@@ -3,6 +3,9 @@ using HM.Domain.Abstractions;
 
 namespace HM.Domain.Users.Value_Objects;
 
+/// <summary>
+///     Represents a valid email address.
+/// </summary>
 public record Email
 {
     private Email()
@@ -17,9 +20,17 @@ public record Email
         Domain = domain;
     }
 
+    /// <summary>Gets the user part of the email address (before @).</summary>
     public string Value { get; init; }
+
+    /// <summary>Gets the domain part of the email address (after @).</summary>
     public string Domain { get; init; }
 
+    /// <summary>
+    ///     Creates a new <see cref="Email" /> value object.
+    /// </summary>
+    /// <param name="email">The raw email string.</param>
+    /// <returns>A Result containing the Email object or a validation error.</returns>
     public static Result<Email> Create(string email)
     {
         if (!IsEmailValid(email))
