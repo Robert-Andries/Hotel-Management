@@ -23,7 +23,6 @@ internal sealed class BookingRepository : IBookingRepository
     public async Task<Result> AddAsync(Booking booking, CancellationToken cancellationToken = default)
     {
         _dbContext.Bookings.Add(booking);
-        await _dbContext.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
 
