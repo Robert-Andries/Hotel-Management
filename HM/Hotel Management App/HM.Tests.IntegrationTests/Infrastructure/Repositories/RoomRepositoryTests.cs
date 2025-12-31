@@ -34,7 +34,7 @@ public class RoomRepositoryTests : BaseIntegrationTest
         result.IsSuccess.Should().BeTrue();
         var fromDb = await DbContext.Rooms.FirstOrDefaultAsync(r => r.Location.RoomNumber == 701);
         fromDb.Should().NotBeNull();
-        fromDb!.Id.Should().Be(room.Id);
+        fromDb.Id.Should().Be(room.Id);
     }
 
     [Fact]

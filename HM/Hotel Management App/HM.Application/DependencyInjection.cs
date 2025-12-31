@@ -12,8 +12,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationDependencyInjection(this IServiceCollection services)
     {
         services.AddMediatR(config => { config.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly); });
-        services.AddTransient<PricingService>();
-        services.AddTransient<UserCreationService>();
+        services.AddTransient<IPricingService, PricingService>();
+        services.AddTransient<IUserCreationService, UserCreationService>();
         services.AddLogging();
 
         return services;

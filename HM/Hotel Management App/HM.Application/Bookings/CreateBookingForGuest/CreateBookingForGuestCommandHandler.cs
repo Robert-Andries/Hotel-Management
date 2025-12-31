@@ -18,7 +18,7 @@ internal sealed class CreateBookingForGuestCommandHandler : ICommandHandler<Crea
     private readonly IRoomRepository _roomRepository;
     private readonly ITime _time;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly UserCreationService _userCreationService;
+    private readonly IUserCreationService _userCreationService;
     private readonly IUserRepository _userRepository;
 
     public CreateBookingForGuestCommandHandler(
@@ -28,7 +28,7 @@ internal sealed class CreateBookingForGuestCommandHandler : ICommandHandler<Crea
         IPricingService pricingService,
         IUnitOfWork unitOfWork,
         ITime time,
-        UserCreationService userCreationService)
+        IUserCreationService userCreationService)
     {
         _userRepository = userRepository;
         _roomRepository = roomRepository;

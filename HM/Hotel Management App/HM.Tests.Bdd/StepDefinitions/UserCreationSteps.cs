@@ -12,7 +12,7 @@ namespace HM.Tests.Bdd.StepDefinitions;
 public class UserCreationSteps
 {
     private readonly Mock<ITime> _timeMock;
-    private readonly UserCreationService _userCreationService;
+    private readonly IUserCreationService _userCreationService;
     private readonly Mock<IUserRepository> _userRepositoryMock;
     private string _countryCode;
     private DateOnly _dateOfBirth;

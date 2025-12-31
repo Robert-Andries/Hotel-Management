@@ -9,13 +9,13 @@ namespace HM.Application.Users.AddUser;
 internal sealed class AddUserCommandHandler : ICommandHandler<AddUserCommand, Result<Guid>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly UserCreationService _userCreationService;
+    private readonly IUserCreationService _userCreationService;
     private readonly IUserRepository _userRepository;
 
     public AddUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
-        UserCreationService userCreationService)
+        IUserCreationService userCreationService)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;

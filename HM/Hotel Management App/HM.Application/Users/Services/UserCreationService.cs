@@ -8,7 +8,7 @@ namespace HM.Application.Users.Services;
 /// <summary>
 ///     Service responsible for handling user creation logic and domain validations.
 /// </summary>
-public class UserCreationService
+public class UserCreationService : IUserCreationService
 {
     private readonly ITime _time;
     private readonly IUserRepository _userRepository;

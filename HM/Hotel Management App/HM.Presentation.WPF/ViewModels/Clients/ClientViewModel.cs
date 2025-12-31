@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using HM.Application.Users.GetUsers;
 using HM.Application.Users.Shared;
@@ -24,12 +25,9 @@ public class ClientViewModel : BaseViewModel
         _mediator = mediator;
         _clientDetailsDialogViewModel = clientDetailsDialogViewModel;
 
-        ShowDetailsCommand = new RelayCommand(ShowDetailsExecute, ShowDetailsCanExecute);
-        RefreshCommand = new AsyncRelayCommand(RefreshExecute, null, OnException);
-        NextPageCommand = new AsyncRelayCommand(NextPageExecute, NextPageCanExecute, OnException);
-        PreviousPageCommand = new AsyncRelayCommand(PreviousPageExecute, PreviousPageCanExecute, OnException);
-        AddClientCommand = new AsyncRelayCommand(AddClientExecute, null, OnException);
+        InitialiseCommands();
     }
+
 
     #region Properties
 
@@ -109,15 +107,30 @@ public class ClientViewModel : BaseViewModel
         _logger.LogInformation("Loaded {Count} users", Users.Count);
     }
 
+    [MemberNotNull(
+        nameof(RefreshCommand),
+        nameof(NextPageCommand),
+        nameof(PreviousPageCommand),
+        nameof(ShowDetailsCommand),
+        nameof(AddClientCommand))]
+    private void InitialiseCommands()
+    {
+        ShowDetailsCommand = new RelayCommand(ShowDetailsExecute, ShowDetailsCanExecute);
+        RefreshCommand = new AsyncRelayCommand(RefreshExecute, null, OnException);
+        NextPageCommand = new AsyncRelayCommand(NextPageExecute, NextPageCanExecute, OnException);
+        PreviousPageCommand = new AsyncRelayCommand(PreviousPageExecute, PreviousPageCanExecute, OnException);
+        AddClientCommand = new AsyncRelayCommand(AddClientExecute, null, OnException);
+    }
+
     #endregion
 
     #region Commands
 
-    public ICommand RefreshCommand { get; }
-    public ICommand NextPageCommand { get; }
-    public ICommand PreviousPageCommand { get; }
-    public ICommand ShowDetailsCommand { get; }
-    public ICommand AddClientCommand { get; }
+    public ICommand RefreshCommand { get; private set; }
+    public ICommand NextPageCommand { get; private set; }
+    public ICommand PreviousPageCommand { get; private set; }
+    public ICommand ShowDetailsCommand { get; private set; }
+    public ICommand AddClientCommand { get; private set; }
 
     #endregion
 
