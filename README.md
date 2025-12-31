@@ -24,17 +24,17 @@ The solution (`Hotel Management App.sln`) is structured into four main layers:
 
 ### Tech Stack
 - **Framework**: .NET 9.0
-- **Database**: SQL Server / InMemory (for testing)
+- **Database**: SQL Server
 - **ORM**: Entity Framework Core 9
 - **Architecture**: CQRS (Mediator Pattern), Clean Architecture
 - **Testing**: xUnit, FluentAssertions, Moq, Coverlet
-- **CI Pipeline**: GitHub Actions (Build, Test, Snyk Scan)
+- **CI Pipeline**: GitHub Actions (Build, Test, Snyk Scan, SonarQube)
 
 ## Setup Instructions
 
 ### Prerequisites
 - [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- SQL Server (LocalDB or full instance)
+- SQL Server
 - A preferred IDE (Visual Studio 2022, JetBrains Rider, or VS Code)
 
 ### Installation
@@ -64,6 +64,7 @@ The solution emphasizes strong testing coverage:
 - **Unit Tests**: `dotnet test "HM\Hotel Management App\HM.Tests.UnitTests"`
 - **Integration Tests**: `dotnet test "HM\Hotel Management App\HM.Tests.IntegrationTests"`
 - **Architecture Tests**: Ensures dependency rules are respected.
+- **End to End Testing**: Using Playwright
 
 ### Code Coverage
 We enforce a strict code coverage policy.
@@ -84,3 +85,4 @@ The project uses GitHub Actions for Continuous Integration:
 - Builds the solution in `Debug` and `Release`.
 - Runs full test suite with coverage checks.
 - Scans for vulnerabilities using **Snyk**.
+- Analyze code using **SonarQube**
