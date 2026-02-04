@@ -1,0 +1,14 @@
+﻿using HM.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace HM.Presentation.WebUI.StartupConfig;
+
+public static class MigrationExtensions
+{
+    public static void ApplyMigrations(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate();
+    }
+}

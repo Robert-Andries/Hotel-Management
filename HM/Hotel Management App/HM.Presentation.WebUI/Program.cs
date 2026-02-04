@@ -15,11 +15,13 @@ builder.Services.AddSerilog(opts => opts.WriteTo.Console());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
+    app.ApplyMigrations();
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
 }
+
+app.UseHsts();
 
 app.UseHttpsRedirection();
 app.UseRouting();

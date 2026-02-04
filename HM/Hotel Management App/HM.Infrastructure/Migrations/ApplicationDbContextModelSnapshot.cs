@@ -17,7 +17,7 @@ namespace HM.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -56,6 +56,36 @@ namespace HM.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Bookings", (string)null);
+                });
+
+            modelBuilder.Entity("HM.Domain.Reviews.Entities.RoomReview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("reviews", (string)null);
                 });
 
             modelBuilder.Entity("HM.Domain.Rooms.Entities.Room", b =>
@@ -154,6 +184,47 @@ namespace HM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Price")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HM.Domain.Reviews.Entities.RoomReview", b =>
+                {
+                    b.HasOne("HM.Domain.Rooms.Entities.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HM.Domain.Users.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("HM.Domain.Reviews.Value_Objects.Comment", "Comment", b1 =>
+                        {
+                            b1.Property<Guid>("RoomReviewId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Content")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.Property<string>("Title")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.HasKey("RoomReviewId");
+
+                            b1.ToTable("reviews");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomReviewId");
+                        });
+
+                    b.Navigation("Comment")
                         .IsRequired();
                 });
 
