@@ -9,6 +9,9 @@ public static class MigrationExtensions
     {
         using var scope = app.ApplicationServices.CreateScope();
         using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        dbContext.Database.Migrate();
+
+        // Non relational dbs are not compatible with migration
+        // e.g. of non realational db: InMemory db
+        if (dbContext.Database.IsRelational()) dbContext.Database.Migrate();
     }
 }
